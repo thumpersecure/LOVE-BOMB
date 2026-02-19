@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You've Been Love Bombed</title>
+<meta name="description" content="more love = more world peace. You just received a love bomb. Pass it on.">
+<meta property="og:title" content="You've Been Love Bombed">
+<meta property="og:description" content="more love = more world peace">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:#0d0212;
+  color:#fff;
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ── Heart Canvas ── */
+#heart-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ── Content Overlay ── */
+.content{
+  position:relative;z-index:1;
+  max-width:720px;margin:0 auto;padding:40px 24px;
+  text-align:center;
+}
+
+/* ── Sections ── */
+.section{
+  margin:80px 0;
+  opacity:0;transform:translateY(40px);
+  transition:opacity 1.2s ease,transform 1.2s ease;
+}
+.section.visible{opacity:1;transform:translateY(0)}
+.section:first-child{margin-top:15vh}
+
+/* ── Typography ── */
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.4rem,6vw,4rem);
+  font-weight:700;
+  line-height:1.15;
+  margin-bottom:16px;
+}
+h2{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  font-weight:400;font-style:italic;
+  color:#ffb6c1;
+  margin-bottom:24px;
+}
+p,.quote{
+  font-size:clamp(1rem,2.5vw,1.15rem);
+  line-height:1.8;
+  color:#e0c0d0;
+  font-weight:300;
+  margin-bottom:20px;
+}
+.quote{
+  border-left:3px solid #ff69b4;
+  padding:16px 24px;
+  margin:32px auto;
+  max-width:520px;
+  text-align:left;
+  font-style:italic;
+  background:rgba(255,105,180,0.05);
+  border-radius:0 12px 12px 0;
+}
+
+/* ── Glow Equation ── */
+.equation{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.8rem,5vw,3.2rem);
+  font-weight:700;
+  color:#fff;
+  text-shadow:
+    0 0 20px rgba(255,105,180,0.8),
+    0 0 40px rgba(255,105,180,0.5),
+    0 0 80px rgba(255,105,180,0.3);
+  margin:40px 0;
+  animation:glow-pulse 3s ease-in-out infinite;
+}
+@keyframes glow-pulse{
+  0%,100%{text-shadow:0 0 20px rgba(255,105,180,0.8),0 0 40px rgba(255,105,180,0.5),0 0 80px rgba(255,105,180,0.3)}
+  50%{text-shadow:0 0 30px rgba(255,105,180,1),0 0 60px rgba(255,105,180,0.7),0 0 120px rgba(255,105,180,0.5)}
+}
+
+/* ── Emphasis ── */
+.love-word{color:#ff69b4;font-weight:500}
+em{color:#ffb6c1}
+strong{color:#fff;font-weight:500}
+
+/* ── Heart Divider ── */
+.heart-divider{
+  margin:48px auto;font-size:1.4rem;
+  letter-spacing:12px;color:#ff69b4;
+  opacity:0.6;
+}
+
+/* ── Music Player ── */
+.music-box{
+  background:rgba(255,105,180,0.08);
+  border:1px solid rgba(255,105,180,0.2);
+  border-radius:24px;
+  padding:40px 32px;
+  margin:48px auto;
+  max-width:480px;
+  backdrop-filter:blur(20px);
+}
+.music-box h3{
+  font-family:'Playfair Display',serif;
+  font-size:1.3rem;
+  color:#ffb6c1;
+  margin-bottom:8px;
+}
+.music-box .subtitle{
+  font-size:0.85rem;color:#c090a8;margin-bottom:24px;
+}
+.play-btn{
+  display:inline-flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,#ff69b4,#ff1493,#c71585);
+  color:#fff;border:none;border-radius:60px;
+  padding:16px 36px;font-size:1.05rem;
+  font-family:'Inter',sans-serif;font-weight:500;
+  cursor:pointer;
+  box-shadow:0 0 30px rgba(255,105,180,0.4),0 4px 20px rgba(0,0,0,0.3);
+  transition:all 0.3s ease;
+  animation:btn-breathe 2.5s ease-in-out infinite;
+}
+.play-btn:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 50px rgba(255,105,180,0.6),0 6px 30px rgba(0,0,0,0.4);
+}
+@keyframes btn-breathe{
+  0%,100%{box-shadow:0 0 30px rgba(255,105,180,0.4),0 4px 20px rgba(0,0,0,0.3)}
+  50%{box-shadow:0 0 50px rgba(255,105,180,0.6),0 4px 20px rgba(0,0,0,0.3)}
+}
+.play-icon{font-size:1.4rem}
+.yt-container{
+  margin-top:24px;border-radius:16px;overflow:hidden;
+  display:none;
+  box-shadow:0 0 40px rgba(255,105,180,0.2);
+}
+.yt-container.active{display:block;animation:fade-in 0.8s ease}
+.yt-container iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+@keyframes fade-in{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
+
+/* ── Share ── */
+.share-btn{
+  display:inline-flex;align-items:center;gap:10px;
+  background:transparent;
+  border:2px solid rgba(255,105,180,0.5);
+  color:#ffb6c1;border-radius:60px;
+  padding:14px 32px;font-size:1rem;
+  font-family:'Inter',sans-serif;font-weight:400;
+  cursor:pointer;transition:all 0.3s ease;
+}
+.share-btn:hover{
+  background:rgba(255,105,180,0.15);
+  border-color:#ff69b4;color:#fff;
+  box-shadow:0 0 30px rgba(255,105,180,0.2);
+}
+
+/* ── Floating Sparkles ── */
+.sparkle{
+  position:fixed;pointer-events:none;z-index:2;
+  width:4px;height:4px;border-radius:50%;
+  background:#ff69b4;
+  animation:sparkle-float 3s ease-out forwards;
+}
+@keyframes sparkle-float{
+  0%{opacity:1;transform:scale(1) translateY(0)}
+  100%{opacity:0;transform:scale(0) translateY(-60px)}
+}
+
+/* ── Responsive ── */
+@media(max-width:600px){
+  .content{padding:24px 16px}
+  .section:first-child{margin-top:10vh}
+  .music-box{padding:28px 20px}
+  .play-btn{padding:14px 28px;font-size:0.95rem}
+}
+</style>
+</head>
+<body>
+
+<canvas id="heart-canvas"></canvas>
+
+<div class="content">
+
+  <!-- ═══ HOOK ═══ -->
+  <div class="section" id="s1">
+    <h1>You just got<br>love bombed.</h1>
+    <p>Don't panic. It only contains one idea.</p>
+    <p style="font-size:0.9rem;color:#a07888;margin-top:40px">scroll down</p>
+    <p style="font-size:1.4rem;color:#ff69b4;animation:bounce 2s infinite">&#8595;</p>
+  </div>
+
+  <!-- ═══ THE EQUATION ═══ -->
+  <div class="section" id="s2">
+    <div class="equation">more love = more world peace</div>
+    <p>Read that again. Sit with it for a second.</p>
+    <p>Not a slogan. Not a bumper sticker.<br>Just a sentence so plainly true that it's strange<br>no one has put it at the center of every conversation<br>about war, conflict, and what to do about either.</p>
+  </div>
+
+  <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
+
+  <!-- ═══ THE TRUTH ═══ -->
+  <div class="section" id="s3">
+    <h2>The obvious thing nobody is saying</h2>
+    <p>Every conflict — between nations, neighbors, strangers online — shares the same deficiency.</p>
+    <p>Not resources. Not policy. Not diplomacy.</p>
+    <p style="font-size:1.6rem;color:#ff69b4;font-family:'Playfair Display',serif;font-style:italic;margin:24px 0">Love.</p>
+    <div class="quote">
+      Would more love between those people<br>have made it better or worse?
+    </div>
+    <p>The answer has never once been <em>"worse."</em></p>
+    <p>Not once. In all of human history. Not once.</p>
+    <p>And yet somehow, in all the serious rooms where serious people discuss serious solutions… this word barely comes up.</p>
+    <p>That's not because it's naive.<br>It's because <strong>no one wants to say the obvious thing first.</strong></p>
+  </div>
+
+  <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
+
+  <!-- ═══ SOCIAL PROOF ═══ -->
+  <div class="section" id="s4">
+    <h2>You already know this</h2>
+    <p>You knew it before you opened this page.<br>Every person who reads that equation has the same reaction:</p>
+    <p style="font-size:1.3rem;font-style:italic;color:#ffb6c1;margin:24px 0">"…yeah."</p>
+    <p>That reaction? That's the most honest thing you've felt all day. Don't let it pass. Sit in it. <span class="love-word">That feeling is the whole point.</span></p>
+    <p>It's not that nobody believes this. <strong>Everyone does.</strong><br>The problem is nobody says it out loud — so it stays invisible in exactly the spaces where it matters most.</p>
+  </div>
+
+  <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
+
+  <!-- ═══ MUSIC ═══ -->
+  <div class="section" id="s5">
+    <div class="music-box">
+      <h3>Love me, love me, say that you love me…</h3>
+      <div class="subtitle">The Cardigans — Lovefool</div>
+      <button class="play-btn" id="play-btn" onclick="toggleMusic()">
+        <span class="play-icon">&#9654;</span>
+        <span id="play-text">Play &amp; feel the love</span>
+      </button>
+      <div class="yt-container" id="yt-container">
+        <div id="yt-player"></div>
+      </div>
+    </div>
+    <p style="margin-top:24px;font-size:0.95rem;color:#a07888">Let it play. Watch the hearts. <span class="love-word">Feel it.</span></p>
+  </div>
+
+  <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
+
+  <!-- ═══ THE MECHANISM ═══ -->
+  <div class="section" id="s6">
+    <h2>How a love bomb works</h2>
+    <p>It works the same way every idea that ever changed the world worked:</p>
+    <div class="quote">
+      One person says it. Another person hears it.<br>
+      It becomes harder to unsay.
+    </div>
+    <p>No algorithm. No ad spend. No organization.<br>Just people saying a quiet, obvious truth out loud<br>until it isn't quiet anymore.</p>
+    <p>That's <strong>social proof</strong> — the oldest force in human behavior. Once enough people hear <span class="love-word">more love = more world peace</span> regularly, it stops sounding like idealism and starts sounding like common sense.</p>
+    <p>Because it is.</p>
+  </div>
+
+  <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
+
+  <!-- ═══ CLOSE / CTA ═══ -->
+  <div class="section" id="s7">
+    <h2>Now someone's waiting for theirs</h2>
+    <p>You've already been love bombed.<br>You can't un-read the equation.<br>You can't un-feel what you felt.</p>
+    <p>The only question left is simple:</p>
+    <p style="font-size:1.2rem;color:#ffb6c1;font-style:italic;margin:24px 0">Who are you going to send this to?</p>
+    <p>One person. That's all it takes. Share this page.<br>No signup. No merch. No manifesto.</p>
+    <p style="margin:32px 0">
+      <button class="share-btn" onclick="shareLoveBomb()">
+        &#128140;&ensp;Send a love bomb
+      </button>
+    </p>
+    <p style="font-size:0.9rem;color:#806070;margin-top:8px">(Or just copy the link. Love doesn't need a button.)</p>
+  </div>
+
+  <!-- ═══ FINAL ═══ -->
+  <div class="section" id="s8" style="margin-bottom:15vh">
+    <div class="equation" style="font-size:clamp(1.4rem,4vw,2.4rem)">more love = more world peace</div>
+    <p style="font-style:italic;color:#a07888;margin-top:12px">It was always this simple.</p>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SCRIPTS                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<script>
+/* ── Heart Particle System ── */
+const canvas = document.getElementById('heart-canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+let hearts = [];
+let musicMode = false;
+let mouseX = -1, mouseY = -1;
+let clickBursts = [];
+
+const COLORS = [
+  [255,105,180], [255,69,100], [255,182,193],
+  [238,130,238], [255,140,160], [255,200,220],
+  [200,100,255], [255,80,120],  [255,220,230],
+  [255,20,100],  [180,60,200],
+];
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function drawHeart(cx, cy, size, angle, color, alpha) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(angle);
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
+  ctx.beginPath();
+  const s = size;
+  ctx.moveTo(0, -s * 0.35);
+  ctx.bezierCurveTo(-s * 0.5, -s * 0.9, -s * 1.3, -s * 0.4, 0, s * 0.6);
+  ctx.bezierCurveTo(s * 1.3, -s * 0.4, s * 0.5, -s * 0.9, 0, -s * 0.35);
+  ctx.fill();
+
+  // Inner glow
+  ctx.globalAlpha = alpha * 0.3;
+  ctx.fillStyle = `rgb(${Math.min(255,color[0]+60)},${Math.min(255,color[1]+60)},${Math.min(255,color[2]+60)})`;
+  ctx.beginPath();
+  const gs = size * 0.5;
+  ctx.moveTo(0, -gs * 0.35);
+  ctx.bezierCurveTo(-gs * 0.5, -gs * 0.9, -gs * 1.3, -gs * 0.4, 0, gs * 0.6);
+  ctx.bezierCurveTo(gs * 1.3, -gs * 0.4, gs * 0.5, -gs * 0.9, 0, -gs * 0.35);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+class Heart {
+  constructor(x, y, burst) {
+    this.x = x || Math.random() * W;
+    this.y = y || -20 - Math.random() * 100;
+    this.size = 8 + Math.random() * 24;
+    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+    this.angle = (Math.random() - 0.5) * 0.8;
+    this.rotSpeed = (Math.random() - 0.5) * 0.03;
+    this.vy = burst ? (Math.random() - 0.5) * 6 : 0.3 + Math.random() * 1.2;
+    this.vx = burst ? (Math.random() - 0.5) * 6 : (Math.random() - 0.5) * 0.5;
+    this.gravity = 0.02 + Math.random() * 0.01;
+    this.opacity = 0.4 + Math.random() * 0.6;
+    this.fadeSpeed = burst ? 0.008 + Math.random() * 0.005 : 0.0005;
+    this.wobblePhase = Math.random() * Math.PI * 2;
+    this.wobbleSpeed = 0.01 + Math.random() * 0.02;
+    this.wobbleAmp = 0.3 + Math.random() * 0.5;
+    this.burst = burst || false;
+    this.life = 1;
+  }
+  update() {
+    this.wobblePhase += this.wobbleSpeed;
+    this.vx += Math.sin(this.wobblePhase) * this.wobbleAmp * 0.01;
+    if (!this.burst) this.vy += this.gravity;
+    else this.vy += this.gravity * 2;
+    this.x += this.vx;
+    this.y += this.vy;
+    this.angle += this.rotSpeed;
+    this.life -= this.fadeSpeed;
+
+    // Bounce off bottom
+    if (this.y > H - this.size) {
+      this.y = H - this.size;
+      this.vy *= -0.4;
+      this.vx *= 0.9;
+    }
+    // Bounce off sides
+    if (this.x < this.size || this.x > W - this.size) {
+      this.vx *= -0.7;
+      this.x = Math.max(this.size, Math.min(W - this.size, this.x));
+    }
+    return this.life > 0 && this.y < H + 50;
+  }
+  draw() {
+    drawHeart(this.x, this.y, this.size, this.angle, this.color, this.life * this.opacity);
+  }
+}
+
+// Collision between hearts (approximate, circle-based)
+function collide(a, b) {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  const dist = Math.sqrt(dx * dx + dy * dy);
+  const minDist = (a.size + b.size) * 0.6;
+  if (dist < minDist && dist > 0) {
+    const nx = dx / dist;
+    const ny = dy / dist;
+    const overlap = minDist - dist;
+    a.x += nx * overlap * 0.5;
+    a.y += ny * overlap * 0.5;
+    b.x -= nx * overlap * 0.5;
+    b.y -= ny * overlap * 0.5;
+    // Swap velocity components along collision normal
+    const dvx = a.vx - b.vx;
+    const dvy = a.vy - b.vy;
+    const dot = dvx * nx + dvy * ny;
+    if (dot > 0) {
+      a.vx -= dot * nx * 0.5;
+      a.vy -= dot * ny * 0.5;
+      b.vx += dot * nx * 0.5;
+      b.vy += dot * ny * 0.5;
+      // Spin from collision
+      a.rotSpeed += (Math.random() - 0.5) * 0.02;
+      b.rotSpeed += (Math.random() - 0.5) * 0.02;
+    }
+  }
+}
+
+let spawnTimer = 0;
+function animate() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Spawn new hearts
+  spawnTimer++;
+  const spawnRate = musicMode ? 3 : 12;
+  if (spawnTimer >= spawnRate) {
+    spawnTimer = 0;
+    hearts.push(new Heart());
+    if (musicMode) hearts.push(new Heart()); // double in music mode
+  }
+
+  // Update and draw
+  hearts = hearts.filter(h => h.update());
+
+  // Collisions (check nearby pairs only for perf)
+  for (let i = 0; i < hearts.length; i++) {
+    for (let j = i + 1; j < Math.min(i + 8, hearts.length); j++) {
+      collide(hearts[i], hearts[j]);
+    }
+  }
+
+  // Soft background glow in music mode
+  if (musicMode) {
+    const t = Date.now() * 0.001;
+    const pulse = 0.02 + Math.sin(t * 2) * 0.01;
+    ctx.fillStyle = `rgba(255,105,180,${pulse})`;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  hearts.forEach(h => h.draw());
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Click to burst hearts
+document.addEventListener('click', function(e) {
+  // Don't burst on button clicks
+  if (e.target.closest('button') || e.target.closest('.yt-container')) return;
+  for (let i = 0; i < 12; i++) {
+    hearts.push(new Heart(e.clientX, e.clientY, true));
+  }
+});
+
+// Touch support
+document.addEventListener('touchstart', function(e) {
+  if (e.target.closest('button') || e.target.closest('.yt-container')) return;
+  const t = e.touches[0];
+  for (let i = 0; i < 12; i++) {
+    hearts.push(new Heart(t.clientX, t.clientY, true));
+  }
+});
+
+/* ── Scroll Reveal ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.15 });
+document.querySelectorAll('.section').forEach(s => observer.observe(s));
+
+/* ── YouTube Player ── */
+let ytPlayer = null;
+let ytReady = false;
+
+// Load YT API
+const tag = document.createElement('script');
+tag.src = 'https://www.youtube.com/iframe_api';
+document.head.appendChild(tag);
+
+window.onYouTubeIframeAPIReady = function() {
+  ytPlayer = new YT.Player('yt-player', {
+    height: '100%',
+    width: '100%',
+    videoId: 'NI6aOFI7hms',
+    playerVars: {
+      autoplay: 0,
+      start: 52,
+      modestbranding: 1,
+      rel: 0,
+    },
+    events: {
+      onReady: () => { ytReady = true; },
+      onStateChange: (e) => {
+        musicMode = (e.data === YT.PlayerState.PLAYING);
+      }
+    }
+  });
+};
+
+function toggleMusic() {
+  const container = document.getElementById('yt-container');
+  const btn = document.getElementById('play-btn');
+  const txt = document.getElementById('play-text');
+
+  container.classList.add('active');
+
+  if (ytReady && ytPlayer) {
+    const state = ytPlayer.getPlayerState();
+    if (state === YT.PlayerState.PLAYING) {
+      ytPlayer.pauseVideo();
+      txt.textContent = 'Play & feel the love';
+      musicMode = false;
+    } else {
+      ytPlayer.playVideo();
+      txt.textContent = 'Pause';
+      musicMode = true;
+      // Burst of hearts when music starts
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          hearts.push(new Heart(W/2 + (Math.random()-0.5)*200, H/2, true));
+        }, i * 50);
+      }
+    }
+  }
+}
+
+/* ── Share ── */
+function shareLoveBomb() {
+  const url = window.location.href;
+  const text = 'You\'ve been love bombed. \u{1F48C}\n\nmore love = more world peace\n\n';
+  if (navigator.share) {
+    navigator.share({ title: 'Love Bomb', text: text, url: url });
+  } else {
+    navigator.clipboard.writeText(text + url).then(() => {
+      const btn = document.querySelector('.share-btn');
+      btn.textContent = '\u{1F48C} Copied! Now send it.';
+      setTimeout(() => { btn.innerHTML = '\u{1F48C}&ensp;Send a love bomb'; }, 3000);
+    });
+  }
+  // Celebrate
+  for (let i = 0; i < 25; i++) {
+    setTimeout(() => {
+      hearts.push(new Heart(Math.random()*W, H, true));
+    }, i * 40);
+  }
+}
+
+/* ── Sparkles on mouse move ── */
+let sparkleTimer = 0;
+document.addEventListener('mousemove', function(e) {
+  sparkleTimer++;
+  if (sparkleTimer % 4 !== 0) return;
+  const s = document.createElement('div');
+  s.className = 'sparkle';
+  s.style.left = e.clientX + 'px';
+  s.style.top = e.clientY + 'px';
+  s.style.background = COLORS[Math.floor(Math.random()*COLORS.length)].map(c => c).join(',');
+  s.style.background = `rgb(${s.style.background})`;
+  document.body.appendChild(s);
+  setTimeout(() => s.remove(), 3000);
+});
+
+/* ── Bounce arrow animation ── */
+const style = document.createElement('style');
+style.textContent = '@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}';
+document.head.appendChild(style);
+</script>
+
+</body>
+</html>
