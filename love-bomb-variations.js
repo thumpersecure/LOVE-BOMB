@@ -1,8 +1,8 @@
 /**
- * Love Bomb Variations — 5 themed editions
- * Philly Love Park | NYC | United States | LGBTQ | Multi-language
+ * Love Bomb Variations — 5 themed editions + classic
+ * 95% personal love / 5% world peace
  */
-const LOVE_BOMB_VARIATIONS = {
+var LOVE_BOMB_VARIATIONS = {
   default: {
     id: 'default',
     name: 'Classic',
@@ -11,7 +11,7 @@ const LOVE_BOMB_VARIATIONS = {
     telegramTo: 'You, right now, reading this',
     telegramRe: 'Things you need to hear',
     hookSub: '',
-    worldPeaceNote: 'Every love bomb is both personal and universal. Yours landed on you. The next one will land on someone else. That\'s how it spreads.',
+    worldPeaceNote: 'And when enough people send love to each other — the whole world quietly gets a little more peaceful.',
   },
   philly: {
     id: 'philly',
@@ -22,14 +22,14 @@ const LOVE_BOMB_VARIATIONS = {
     telegramFrom: 'Someone from the City of Brotherly Love',
     telegramTo: 'You, right now, reading this',
     telegramRe: 'Things you need to hear',
-    worldPeaceNote: 'And like the LOVE sculpture in our park — when we send love to each other, the whole world feels it.',
+    worldPeaceNote: 'Like the LOVE sculpture in our park — when we send love to each other, it radiates outward.',
   },
   nyc: {
     id: 'nyc',
     name: 'New York City',
     label: 'NYC',
     tagline: 'In the city that never sleeps, love never stops.',
-    hookSub: "From Brooklyn to the Bronx, Queens to Manhattan — someone in this city sent you love.",
+    hookSub: "From Brooklyn to the Bronx, Queens to Manhattan — someone in this city chose to send you love.",
     telegramFrom: 'Someone in the city that never sleeps',
     telegramTo: 'You, right now, reading this',
     telegramRe: 'Things you need to hear',
@@ -40,32 +40,32 @@ const LOVE_BOMB_VARIATIONS = {
     name: 'United States',
     label: 'United States',
     tagline: 'From sea to shining sea — love travels.',
-    hookSub: "Coast to coast, someone in this country thought of you and sent love your way.",
+    hookSub: "Coast to coast, someone in this country thought of you and chose to send love your way.",
     telegramFrom: 'Someone across this great land',
     telegramTo: 'You, right now, reading this',
     telegramRe: 'Things you need to hear',
-    worldPeaceNote: 'One person, one love bomb, one message. That\'s how we build a more united future.',
+    worldPeaceNote: 'One person, one love bomb, one message of love. That\'s how hearts connect across any distance.',
   },
   lgbtq: {
     id: 'lgbtq',
     name: 'LGBTQ',
     label: 'LGBTQ+',
     tagline: 'Love is love. You are loved.',
-    hookSub: "From chosen family to found family — someone in your community sent you this with love.",
+    hookSub: "From chosen family to found family — someone in your community sent you this with so much love.",
     telegramFrom: 'Someone who sees you',
     telegramTo: 'You, exactly as you are',
     telegramRe: 'Things you need to hear',
-    worldPeaceNote: 'When we lift each other up and send love forward, we make the world safer for everyone.',
+    worldPeaceNote: 'When we lift each other up and send love forward, we make the world gentler for everyone.',
   },
   multilang: {
     id: 'multilang',
     name: 'Multi-language',
     label: 'Multi-language',
-    tagline: 'Te amo · Je t\'aime · 我爱你 · Love · Te quiero',
-    hookSub: "No matter the language — love translates. Alguien te envió amor. Someone sent you love.",
+    tagline: 'Te amo \u00b7 Je t\'aime \u00b7 \u6211\u7231\u4f60 \u00b7 Love \u00b7 Te quiero',
+    hookSub: "No matter the language \u2014 love translates. Alguien te envi\u00f3 amor. Someone sent you love.",
     telegramFrom: 'Someone who loves you / Alguien que te ama',
-    telegramTo: 'You / Tú / Toi',
-    telegramRe: 'Things you need to hear / Lo que necesitas oír',
-    worldPeaceNote: 'más amor = más paz mundial · more love = more world peace · plus d\'amour = plus de paix',
+    telegramTo: 'You / T\u00fa / Toi',
+    telegramRe: 'Things you need to hear / Lo que necesitas o\u00edr',
+    worldPeaceNote: 'Love needs no translation. Amor no necesita traducci\u00f3n. L\'amour n\'a pas besoin de traduction.',
   },
 };
