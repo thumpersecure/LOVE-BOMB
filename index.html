@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="love-bomb-variations.js"></script>
 <title>You've Been Love Bombed 💌</title>
-<meta name="description" content="Someone just sent you a love bomb. A personal love telegram filled with love — and an idea that could change everything.">
+<meta name="description" content="Someone just sent you a love bomb — a personal love telegram meant only for you. Open it.">
 <meta property="og:title" content="You've Been Love Bombed 💌">
 <meta property="og:description" content="Someone sent you a love bomb. Open it.">
 <meta property="og:type" content="website">
@@ -30,15 +30,37 @@ body{
   min-height:100vh;
 }
 
-/* ── Heart Canvas ── */
-#heart-canvas{
+/* ── Starfield Canvas ── */
+#star-canvas{
   position:fixed;top:0;left:0;width:100%;height:100%;
   z-index:0;pointer-events:none;
 }
 
+/* ── Heart Canvas ── */
+#heart-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:1;pointer-events:none;
+}
+
+/* ── Aurora Overlay ── */
+.aurora-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(255,105,180,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(180,60,255,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,20,147,0.03) 0%, transparent 70%);
+  animation:aurora-shift 12s ease-in-out infinite alternate;
+}
+@keyframes aurora-shift{
+  0%{opacity:0.6;filter:hue-rotate(0deg)}
+  50%{opacity:1;filter:hue-rotate(15deg)}
+  100%{opacity:0.7;filter:hue-rotate(-10deg)}
+}
+
 /* ── Content Overlay ── */
 .content{
-  position:relative;z-index:1;
+  position:relative;z-index:2;
   max-width:720px;margin:0 auto;padding:40px 24px;
   text-align:center;
 }
@@ -60,6 +82,17 @@ h1{
   font-weight:700;
   line-height:1.15;
   margin-bottom:16px;
+  background:linear-gradient(135deg,#fff 0%,#ffb6c1 40%,#ff69b4 70%,#fff 100%);
+  background-size:200% 200%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:shimmer-text 4s ease-in-out infinite;
+}
+@keyframes shimmer-text{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 h2{
   font-family:'Playfair Display',serif;
@@ -84,6 +117,17 @@ p,.quote{
   font-style:italic;
   background:rgba(255,105,180,0.05);
   border-radius:0 12px 12px 0;
+  position:relative;
+}
+.quote::after{
+  content:'';
+  position:absolute;top:0;left:0;width:3px;height:100%;
+  background:linear-gradient(180deg,#ff69b4,#c71585,#ff69b4);
+  animation:quote-glow 3s ease-in-out infinite;
+}
+@keyframes quote-glow{
+  0%,100%{box-shadow:0 0 8px rgba(255,105,180,0.4)}
+  50%{box-shadow:0 0 20px rgba(255,105,180,0.8)}
 }
 
 /* ── Telegram Frame ── */
@@ -96,6 +140,11 @@ p,.quote{
   background:rgba(255,105,180,0.03);
   backdrop-filter:blur(12px);
   position:relative;
+  animation:frame-glow 5s ease-in-out infinite;
+}
+@keyframes frame-glow{
+  0%,100%{box-shadow:0 0 15px rgba(255,105,180,0.08),inset 0 0 15px rgba(255,105,180,0.03)}
+  50%{box-shadow:0 0 30px rgba(255,105,180,0.15),inset 0 0 30px rgba(255,105,180,0.06)}
 }
 .telegram-frame::before{
   content:'LOVE BOMB';
@@ -106,6 +155,7 @@ p,.quote{
   font-size:0.85rem;
   letter-spacing:4px;
   color:#ff69b4;
+  text-shadow:0 0 10px rgba(255,105,180,0.5);
 }
 .telegram-header{
   font-family:'Special Elite',cursive;
@@ -131,6 +181,7 @@ p,.quote{
   color:#ff69b4;
   font-weight:700;
   font-style:normal;
+  text-shadow:0 0 8px rgba(255,105,180,0.3);
 }
 .telegram-stamp{
   margin-top:24px;
@@ -141,22 +192,82 @@ p,.quote{
   letter-spacing:2px;
 }
 
-/* ── Glow Equation ── */
+/* ── Love Affirmation Cards ── */
+.affirmation-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+  max-width:520px;
+  margin:32px auto;
+}
+.affirmation-card{
+  background:rgba(255,105,180,0.04);
+  border:1px solid rgba(255,105,180,0.15);
+  border-radius:16px;
+  padding:20px 16px;
+  transition:all 0.4s ease;
+  position:relative;
+  overflow:hidden;
+}
+.affirmation-card::before{
+  content:'';
+  position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(255,105,180,0.08) 0%,transparent 60%);
+  opacity:0;
+  transition:opacity 0.5s ease;
+}
+.affirmation-card:hover::before{opacity:1}
+.affirmation-card:hover{
+  border-color:rgba(255,105,180,0.4);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(255,105,180,0.1);
+}
+.affirmation-emoji{font-size:1.6rem;margin-bottom:8px;display:block}
+.affirmation-text{
+  font-family:'Playfair Display',serif;
+  font-size:0.95rem;
+  color:#e0c0d0;
+  font-style:italic;
+  line-height:1.5;
+}
+
+/* ── Glow Equation (small, subtle) ── */
 .equation{
   font-family:'Playfair Display',serif;
-  font-size:clamp(1.8rem,5vw,3.2rem);
+  font-size:clamp(1.4rem,3.5vw,2rem);
   font-weight:700;
   color:#fff;
   text-shadow:
     0 0 20px rgba(255,105,180,0.8),
     0 0 40px rgba(255,105,180,0.5),
     0 0 80px rgba(255,105,180,0.3);
-  margin:40px 0;
+  margin:24px 0;
   animation:glow-pulse 3s ease-in-out infinite;
 }
 @keyframes glow-pulse{
   0%,100%{text-shadow:0 0 20px rgba(255,105,180,0.8),0 0 40px rgba(255,105,180,0.5),0 0 80px rgba(255,105,180,0.3)}
   50%{text-shadow:0 0 30px rgba(255,105,180,1),0 0 60px rgba(255,105,180,0.7),0 0 120px rgba(255,105,180,0.5)}
+}
+
+/* ── Big Love Declaration ── */
+.love-declaration{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5.5vw,3.6rem);
+  font-weight:700;
+  background:linear-gradient(135deg,#ff69b4,#ff1493,#c71585,#ff69b4);
+  background-size:300% 300%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:love-gradient 4s ease-in-out infinite;
+  text-shadow:none;
+  margin:40px 0;
+  filter:drop-shadow(0 0 20px rgba(255,105,180,0.4));
+}
+@keyframes love-gradient{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
 
 /* ── Counter ── */
@@ -189,7 +300,7 @@ p,.quote{
 }
 
 /* ── Emphasis ── */
-.love-word{color:#ff69b4;font-weight:500}
+.love-word{color:#ff69b4;font-weight:500;text-shadow:0 0 6px rgba(255,105,180,0.2)}
 em{color:#ffb6c1}
 strong{color:#fff;font-weight:500}
 
@@ -198,6 +309,11 @@ strong{color:#fff;font-weight:500}
   margin:48px auto;font-size:1.4rem;
   letter-spacing:12px;color:#ff69b4;
   opacity:0.6;
+  animation:divider-twinkle 4s ease-in-out infinite;
+}
+@keyframes divider-twinkle{
+  0%,100%{opacity:0.4;letter-spacing:12px}
+  50%{opacity:0.8;letter-spacing:16px}
 }
 
 /* ── Video Container ── */
@@ -209,6 +325,20 @@ strong{color:#fff;font-weight:500}
   margin:48px auto;
   max-width:480px;
   backdrop-filter:blur(20px);
+  position:relative;
+  overflow:hidden;
+}
+.video-section::before{
+  content:'';
+  position:absolute;top:-2px;left:-2px;right:-2px;bottom:-2px;
+  background:linear-gradient(135deg,rgba(255,105,180,0.2),transparent,rgba(180,60,255,0.2));
+  border-radius:25px;
+  z-index:-1;
+  animation:video-border-glow 4s ease-in-out infinite alternate;
+}
+@keyframes video-border-glow{
+  0%{opacity:0.3}
+  100%{opacity:0.8}
 }
 .video-section h3{
   font-family:'Playfair Display',serif;
@@ -228,6 +358,31 @@ strong{color:#fff;font-weight:500}
 .yt-container iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
 @keyframes fade-in{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
 
+/* ── Tap to hear overlay ── */
+.tap-to-hear{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  background:rgba(255,105,180,0.15);
+  border:1px solid rgba(255,105,180,0.3);
+  border-radius:50%;
+  width:80px;height:80px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;
+  cursor:pointer;
+  z-index:10;
+  animation:tap-pulse 2s ease-in-out infinite;
+  transition:all 0.3s ease;
+  backdrop-filter:blur(8px);
+}
+.tap-to-hear:hover{
+  background:rgba(255,105,180,0.3);
+  transform:translate(-50%,-50%) scale(1.1);
+}
+.tap-to-hear.hidden{display:none}
+@keyframes tap-pulse{
+  0%,100%{box-shadow:0 0 10px rgba(255,105,180,0.3)}
+  50%{box-shadow:0 0 30px rgba(255,105,180,0.6)}
+}
+
 /* ── Share ── */
 .share-btn{
   display:inline-flex;align-items:center;gap:10px;
@@ -239,6 +394,18 @@ strong{color:#fff;font-weight:500}
   cursor:pointer;transition:all 0.3s ease;
   box-shadow:0 0 30px rgba(255,105,180,0.4),0 4px 20px rgba(0,0,0,0.3);
   animation:btn-breathe 2.5s ease-in-out infinite;
+  position:relative;
+  overflow:hidden;
+}
+.share-btn::before{
+  content:'';
+  position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,0.1) 50%,transparent 70%);
+  animation:btn-shine 3s ease-in-out infinite;
+}
+@keyframes btn-shine{
+  0%{transform:translateX(-100%) rotate(45deg)}
+  100%{transform:translateX(100%) rotate(45deg)}
 }
 .share-btn:hover{
   transform:scale(1.05);
@@ -292,7 +459,7 @@ strong{color:#fff;font-weight:500}
 
 /* ── Floating Sparkles ── */
 .sparkle{
-  position:fixed;pointer-events:none;z-index:2;
+  position:fixed;pointer-events:none;z-index:3;
   width:4px;height:4px;border-radius:50%;
   background:#ff69b4;
   animation:sparkle-float 3s ease-out forwards;
@@ -300,6 +467,31 @@ strong{color:#fff;font-weight:500}
 @keyframes sparkle-float{
   0%{opacity:1;transform:scale(1) translateY(0)}
   100%{opacity:0;transform:scale(0) translateY(-60px)}
+}
+
+/* ── Magical Shimmer on visible sections ── */
+.section.visible .telegram-frame,
+.section.visible .affirmation-card{
+  animation:enchanted-entrance 1s ease forwards;
+}
+@keyframes enchanted-entrance{
+  0%{filter:brightness(1)}
+  30%{filter:brightness(1.2)}
+  100%{filter:brightness(1)}
+}
+
+/* ── Floating Magical Orbs ── */
+.magic-orb{
+  position:fixed;pointer-events:none;z-index:1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,105,180,0.3) 0%,transparent 70%);
+  animation:orb-float 8s ease-in-out infinite;
+}
+@keyframes orb-float{
+  0%,100%{transform:translate(0,0) scale(1);opacity:0.3}
+  25%{transform:translate(30px,-20px) scale(1.2);opacity:0.5}
+  50%{transform:translate(-20px,-40px) scale(0.9);opacity:0.4}
+  75%{transform:translate(10px,-10px) scale(1.1);opacity:0.3}
 }
 
 /* ── Responsive ── */
@@ -310,11 +502,14 @@ strong{color:#fff;font-weight:500}
   .video-section{padding:28px 20px}
   .share-btn{padding:14px 28px;font-size:0.95rem}
   .variation-btn{padding:6px 12px;font-size:0.8rem}
+  .affirmation-grid{grid-template-columns:1fr;gap:12px}
 }
 </style>
 </head>
 <body>
 
+<canvas id="star-canvas"></canvas>
+<div class="aurora-overlay"></div>
 <canvas id="heart-canvas"></canvas>
 
 <div class="content">
@@ -325,18 +520,18 @@ strong{color:#fff;font-weight:500}
     <div class="variation-btns" id="variation-btns"></div>
   </div>
 
-  <!-- ═══ HOOK ═══ (85% personal love focus) -->
+  <!-- ═══ HOOK ═══ (deeply personal love) -->
   <div class="section" id="s1">
     <h1>Someone just sent you<br>a love bomb.</h1>
-    <p>Not the bad kind. The kind that lands softly, fills you up, and doesn't leave shrapnel — just warmth.</p>
-    <p>Someone thought of <strong>you</strong>. They chose to send you this. Right now, you are the reason this exists.</p>
-    <p>This is yours. Scroll down and open it.</p>
+    <p>Not the scary kind. The kind that wraps around you like a warm blanket on a cold night and whispers: <em>you matter.</em></p>
+    <p>Someone thought of <strong>you</strong>. Out of everyone in their world, they chose you. Right now, in this moment, <span class="love-word">you are the reason this page exists.</span></p>
+    <p>This was made for you. Every word. Every heart. Every glow. <strong>Scroll down and feel it.</strong></p>
     <p id="variation-hook-sub" style="font-size:0.95rem;color:#c090a8;margin-top:16px"></p>
     <p style="font-size:0.9rem;color:#a07888;margin-top:40px">scroll down</p>
     <p style="font-size:1.4rem;color:#ff69b4;animation:bounce 2s infinite">&#8595;</p>
   </div>
 
-  <!-- ═══ THE TELEGRAM ═══ (personal love — core message) -->
+  <!-- ═══ THE TELEGRAM ═══ (the heart of the love bomb) -->
   <div class="section" id="s2">
     <div class="telegram-frame">
       <div class="telegram-header">
@@ -345,39 +540,77 @@ strong{color:#fff;font-weight:500}
         RE: <span id="var-re">Things you need to hear</span>
       </div>
       <div class="telegram-body">
-        You are <span class="love-word">loved</span>. Not in theory — right now, by the person who sent you this. They thought of you, chose you, and wanted you to feel something real today.
+        You are <span class="love-word">loved</span>. Not in some vague, distant, "everyone is loved" way — right here, right now, by the specific person who sent you this. They thought of <strong>you</strong>. They chose <strong>you</strong>. They wanted <strong>you</strong> to feel something real today.
         <br><br>
-        You matter more than you let yourself believe. Your presence makes the world around you gentler. Your laugh, your kindness, the way you show up — it matters. And if no one's told you lately — <span class="love-word">you are enough</span>, exactly as you are.
+        You matter more than you let yourself believe. Your laugh makes rooms lighter. Your kindness leaves marks on people you'll never know about. The way you care, the way you try, even the way you doubt yourself — it all means you have a heart that <span class="love-word">feels deeply</span>. That's not weakness. That's your superpower.
         <br><br>
-        The person who sent this didn't do it by accident. They did it because <strong>you</strong> crossed their mind and they wanted you to know: you're seen. You're valued. You're loved.
+        If no one's told you lately: <span class="love-word">you are enough</span>. Exactly as you are. Not when you fix that thing. Not when you achieve that goal. Not someday. <em>Right now.</em> You — imperfect, beautiful, trying-your-best you — are enough.
         <br><br>
-        This love bomb was sent to remind you of that. Hold onto it. And when you're ready — pass it on to someone else who needs to hear it too.
+        The person who sent this didn't do it by accident. They did it because you crossed their mind and their heart said: <em>"They need to know."</em> So here it is. You're seen. You're valued. You're cherished. <span class="love-word">You are loved.</span>
+        <br><br>
+        Hold onto this feeling. It's real. And when you're ready — pass it on to someone who needs to hear it too.
       </div>
-      <div class="telegram-stamp">SENT WITH LOVE &#10084;</div>
+      <div class="telegram-stamp">SENT WITH ALL MY LOVE &#10084;</div>
     </div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
 
-  <!-- ═══ WORLD PEACE — brief (15%) ═══ -->
-  <div class="section" id="s3">
-    <h2>One more thing</h2>
-    <p>The person who sent you this believes in something bigger too: <span class="love-word">more love = more world peace</span>. It's that simple. When we send love to each other — like they just did for you — it adds up.</p>
-    <div class="equation">more love = more world peace</div>
-    <p id="variation-world-note">Every love bomb is both personal and universal. Yours landed on you. The next one will land on someone else. That's how it spreads.</p>
+  <!-- ═══ LOVE AFFIRMATIONS ═══ (making them feel truly loved) -->
+  <div class="section" id="s-affirmations">
+    <h2>In case you needed reminders</h2>
+    <p>The person who sent this wants you to carry these with you today:</p>
+    <div class="affirmation-grid">
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">💗</span>
+        <span class="affirmation-text">You make the world gentler just by being in it.</span>
+      </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">✨</span>
+        <span class="affirmation-text">Someone's favorite memory has you in it.</span>
+      </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">🌙</span>
+        <span class="affirmation-text">You've gotten through every hard day so far. That's a perfect record.</span>
+      </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">💌</span>
+        <span class="affirmation-text">Someone out there is grateful you exist. That someone sent you this.</span>
+      </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">🦋</span>
+        <span class="affirmation-text">You don't have to earn love. It's already yours.</span>
+      </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">🔥</span>
+        <span class="affirmation-text">Your heart is brave. Even when it doesn't feel that way.</span>
+      </div>
+    </div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
 
-  <!-- ═══ THE TRUTH — still personal-first ═══ -->
+  <!-- ═══ A LOVE LETTER ═══ (deepening the emotional connection) -->
+  <div class="section" id="s-letter">
+    <h2>A quiet truth from whoever sent this</h2>
+    <div class="quote">
+      I don't say it enough. Nobody does. But you've changed my life in ways I don't even know how to articulate. So instead of waiting for the perfect moment, I'm sending you this. Because you deserve to know — today, not someday — that <strong>you are deeply, truly, unmistakably loved.</strong>
+    </div>
+    <p>They meant every word of that. Read it again if you need to.</p>
+  </div>
+
+  <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
+
+  <!-- ═══ THE TRUTH — personal love focus ═══ -->
   <div class="section" id="s4">
     <h2>You already know this is true</h2>
-    <p>Think of someone who matters to you. A friend. A family member. Someone you haven't talked to in a while.</p>
+    <p>Think of someone who matters to you. A friend. A family member. The person you haven't called in too long but still think about at 2am.</p>
     <div class="quote">
-      Would they feel better or worse<br>if they knew you were thinking of them?
+      Would they feel better or worse<br>if they knew you were thinking of them right now?
     </div>
     <p>The answer has never once been <em>"worse."</em></p>
-    <p>That's why this love bomb exists — it's a personal reminder that <span class="love-word">love works</span>. When you send it. When you receive it. Between two people. It just works.</p>
+    <p>That's the whole secret of a love bomb. <span class="love-word">Love works.</span> When you send it. When you receive it. Between two people. No conditions, no fine print. It just <em>works.</em></p>
+    <div class="love-declaration">You Are Loved</div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -385,13 +618,14 @@ strong{color:#fff;font-weight:500}
   <!-- ═══ VIDEO ═══ -->
   <div class="section" id="s5">
     <div class="video-section">
-      <h3>While you're here, let this play.</h3>
-      <div class="subtitle">A little something to set the mood.</div>
+      <h3>Let this play while you take it in.</h3>
+      <div class="subtitle">The person who sent this picked this song for you.</div>
       <div class="yt-container" id="yt-container">
         <div id="yt-player"></div>
       </div>
+      <div class="tap-to-hear" id="tap-to-hear" title="Tap for sound">🔊</div>
     </div>
-    <p style="margin-top:24px;font-size:0.95rem;color:#a07888">Let it play. Watch the hearts. <span class="love-word">Feel it.</span></p>
+    <p style="margin-top:24px;font-size:0.95rem;color:#a07888">Let the music play. Watch the hearts. <span class="love-word">Feel the love.</span></p>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -399,18 +633,19 @@ strong{color:#fff;font-weight:500}
   <!-- ═══ HOW IT SPREADS ═══ -->
   <div class="section" id="s6">
     <h2>How a love bomb works</h2>
-    <p>Someone sent this to you because they care about you. They thought of you. They chose you. That's the whole trick — there is no trick.</p>
-    <p>One person thinks of someone they love. They send this page. That person reads it, feels it, and sends it to someone <strong>they</strong> love. And on and on. Love gets passed forward — one person at a time.</p>
+    <p>Someone sent this to you because they <span class="love-word">love you</span>. They thought of you. They chose you. That's the whole trick — there is no trick. Just love, delivered.</p>
+    <p>One person thinks of someone they love. They send this page. That person reads it, <em>feels it</em>, and sends it to someone <strong>they</strong> love. And on and on. Love gets passed forward — one heart at a time.</p>
     <div class="quote">
       One person sends love. Another person receives it.<br>
-      Then they send it onward.
+      Then they send it forward. That's how love grows.
     </div>
-    <p>Each love bomb carries two things: a personal message that <strong>you are loved</strong>, and a small reminder that when we send love to each other, the whole world benefits.</p>
     <div class="counter-box">
       <div class="counter-pulse"></div>
       <span>love bombs sent:</span>
       <span class="counter-num" id="love-counter">—</span>
     </div>
+    <p style="font-size:0.9rem;color:#806070;margin-top:16px" id="variation-world-note">And when enough people send love to each other — the whole world quietly gets a little more peaceful.</p>
+    <p style="font-size:0.8rem;color:#604050;margin-top:8px;font-style:italic">more love = more world peace</p>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -419,11 +654,11 @@ strong{color:#fff;font-weight:500}
   <div class="section" id="s7">
     <h2>Now it's your turn</h2>
     <p>You've been love bombed. You felt it. You can't un-feel it.</p>
-    <p>Think of one person who needs to hear that they're loved today. A friend, a parent, a partner, someone you haven't talked to in a while. <span class="love-word">That person.</span></p>
-    <p>Send them this. No explanation needed — the page does the talking.</p>
+    <p>Think of <strong>one person</strong> who needs to hear that they're loved today. A friend, a parent, a partner, a sibling, someone you haven't reached out to in too long. <span class="love-word">That person.</span> The one who just popped into your head.</p>
+    <p>Send them this. No explanation needed — the page does the talking. They'll open it, feel exactly what you just felt, and know that someone loves them.</p>
     <p style="margin:32px 0">
       <button class="share-btn" onclick="shareLoveBomb()">
-        &#128140;&ensp;Send a love bomb
+        &#128140;&ensp;Send a love bomb to someone you love
       </button>
     </p>
     <p style="margin:16px 0">
@@ -431,15 +666,15 @@ strong{color:#fff;font-weight:500}
         &#128279;&ensp;Copy link
       </button>
     </p>
-    <p style="font-size:0.9rem;color:#806070;margin-top:8px">No signup. No merch. Just love, passed forward.</p>
+    <p style="font-size:0.9rem;color:#806070;margin-top:8px">No signup. No cost. No catch. Just love, passed forward.</p>
   </div>
 
   <!-- ═══ FINAL ═══ -->
   <div class="section" id="s8" style="margin-bottom:15vh">
-    <p style="font-style:italic;color:#ffb6c1;margin-bottom:16px">You were always loved. Now send it forward.</p>
-    <div class="equation" style="font-size:clamp(1.4rem,4vw,2.4rem)">more love = more world peace</div>
-    <p style="font-style:italic;color:#a07888;margin-top:12px">It was always this simple.</p>
-    <p style="font-style:italic;color:#806070;margin-top:8px;font-size:0.9rem">And you were always loved.</p>
+    <p style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-style:italic;color:#ffb6c1;margin-bottom:24px">You were always loved.<br>Now someone made sure you know it.</p>
+    <div class="love-declaration" style="font-size:clamp(1.6rem,4.5vw,2.8rem)">You Are Loved &#10084;</div>
+    <p style="font-style:italic;color:#a07888;margin-top:16px">Now send it forward. Someone's waiting for theirs.</p>
+    <p style="font-style:italic;color:#806070;margin-top:8px;font-size:0.9rem">And you — you were always, always loved.</p>
   </div>
 
 </div>
@@ -448,15 +683,83 @@ strong{color:#fff;font-weight:500}
 <!-- SCRIPTS                                     -->
 <!-- ═══════════════════════════════════════════ -->
 <script>
-/* ── Heart Particle System ── */
-const canvas = document.getElementById('heart-canvas');
-const ctx = canvas.getContext('2d');
-let W, H;
-let hearts = [];
-let musicMode = false;
-let scrollProgress = 0; // 0 = top, 1 = bottom
+/* ── Starfield — twinkling stars background (magical layer) ── */
+(function initStarfield() {
+  var starCanvas = document.getElementById('star-canvas');
+  var sctx = starCanvas.getContext('2d');
+  var stars = [];
+  var STAR_COUNT = 120;
 
-const COLORS = [
+  function resizeStars() {
+    starCanvas.width = window.innerWidth;
+    starCanvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeStars);
+  resizeStars();
+
+  for (var i = 0; i < STAR_COUNT; i++) {
+    stars.push({
+      x: Math.random() * starCanvas.width,
+      y: Math.random() * starCanvas.height,
+      r: 0.5 + Math.random() * 1.5,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.005 + Math.random() * 0.015,
+      color: Math.random() > 0.7
+        ? [255, 182, 193]
+        : Math.random() > 0.5
+          ? [200, 180, 255]
+          : [255, 255, 255],
+    });
+  }
+
+  function animateStars() {
+    sctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
+    for (var i = 0; i < stars.length; i++) {
+      var s = stars[i];
+      s.phase += s.speed;
+      var alpha = 0.2 + Math.sin(s.phase) * 0.4 + 0.4;
+      sctx.beginPath();
+      sctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      sctx.fillStyle = 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + alpha + ')';
+      sctx.fill();
+      if (s.r > 1) {
+        sctx.beginPath();
+        sctx.arc(s.x, s.y, s.r * 2.5, 0, Math.PI * 2);
+        sctx.fillStyle = 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + (alpha * 0.15) + ')';
+        sctx.fill();
+      }
+    }
+    requestAnimationFrame(animateStars);
+  }
+  animateStars();
+})();
+
+/* ── Magical Floating Orbs ── */
+(function initOrbs() {
+  var orbCount = 3;
+  for (var i = 0; i < orbCount; i++) {
+    var orb = document.createElement('div');
+    orb.className = 'magic-orb';
+    var size = 100 + Math.random() * 200;
+    orb.style.width = size + 'px';
+    orb.style.height = size + 'px';
+    orb.style.left = (Math.random() * 80 + 10) + '%';
+    orb.style.top = (Math.random() * 80 + 10) + '%';
+    orb.style.animationDelay = (Math.random() * 5) + 's';
+    orb.style.animationDuration = (6 + Math.random() * 6) + 's';
+    document.body.appendChild(orb);
+  }
+})();
+
+/* ── Heart Particle System ── */
+var canvas = document.getElementById('heart-canvas');
+var ctx = canvas.getContext('2d');
+var W, H;
+var hearts = [];
+var musicMode = false;
+var scrollProgress = 0;
+
+var COLORS = [
   [255,105,180], [255,69,100], [255,182,193],
   [238,130,238], [255,140,160], [255,200,220],
   [200,100,255], [255,80,120],  [255,220,230],
@@ -470,9 +773,8 @@ function resize() {
 window.addEventListener('resize', resize);
 resize();
 
-/* ── Track scroll progress for heart density ── */
 window.addEventListener('scroll', function() {
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
   scrollProgress = docHeight > 0 ? Math.min(1, window.scrollY / docHeight) : 0;
 });
 
@@ -481,91 +783,82 @@ function drawHeart(cx, cy, size, angle, color, alpha) {
   ctx.translate(cx, cy);
   ctx.rotate(angle);
   ctx.globalAlpha = alpha;
-  ctx.fillStyle = `rgb(${color[0]},${color[1]},${color[2]})`;
+  ctx.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
   ctx.beginPath();
-  const s = size;
+  var s = size;
   ctx.moveTo(0, -s * 0.35);
   ctx.bezierCurveTo(-s * 0.5, -s * 0.9, -s * 1.3, -s * 0.4, 0, s * 0.6);
   ctx.bezierCurveTo(s * 1.3, -s * 0.4, s * 0.5, -s * 0.9, 0, -s * 0.35);
   ctx.fill();
-
-  // Inner glow
   ctx.globalAlpha = alpha * 0.3;
-  ctx.fillStyle = `rgb(${Math.min(255,color[0]+60)},${Math.min(255,color[1]+60)},${Math.min(255,color[2]+60)})`;
+  ctx.fillStyle = 'rgb(' + Math.min(255,color[0]+60) + ',' + Math.min(255,color[1]+60) + ',' + Math.min(255,color[2]+60) + ')';
   ctx.beginPath();
-  const gs = size * 0.5;
+  var gs = size * 0.5;
   ctx.moveTo(0, -gs * 0.35);
   ctx.bezierCurveTo(-gs * 0.5, -gs * 0.9, -gs * 1.3, -gs * 0.4, 0, gs * 0.6);
   ctx.bezierCurveTo(gs * 1.3, -gs * 0.4, gs * 0.5, -gs * 0.9, 0, -gs * 0.35);
   ctx.fill();
-
   ctx.restore();
 }
 
-class Heart {
-  constructor(x, y, burst) {
-    this.x = x || Math.random() * W;
-    this.y = y || -20 - Math.random() * 100;
-    this.size = 8 + Math.random() * 24;
-    this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
-    this.angle = (Math.random() - 0.5) * 0.8;
-    this.rotSpeed = (Math.random() - 0.5) * 0.03;
-    this.vy = burst ? (Math.random() - 0.5) * 6 : 0.3 + Math.random() * 1.2;
-    this.vx = burst ? (Math.random() - 0.5) * 6 : (Math.random() - 0.5) * 0.5;
-    this.gravity = 0.02 + Math.random() * 0.01;
-    this.opacity = 0.4 + Math.random() * 0.6;
-    this.fadeSpeed = burst ? 0.008 + Math.random() * 0.005 : 0.0005;
-    this.wobblePhase = Math.random() * Math.PI * 2;
-    this.wobbleSpeed = 0.01 + Math.random() * 0.02;
-    this.wobbleAmp = 0.3 + Math.random() * 0.5;
-    this.burst = burst || false;
-    this.life = 1;
-  }
-  update() {
-    this.wobblePhase += this.wobbleSpeed;
-    this.vx += Math.sin(this.wobblePhase) * this.wobbleAmp * 0.01;
-    if (!this.burst) this.vy += this.gravity;
-    else this.vy += this.gravity * 2;
-    this.x += this.vx;
-    this.y += this.vy;
-    this.angle += this.rotSpeed;
-    this.life -= this.fadeSpeed;
-
-    // Bounce off bottom
-    if (this.y > H - this.size) {
-      this.y = H - this.size;
-      this.vy *= -0.4;
-      this.vx *= 0.9;
-    }
-    // Bounce off sides
-    if (this.x < this.size || this.x > W - this.size) {
-      this.vx *= -0.7;
-      this.x = Math.max(this.size, Math.min(W - this.size, this.x));
-    }
-    return this.life > 0 && this.y < H + 50;
-  }
-  draw() {
-    drawHeart(this.x, this.y, this.size, this.angle, this.color, this.life * this.opacity);
-  }
+function Heart(x, y, burst) {
+  this.x = x || Math.random() * W;
+  this.y = y || -20 - Math.random() * 100;
+  this.size = 8 + Math.random() * 24;
+  this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+  this.angle = (Math.random() - 0.5) * 0.8;
+  this.rotSpeed = (Math.random() - 0.5) * 0.03;
+  this.vy = burst ? (Math.random() - 0.5) * 6 : 0.3 + Math.random() * 1.2;
+  this.vx = burst ? (Math.random() - 0.5) * 6 : (Math.random() - 0.5) * 0.5;
+  this.gravity = 0.02 + Math.random() * 0.01;
+  this.opacity = 0.4 + Math.random() * 0.6;
+  this.fadeSpeed = burst ? 0.008 + Math.random() * 0.005 : 0.0005;
+  this.wobblePhase = Math.random() * Math.PI * 2;
+  this.wobbleSpeed = 0.01 + Math.random() * 0.02;
+  this.wobbleAmp = 0.3 + Math.random() * 0.5;
+  this.burst = burst || false;
+  this.life = 1;
 }
+Heart.prototype.update = function() {
+  this.wobblePhase += this.wobbleSpeed;
+  this.vx += Math.sin(this.wobblePhase) * this.wobbleAmp * 0.01;
+  if (!this.burst) this.vy += this.gravity;
+  else this.vy += this.gravity * 2;
+  this.x += this.vx;
+  this.y += this.vy;
+  this.angle += this.rotSpeed;
+  this.life -= this.fadeSpeed;
+  if (this.y > H - this.size) {
+    this.y = H - this.size;
+    this.vy *= -0.4;
+    this.vx *= 0.9;
+  }
+  if (this.x < this.size || this.x > W - this.size) {
+    this.vx *= -0.7;
+    this.x = Math.max(this.size, Math.min(W - this.size, this.x));
+  }
+  return this.life > 0 && this.y < H + 50;
+};
+Heart.prototype.draw = function() {
+  drawHeart(this.x, this.y, this.size, this.angle, this.color, this.life * this.opacity);
+};
 
-// Collision between hearts
 function collide(a, b) {
-  const dx = a.x - b.x;
-  const dy = a.y - b.y;
-  const dist = Math.sqrt(dx * dx + dy * dy);
-  const minDist = (a.size + b.size) * 0.6;
+  var dx = a.x - b.x;
+  var dy = a.y - b.y;
+  var dist = Math.sqrt(dx * dx + dy * dy);
+  var minDist = (a.size + b.size) * 0.6;
   if (dist < minDist && dist > 0) {
-    const nx = dx / dist;
-    const ny = dy / dist;
-    const overlap = minDist - dist;
+    var nx = dx / dist;
+    var ny = dy / dist;
+    var overlap = minDist - dist;
     a.x += nx * overlap * 0.5;
     a.y += ny * overlap * 0.5;
     b.x -= nx * overlap * 0.5;
     b.y -= ny * overlap * 0.5;
-    const dvx = a.vx - b.vx;
-    const dvy = a.vy - b.vy;
-    const dot = dvx * nx + dvy * ny;
+    var dvx = a.vx - b.vx;
+    var dvy = a.vy - b.vy;
+    var dot = dvx * nx + dvy * ny;
     if (dot > 0) {
       a.vx -= dot * nx * 0.5;
       a.vy -= dot * ny * 0.5;
@@ -577,85 +870,111 @@ function collide(a, b) {
   }
 }
 
-let spawnTimer = 0;
+var spawnTimer = 0;
 function animate() {
   ctx.clearRect(0, 0, W, H);
-
-  // Spawn hearts — rate decreases as user scrolls down
-  // At top: spawn every 3 frames (heavy). At bottom: spawn every 60 frames (sparse).
   spawnTimer++;
-  const baseMusicRate = musicMode ? 2 : 4;
-  const baseNormalRate = musicMode ? 4 : 12;
-  // Interpolate spawn rate: fast at top, very slow at bottom
-  const topRate = musicMode ? baseMusicRate : baseNormalRate;
-  const bottomRate = musicMode ? 30 : 80;
-  const spawnRate = Math.round(topRate + (bottomRate - topRate) * Math.pow(scrollProgress, 0.7));
+  var baseMusicRate = musicMode ? 2 : 4;
+  var baseNormalRate = musicMode ? 4 : 12;
+  var topRate = musicMode ? baseMusicRate : baseNormalRate;
+  var bottomRate = musicMode ? 30 : 80;
+  var spawnRate = Math.round(topRate + (bottomRate - topRate) * Math.pow(scrollProgress, 0.7));
 
   if (spawnTimer >= spawnRate) {
     spawnTimer = 0;
     hearts.push(new Heart());
-    // Extra hearts at top of page
     if (scrollProgress < 0.2 && musicMode) {
       hearts.push(new Heart());
     }
   }
 
-  // Update and draw
-  hearts = hearts.filter(h => h.update());
+  hearts = hearts.filter(function(h) { return h.update(); });
 
-  // Collisions
-  for (let i = 0; i < hearts.length; i++) {
-    for (let j = i + 1; j < Math.min(i + 8, hearts.length); j++) {
+  for (var i = 0; i < hearts.length; i++) {
+    for (var j = i + 1; j < Math.min(i + 8, hearts.length); j++) {
       collide(hearts[i], hearts[j]);
     }
   }
 
-  // Soft background glow in music mode
   if (musicMode) {
-    const t = Date.now() * 0.001;
-    const pulse = 0.02 + Math.sin(t * 2) * 0.01;
-    ctx.fillStyle = `rgba(255,105,180,${pulse})`;
+    var t = Date.now() * 0.001;
+    var pulse = 0.02 + Math.sin(t * 2) * 0.01;
+    ctx.fillStyle = 'rgba(255,105,180,' + pulse + ')';
     ctx.fillRect(0, 0, W, H);
   }
 
-  hearts.forEach(h => h.draw());
+  hearts.forEach(function(h) { h.draw(); });
   requestAnimationFrame(animate);
 }
 animate();
 
-// Click to burst hearts
 document.addEventListener('click', function(e) {
-  if (e.target.closest('button') || e.target.closest('.yt-container')) return;
-  for (let i = 0; i < 12; i++) {
+  if (e.target.closest('button') || e.target.closest('.yt-container') || e.target.closest('.tap-to-hear')) return;
+  for (var i = 0; i < 12; i++) {
     hearts.push(new Heart(e.clientX, e.clientY, true));
   }
 });
 
-// Touch support
 document.addEventListener('touchstart', function(e) {
-  if (e.target.closest('button') || e.target.closest('.yt-container')) return;
-  const t = e.touches[0];
-  for (let i = 0; i < 12; i++) {
+  if (e.target.closest('button') || e.target.closest('.yt-container') || e.target.closest('.tap-to-hear')) return;
+  var t = e.touches[0];
+  for (var i = 0; i < 12; i++) {
     hearts.push(new Heart(t.clientX, t.clientY, true));
   }
 });
 
 /* ── Scroll Reveal ── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
     if (e.isIntersecting) e.target.classList.add('visible');
   });
 }, { threshold: 0.15 });
-document.querySelectorAll('.section').forEach(s => observer.observe(s));
+document.querySelectorAll('.section').forEach(function(s) { observer.observe(s); });
 
-/* ── YouTube Player — autoplay 5s after load ── */
-let ytPlayer = null;
-let ytReady = false;
-let autoplayDone = false;
+/* ── YouTube Player — autoplay with volume ── */
+var ytPlayer = null;
+var ytReady = false;
+var userHasInteracted = false;
+var audioUnlocked = false;
 
-const tag = document.createElement('script');
+var tag = document.createElement('script');
 tag.src = 'https://www.youtube.com/iframe_api';
 document.head.appendChild(tag);
+
+function tryUnmutePlayer() {
+  if (!ytPlayer || !ytReady || audioUnlocked) return;
+  try {
+    ytPlayer.unMute();
+    ytPlayer.setVolume(100);
+    if (ytPlayer.isMuted && !ytPlayer.isMuted()) {
+      audioUnlocked = true;
+      var tapBtn = document.getElementById('tap-to-hear');
+      if (tapBtn) tapBtn.classList.add('hidden');
+    }
+  } catch(e) {}
+}
+
+function pollForContentStart() {
+  if (!ytPlayer || !ytReady) return;
+  try {
+    var currentTime = ytPlayer.getCurrentTime();
+    var state = ytPlayer.getPlayerState();
+    if (state === YT.PlayerState.PLAYING && currentTime >= 48) {
+      tryUnmutePlayer();
+      if (!audioUnlocked && userHasInteracted) {
+        ytPlayer.unMute();
+        ytPlayer.setVolume(100);
+        audioUnlocked = true;
+        var tapBtn = document.getElementById('tap-to-hear');
+        if (tapBtn) tapBtn.classList.add('hidden');
+      }
+    } else {
+      setTimeout(pollForContentStart, 1000);
+    }
+  } catch(e) {
+    setTimeout(pollForContentStart, 1000);
+  }
+}
 
 window.onYouTubeIframeAPIReady = function() {
   ytPlayer = new YT.Player('yt-player', {
@@ -663,92 +982,117 @@ window.onYouTubeIframeAPIReady = function() {
     width: '100%',
     videoId: 'NI6aOFI7hms',
     playerVars: {
-      autoplay: 0,
+      autoplay: 1,
       start: 52,
       modestbranding: 1,
       rel: 0,
+      playsinline: 1,
     },
     events: {
-      onReady: function() {
+      onReady: function(event) {
         ytReady = true;
-        // Autoplay after 5 seconds
+        var container = document.getElementById('yt-container');
+        container.classList.add('active');
+        event.target.setVolume(100);
+        event.target.unMute();
+        event.target.playVideo();
+        musicMode = true;
+
         setTimeout(function() {
-          if (!autoplayDone && ytReady && ytPlayer) {
-            autoplayDone = true;
-            const container = document.getElementById('yt-container');
-            container.classList.add('active');
-            ytPlayer.playVideo();
-            musicMode = true;
-            // Burst of hearts when music starts
-            for (let i = 0; i < 30; i++) {
-              setTimeout(function() {
-                hearts.push(new Heart(W/2 + (Math.random()-0.5)*200, H/2, true));
-              }, i * 50);
+          try {
+            if (ytPlayer.isMuted()) {
+              var tapBtn = document.getElementById('tap-to-hear');
+              if (tapBtn) tapBtn.classList.remove('hidden');
+            } else {
+              audioUnlocked = true;
+              var tapBtn = document.getElementById('tap-to-hear');
+              if (tapBtn) tapBtn.classList.add('hidden');
             }
-          }
-        }, 5000);
+          } catch(e) {}
+        }, 500);
+
+        pollForContentStart();
+
+        for (var i = 0; i < 30; i++) {
+          (function(idx) {
+            setTimeout(function() {
+              hearts.push(new Heart(W/2 + (Math.random()-0.5)*200, H/2, true));
+            }, idx * 50);
+          })(i);
+        }
       },
       onStateChange: function(e) {
         musicMode = (e.data === YT.PlayerState.PLAYING);
+        if (e.data === YT.PlayerState.PLAYING && userHasInteracted && !audioUnlocked) {
+          tryUnmutePlayer();
+        }
       }
     }
   });
 };
 
+function onUserInteraction() {
+  if (userHasInteracted) return;
+  userHasInteracted = true;
+  if (ytPlayer && ytReady) {
+    ytPlayer.unMute();
+    ytPlayer.setVolume(100);
+    ytPlayer.playVideo();
+    audioUnlocked = true;
+    var tapBtn = document.getElementById('tap-to-hear');
+    if (tapBtn) tapBtn.classList.add('hidden');
+  }
+}
+
+document.getElementById('tap-to-hear').addEventListener('click', function(e) {
+  e.stopPropagation();
+  onUserInteraction();
+});
+
+document.addEventListener('scroll', function onFirstScroll() {
+  onUserInteraction();
+  document.removeEventListener('scroll', onFirstScroll);
+}, {passive: true});
+
 /* ── Love Bomb Counter ── */
 (function initCounter() {
-  const LAUNCH_DATE = new Date('2025-06-01T00:00:00Z');
-  const BASE_COUNT = 1300;
-  // Primes used for daily increment divisor cycling
-  const PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47];
+  var LAUNCH_DATE = new Date('2025-06-01T00:00:00Z');
+  var BASE_COUNT = 1300;
+  var PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47];
 
   function seededRandom(seed) {
-    // Simple seeded PRNG (mulberry32)
-    let t = seed + 0x6D2B79F5;
+    var t = seed + 0x6D2B79F5;
     t = Math.imul(t ^ (t >>> 15), t | 1);
     t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   }
 
   function calculateCount() {
-    const now = new Date();
-    const msPerDay = 86400000;
-    const daysSinceLaunch = Math.max(0, Math.floor((now - LAUNCH_DATE) / msPerDay));
-    let total = BASE_COUNT;
+    var now = new Date();
+    var msPerDay = 86400000;
+    var daysSinceLaunch = Math.max(0, Math.floor((now - LAUNCH_DATE) / msPerDay));
+    var total = BASE_COUNT;
 
-    // Each day gets an increment. Early days: small (divided by large primes).
-    // Later days: larger (divided by small primes), ramping from ~1/day to ~3/min.
-    for (let day = 0; day <= daysSinceLaunch; day++) {
-      const seed = day * 31337 + 7919;
-      const rand = seededRandom(seed);
-
-      // Progress through days: 0 at start, 1 at maturity (~365 days)
-      const progress = Math.min(1, day / 365);
-
-      // Pick a prime: early days pick from larger primes, later from smaller
-      const primeIndex = Math.floor((1 - progress) * (PRIMES.length - 1));
-      const prime = PRIMES[primeIndex];
-
-      // Base daily increment scales from 1 to 4320 (3 per minute * 1440 minutes)
-      // Uses exponential curve so growth accelerates naturally
-      const maxDailyAdds = 4320;
-      const dailyBase = 1 + (maxDailyAdds - 1) * Math.pow(progress, 3);
-
-      // Divide by the chosen prime for irregular-looking numbers
-      const dailyIncrement = Math.floor((dailyBase / prime) * (0.6 + rand * 0.8));
-
+    for (var day = 0; day <= daysSinceLaunch; day++) {
+      var seed = day * 31337 + 7919;
+      var rand = seededRandom(seed);
+      var progress = Math.min(1, day / 365);
+      var primeIndex = Math.floor((1 - progress) * (PRIMES.length - 1));
+      var prime = PRIMES[primeIndex];
+      var maxDailyAdds = 4320;
+      var dailyBase = 1 + (maxDailyAdds - 1) * Math.pow(progress, 3);
+      var dailyIncrement = Math.floor((dailyBase / prime) * (0.6 + rand * 0.8));
       total += Math.max(1, dailyIncrement);
     }
 
-    // Add intra-day counts based on current time
     if (daysSinceLaunch > 0) {
-      const progress = Math.min(1, daysSinceLaunch / 365);
-      const maxPerMin = 3 * Math.pow(progress, 3);
-      const minutesToday = now.getHours() * 60 + now.getMinutes();
-      const seed = daysSinceLaunch * 99991 + minutesToday;
-      const rand = seededRandom(seed);
-      const intradayPrime = PRIMES[Math.floor(rand * 5)];
-      const intradayAdds = Math.floor((minutesToday * maxPerMin) / intradayPrime);
+      var progress = Math.min(1, daysSinceLaunch / 365);
+      var maxPerMin = 3 * Math.pow(progress, 3);
+      var minutesToday = now.getHours() * 60 + now.getMinutes();
+      var seed = daysSinceLaunch * 99991 + minutesToday;
+      var rand = seededRandom(seed);
+      var intradayPrime = PRIMES[Math.floor(rand * 5)];
+      var intradayAdds = Math.floor((minutesToday * maxPerMin) / intradayPrime);
       total += Math.max(0, intradayAdds);
     }
 
@@ -760,16 +1104,15 @@ window.onYouTubeIframeAPIReady = function() {
   }
 
   function updateCounter() {
-    const el = document.getElementById('love-counter');
+    var el = document.getElementById('love-counter');
     if (el) {
       el.textContent = formatNumber(calculateCount());
     }
   }
 
-  // Update on load and every 20-40 seconds (random interval for organic feel)
   updateCounter();
   function scheduleNext() {
-    const delay = 20000 + Math.random() * 20000;
+    var delay = 20000 + Math.random() * 20000;
     setTimeout(function() {
       updateCounter();
       scheduleNext();
@@ -780,19 +1123,17 @@ window.onYouTubeIframeAPIReady = function() {
 
 /* ── Variation System ── */
 (function initVariations() {
-  const params = new URLSearchParams(window.location.search);
-  const v = params.get('v') || 'default';
-  const varId = LOVE_BOMB_VARIATIONS[v] ? v : 'default';
-  const cfg = LOVE_BOMB_VARIATIONS[varId];
-  if (!cfg) return;
+  var params = new URLSearchParams(window.location.search);
+  var v = params.get('v') || 'default';
+  var varId = LOVE_BOMB_VARIATIONS[v] ? v : 'default';
 
   function applyVariation(id) {
-    const c = LOVE_BOMB_VARIATIONS[id] || LOVE_BOMB_VARIATIONS.default;
-    const from = document.getElementById('var-from');
-    const to = document.getElementById('var-to');
-    const re = document.getElementById('var-re');
-    const hookSub = document.getElementById('variation-hook-sub');
-    const worldNote = document.getElementById('variation-world-note');
+    var c = LOVE_BOMB_VARIATIONS[id] || LOVE_BOMB_VARIATIONS['default'];
+    var from = document.getElementById('var-from');
+    var to = document.getElementById('var-to');
+    var re = document.getElementById('var-re');
+    var hookSub = document.getElementById('variation-hook-sub');
+    var worldNote = document.getElementById('variation-world-note');
     if (from && c.telegramFrom) from.textContent = c.telegramFrom;
     if (to && c.telegramTo) to.textContent = c.telegramTo;
     if (re && c.telegramRe) re.textContent = c.telegramRe;
@@ -805,18 +1146,18 @@ window.onYouTubeIframeAPIReady = function() {
       btn.classList.toggle('active', btn.dataset.var === id);
     });
     if (id !== (params.get('v') || 'default')) {
-      const u = new URL(window.location.href);
+      var u = new URL(window.location.href);
       u.searchParams.set('v', id);
       window.history.replaceState({}, '', u.toString());
     }
   }
 
-  const btns = document.getElementById('variation-btns');
+  var btns = document.getElementById('variation-btns');
   if (btns) {
     ['default','philly','nyc','usa','lgbtq','multilang'].forEach(function(id) {
-      const c = LOVE_BOMB_VARIATIONS[id];
+      var c = LOVE_BOMB_VARIATIONS[id];
       if (!c) return;
-      const b = document.createElement('button');
+      var b = document.createElement('button');
       b.className = 'variation-btn' + (id === varId ? ' active' : '');
       b.dataset.var = id;
       b.textContent = c.label;
@@ -829,53 +1170,84 @@ window.onYouTubeIframeAPIReady = function() {
 
 /* ── Share Functions ── */
 function shareLoveBomb() {
-  const url = window.location.href;
-  const text = 'Someone sent me a love bomb and now I\u2019m sending one to you. \u{1F48C}\n\nYou are loved. Open this:\n\n';
+  var url = window.location.href;
+  var text = 'Someone sent me a love bomb and now I\u2019m sending one to you. \u{1F48C}\n\nYou are loved. Open this:\n\n';
   if (navigator.share) {
     navigator.share({ title: 'You\u2019ve Been Love Bombed', text: text, url: url });
   } else {
     navigator.clipboard.writeText(text + url).then(function() {
-      const btn = document.querySelector('.share-btn');
+      var btn = document.querySelector('.share-btn');
       btn.textContent = '\u{1F48C} Copied! Now send it to someone you love.';
-      setTimeout(function() { btn.innerHTML = '\u{1F48C}&ensp;Send a love bomb'; }, 3000);
+      setTimeout(function() { btn.innerHTML = '\u{1F48C}&ensp;Send a love bomb to someone you love'; }, 3000);
     });
   }
-  // Celebrate
-  for (let i = 0; i < 25; i++) {
-    setTimeout(function() {
-      hearts.push(new Heart(Math.random()*W, H, true));
-    }, i * 40);
+  for (var i = 0; i < 25; i++) {
+    (function(idx) {
+      setTimeout(function() {
+        hearts.push(new Heart(Math.random()*W, H, true));
+      }, idx * 40);
+    })(i);
   }
 }
 
 function copyLink() {
-  const url = window.location.href;
+  var url = window.location.href;
   navigator.clipboard.writeText(url).then(function() {
-    const btn = document.querySelector('.share-link-btn');
+    var btn = document.querySelector('.share-link-btn');
     btn.textContent = '\u{1F517} Copied!';
     setTimeout(function() { btn.innerHTML = '\u{1F517}&ensp;Copy link'; }, 2000);
   });
 }
 
 /* ── Sparkles on mouse move ── */
-let sparkleTimer = 0;
+var sparkleTimer = 0;
 document.addEventListener('mousemove', function(e) {
   sparkleTimer++;
-  if (sparkleTimer % 4 !== 0) return;
-  const s = document.createElement('div');
+  if (sparkleTimer % 3 !== 0) return;
+  var s = document.createElement('div');
   s.className = 'sparkle';
   s.style.left = e.clientX + 'px';
   s.style.top = e.clientY + 'px';
-  s.style.background = COLORS[Math.floor(Math.random()*COLORS.length)].map(c => c).join(',');
-  s.style.background = `rgb(${s.style.background})`;
+  var c = COLORS[Math.floor(Math.random()*COLORS.length)];
+  s.style.background = 'rgb(' + c[0] + ',' + c[1] + ',' + c[2] + ')';
+  s.style.width = (2 + Math.random() * 4) + 'px';
+  s.style.height = s.style.width;
   document.body.appendChild(s);
   setTimeout(function() { s.remove(); }, 3000);
 });
 
 /* ── Bounce arrow animation ── */
-const style = document.createElement('style');
+var style = document.createElement('style');
 style.textContent = '@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}';
 document.head.appendChild(style);
+
+/* ── Staggered section reveal for enchanted feel ── */
+(function initStaggeredReveal() {
+  var sections = document.querySelectorAll('.section');
+  sections.forEach(function(section) {
+    var cards = section.querySelectorAll('.affirmation-card');
+    if (cards.length > 0) {
+      var cardObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            cards.forEach(function(card, i) {
+              setTimeout(function() {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, i * 120);
+            });
+          }
+        });
+      }, { threshold: 0.2 });
+      cardObserver.observe(section);
+      cards.forEach(function(card) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      });
+    }
+  });
+})();
 </script>
 
 </body>
