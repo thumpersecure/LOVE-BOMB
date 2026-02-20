@@ -1,3 +1,17 @@
+##Now with 5 variations!
+
+Philly Love Park — Love Park, the LOVE sculpture, “City of Brotherly Love”.
+NYC — Boroughs (Brooklyn, Bronx, Queens, Manhattan), “city that never sleeps”.
+United States — “Coast to coast,” “great land,” “united future”.
+LGBTQ+ — “Chosen family,” “You exactly as you are,” “Love is love”.
+Multi-language — Spanish, French, Chinese (“Te amo · Je t’aime · 我爱你”), bilingual telegram fields, equation in several languages.
+Variations can be selected via the picker at the top or with URL params:
+?v=philly | ?v=nyc | ?v=usa | ?v=lgbtq | ?v=multilang
+
+Shared links keep the chosen variation.
+
+
+
 <div align="center">
 
 <br>
