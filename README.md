@@ -11,11 +11,12 @@ LGBTQ+ — “Chosen family,” “You exactly as you are,” “Love is love”
 Multi-language — Spanish, French, Chinese (“Te amo · Je t’aime · 我爱你”), bilingual telegram fields, equation in several languages.
 
 ##Variations can be selected via the picker at the top or with URL params:
-#https://thumpersecure.github.io/?v=philly 
-#https://thumpersecure.github.io/?v=nyc
-#https://thumpersecure.github.io/?v=usa
-#https://thumpersecure.github.io/?v=lgbtq
-#https://thumpersecure.github.io/?v=multilang
+
+• https://thumpersecure.github.io/LOVE-BOMB/?v=philly 
+• https://thumpersecure.github.io/LOVE-BOMB/?v=nyc
+• https://thumpersecure.github.io/LOVE-BOMB/?v=usa
+• https://thumpersecure.github.io/LOVE-BOMB/?v=lgbtq
+• https://thumpersecure.github.io/LOVE-BOMB/?v=multilang
 
 Shared links keep the chosen variation.
 
