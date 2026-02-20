@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="love-bomb-variations.js"></script>
 <title>You've Been Love Bombed 💌</title>
 <meta name="description" content="Someone just sent you a love bomb. A personal love telegram filled with love — and an idea that could change everything.">
 <meta property="og:title" content="You've Been Love Bombed 💌">
@@ -49,7 +50,8 @@ body{
   transition:opacity 1.2s ease,transform 1.2s ease;
 }
 .section.visible{opacity:1;transform:translateY(0)}
-.section:first-child{margin-top:15vh}
+.section#s1{margin-top:15vh}
+.section#variation-picker{margin-top:10vh}
 
 /* ── Typography ── */
 h1{
@@ -262,6 +264,32 @@ strong{color:#fff;font-weight:500}
   box-shadow:0 0 30px rgba(255,105,180,0.2);
 }
 
+/* ── Variation Picker ── */
+.variation-btns{
+  display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
+}
+.variation-btn{
+  padding:8px 16px;
+  font-size:0.85rem;
+  background:rgba(255,105,180,0.1);
+  border:1px solid rgba(255,105,180,0.3);
+  border-radius:20px;
+  color:#ffb6c1;
+  cursor:pointer;
+  transition:all 0.25s ease;
+  font-family:'Inter',sans-serif;
+}
+.variation-btn:hover{
+  background:rgba(255,105,180,0.2);
+  border-color:#ff69b4;
+  color:#fff;
+}
+.variation-btn.active{
+  background:linear-gradient(135deg,rgba(255,105,180,0.4),rgba(255,20,147,0.3));
+  border-color:#ff69b4;
+  color:#fff;
+}
+
 /* ── Floating Sparkles ── */
 .sparkle{
   position:fixed;pointer-events:none;z-index:2;
@@ -281,6 +309,7 @@ strong{color:#fff;font-weight:500}
   .telegram-frame{padding:28px 20px}
   .video-section{padding:28px 20px}
   .share-btn{padding:14px 28px;font-size:0.95rem}
+  .variation-btn{padding:6px 12px;font-size:0.8rem}
 }
 </style>
 </head>
@@ -290,29 +319,39 @@ strong{color:#fff;font-weight:500}
 
 <div class="content">
 
-  <!-- ═══ HOOK ═══ -->
+  <!-- ═══ VARIATION PICKER ═══ -->
+  <div class="section" id="variation-picker" style="margin-bottom:24px">
+    <p style="font-size:0.85rem;color:#a07888;margin-bottom:12px">Choose your love bomb:</p>
+    <div class="variation-btns" id="variation-btns"></div>
+  </div>
+
+  <!-- ═══ HOOK ═══ (85% personal love focus) -->
   <div class="section" id="s1">
     <h1>Someone just sent you<br>a love bomb.</h1>
     <p>Not the bad kind. The kind that lands softly, fills you up, and doesn't leave shrapnel — just warmth.</p>
+    <p>Someone thought of <strong>you</strong>. They chose to send you this. Right now, you are the reason this exists.</p>
     <p>This is yours. Scroll down and open it.</p>
+    <p id="variation-hook-sub" style="font-size:0.95rem;color:#c090a8;margin-top:16px"></p>
     <p style="font-size:0.9rem;color:#a07888;margin-top:40px">scroll down</p>
     <p style="font-size:1.4rem;color:#ff69b4;animation:bounce 2s infinite">&#8595;</p>
   </div>
 
-  <!-- ═══ THE TELEGRAM ═══ -->
+  <!-- ═══ THE TELEGRAM ═══ (personal love — core message) -->
   <div class="section" id="s2">
     <div class="telegram-frame">
       <div class="telegram-header">
-        FROM: <span>Someone who loves you</span><br>
-        TO: <span>You, right now, reading this</span><br>
-        RE: <span>Things you need to hear</span>
+        FROM: <span id="var-from">Someone who loves you</span><br>
+        TO: <span id="var-to">You, right now, reading this</span><br>
+        RE: <span id="var-re">Things you need to hear</span>
       </div>
       <div class="telegram-body">
         You are <span class="love-word">loved</span>. Not in theory — right now, by the person who sent you this. They thought of you, chose you, and wanted you to feel something real today.
         <br><br>
-        You matter more than you let yourself believe. Your presence makes the world around you gentler. And if no one's told you lately — <span class="love-word">you are enough</span>, exactly as you are.
+        You matter more than you let yourself believe. Your presence makes the world around you gentler. Your laugh, your kindness, the way you show up — it matters. And if no one's told you lately — <span class="love-word">you are enough</span>, exactly as you are.
         <br><br>
-        This love bomb was sent to remind you of that. Hold onto it.
+        The person who sent this didn't do it by accident. They did it because <strong>you</strong> crossed their mind and they wanted you to know: you're seen. You're valued. You're loved.
+        <br><br>
+        This love bomb was sent to remind you of that. Hold onto it. And when you're ready — pass it on to someone else who needs to hear it too.
       </div>
       <div class="telegram-stamp">SENT WITH LOVE &#10084;</div>
     </div>
@@ -320,27 +359,25 @@ strong{color:#fff;font-weight:500}
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
 
-  <!-- ═══ THE BIGGER IDEA ═══ -->
+  <!-- ═══ WORLD PEACE — brief (15%) ═══ -->
   <div class="section" id="s3">
-    <h2>And while we have your attention…</h2>
-    <p>The person who sent you this love bomb didn't just want to make you smile. They also believe in something bigger:</p>
+    <h2>One more thing</h2>
+    <p>The person who sent you this believes in something bigger too: <span class="love-word">more love = more world peace</span>. It's that simple. When we send love to each other — like they just did for you — it adds up.</p>
     <div class="equation">more love = more world peace</div>
-    <p>Read it again. It sounds simple because it is. Every conflict — between countries, communities, or people who used to be close — shares the same root deficiency.</p>
-    <p style="font-size:1.6rem;color:#ff69b4;font-family:'Playfair Display',serif;font-style:italic;margin:24px 0">Not enough love.</p>
+    <p id="variation-world-note">Every love bomb is both personal and universal. Yours landed on you. The next one will land on someone else. That's how it spreads.</p>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
 
-  <!-- ═══ THE TRUTH ═══ -->
+  <!-- ═══ THE TRUTH — still personal-first ═══ -->
   <div class="section" id="s4">
     <h2>You already know this is true</h2>
-    <p>Think of any conflict. Any argument. Any war.</p>
+    <p>Think of someone who matters to you. A friend. A family member. Someone you haven't talked to in a while.</p>
     <div class="quote">
-      Would more love between those people<br>have made it better or worse?
+      Would they feel better or worse<br>if they knew you were thinking of them?
     </div>
     <p>The answer has never once been <em>"worse."</em></p>
-    <p>Not once. In all of human history.</p>
-    <p>That's why this love bomb exists — it's a personal reminder wrapped around a universal truth. <span class="love-word">Love works.</span> Between two people. Between two million people. It just works.</p>
+    <p>That's why this love bomb exists — it's a personal reminder that <span class="love-word">love works</span>. When you send it. When you receive it. Between two people. It just works.</p>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -362,13 +399,13 @@ strong{color:#fff;font-weight:500}
   <!-- ═══ HOW IT SPREADS ═══ -->
   <div class="section" id="s6">
     <h2>How a love bomb works</h2>
-    <p>Someone sent this to you because they care about you. That's the whole trick — there is no trick.</p>
-    <p>One person thinks of someone they love. They send this page. That person reads it, feels it, and sends it to someone they love. And on and on.</p>
+    <p>Someone sent this to you because they care about you. They thought of you. They chose you. That's the whole trick — there is no trick.</p>
+    <p>One person thinks of someone they love. They send this page. That person reads it, feels it, and sends it to someone <strong>they</strong> love. And on and on. Love gets passed forward — one person at a time.</p>
     <div class="quote">
-      One person says it. Another person hears it.<br>
-      It becomes harder to unsay.
+      One person sends love. Another person receives it.<br>
+      Then they send it onward.
     </div>
-    <p>Each love bomb carries two things: a personal message that <strong>you are loved</strong>, and a reminder that <span class="love-word">more love = more world peace</span> isn't naive — it's the most obvious truth nobody says out loud.</p>
+    <p>Each love bomb carries two things: a personal message that <strong>you are loved</strong>, and a small reminder that when we send love to each other, the whole world benefits.</p>
     <div class="counter-box">
       <div class="counter-pulse"></div>
       <span>love bombs sent:</span>
@@ -399,6 +436,7 @@ strong{color:#fff;font-weight:500}
 
   <!-- ═══ FINAL ═══ -->
   <div class="section" id="s8" style="margin-bottom:15vh">
+    <p style="font-style:italic;color:#ffb6c1;margin-bottom:16px">You were always loved. Now send it forward.</p>
     <div class="equation" style="font-size:clamp(1.4rem,4vw,2.4rem)">more love = more world peace</div>
     <p style="font-style:italic;color:#a07888;margin-top:12px">It was always this simple.</p>
     <p style="font-style:italic;color:#806070;margin-top:8px;font-size:0.9rem">And you were always loved.</p>
@@ -738,6 +776,55 @@ window.onYouTubeIframeAPIReady = function() {
     }, delay);
   }
   scheduleNext();
+})();
+
+/* ── Variation System ── */
+(function initVariations() {
+  const params = new URLSearchParams(window.location.search);
+  const v = params.get('v') || 'default';
+  const varId = LOVE_BOMB_VARIATIONS[v] ? v : 'default';
+  const cfg = LOVE_BOMB_VARIATIONS[varId];
+  if (!cfg) return;
+
+  function applyVariation(id) {
+    const c = LOVE_BOMB_VARIATIONS[id] || LOVE_BOMB_VARIATIONS.default;
+    const from = document.getElementById('var-from');
+    const to = document.getElementById('var-to');
+    const re = document.getElementById('var-re');
+    const hookSub = document.getElementById('variation-hook-sub');
+    const worldNote = document.getElementById('variation-world-note');
+    if (from && c.telegramFrom) from.textContent = c.telegramFrom;
+    if (to && c.telegramTo) to.textContent = c.telegramTo;
+    if (re && c.telegramRe) re.textContent = c.telegramRe;
+    if (hookSub) {
+      hookSub.textContent = c.hookSub || '';
+      hookSub.style.display = c.hookSub ? 'block' : 'none';
+    }
+    if (worldNote && c.worldPeaceNote) worldNote.textContent = c.worldPeaceNote;
+    document.querySelectorAll('.variation-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.var === id);
+    });
+    if (id !== (params.get('v') || 'default')) {
+      const u = new URL(window.location.href);
+      u.searchParams.set('v', id);
+      window.history.replaceState({}, '', u.toString());
+    }
+  }
+
+  const btns = document.getElementById('variation-btns');
+  if (btns) {
+    ['default','philly','nyc','usa','lgbtq','multilang'].forEach(function(id) {
+      const c = LOVE_BOMB_VARIATIONS[id];
+      if (!c) return;
+      const b = document.createElement('button');
+      b.className = 'variation-btn' + (id === varId ? ' active' : '');
+      b.dataset.var = id;
+      b.textContent = c.label;
+      b.addEventListener('click', function() { applyVariation(id); });
+      btns.appendChild(b);
+    });
+  }
+  applyVariation(varId);
 })();
 
 /* ── Share Functions ── */
