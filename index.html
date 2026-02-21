@@ -1099,7 +1099,7 @@ body.beat-hit .love-star-btn{filter:brightness(1.12)}
   background:rgba(0,0,20,0.6);
   backdrop-filter:blur(16px);
 }
-.variation-starwars .telegram-frame::before{color:#ffe81f;text-shadow:0 0 12px rgba(255,232,31,0.45);content:'GALACTIC LOVE TRANSMISSION'}
+.variation-starwars .telegram-frame::before{color:#ffe81f;text-shadow:0 0 12px rgba(255,232,31,0.45);content:'GALACTIC LOVE TRANSMISSION';font-family:'Orbitron','Inter',sans-serif;font-size:0.7rem;letter-spacing:3px}
 .variation-starwars .love-declaration{
   background:linear-gradient(135deg,#ffe81f,#fff,#4fc3f7,#ffe81f);
   background-size:400% 400%;
@@ -1140,7 +1140,6 @@ body.beat-hit .love-star-btn{filter:brightness(1.12)}
 }
 .variation-starwars .counter-box .counter-num{color:#ffe81f}
 .variation-starwars .counter-pulse{background:#4fc3f7}
-.variation-starwars .telegram-frame::before{font-family:'Orbitron','Inter',sans-serif;font-size:0.7rem;letter-spacing:3px}
 .variation-starwars .scene-title{font-family:'Orbitron','Inter',sans-serif}
 .variation-starwars .save-badge{font-family:'Orbitron','Inter',sans-serif}
 .variation-starwars .from-banner{font-family:'Orbitron','Inter',sans-serif;color:#4fc3f7}
@@ -1813,8 +1812,8 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
       </div>
     </div>
 
-    <p style="font-size:0.9rem;color:#a07888;margin-top:40px">scroll down</p>
-    <p style="font-size:1.4rem;color:#ff69b4;animation:bounce 2s infinite">&#8595;</p>
+    <p id="scroll-hint" style="font-size:0.9rem;color:#a07888;margin-top:40px">scroll down</p>
+    <p id="scroll-arrow" style="font-size:1.4rem;color:#ff69b4;animation:bounce 2s infinite">&#8595;</p>
   </div>
 
   <!-- ═══ THE TELEGRAM ═══ (the heart of the love bomb) -->
@@ -4215,6 +4214,11 @@ function triggerHyperspace() {
     hookTitle.appendChild(document.createTextNode('has arrived for you.'));
   }
 
+  var scrollHint = document.getElementById('scroll-hint');
+  if (scrollHint) { scrollHint.textContent = 'use the Force... scroll down'; scrollHint.style.color = '#4fc3f7'; scrollHint.style.fontFamily = "'Orbitron','Inter',sans-serif"; scrollHint.style.fontSize = '0.75rem'; scrollHint.style.letterSpacing = '2px'; }
+  var scrollArrow = document.getElementById('scroll-arrow');
+  if (scrollArrow) { scrollArrow.style.color = '#4fc3f7'; scrollArrow.textContent = '\u2193'; }
+
   var affTitle = document.querySelector('#s-affirmations h2');
   if (affTitle) affTitle.textContent = 'Transmissions from the Force';
   var affSub = document.querySelector('#s-affirmations > p');
@@ -4294,6 +4298,119 @@ function triggerHyperspace() {
 
   var stamp = document.querySelector('.telegram-stamp');
   if (stamp) stamp.innerHTML = 'TRANSMITTED WITH ALL MY LOVE \u2728 MAY THE FORCE BE WITH YOU';
+})();
+
+/* ── SW Death Star Love Laser (periodic beam from Death Star) ── */
+(function initSWDeathStarLaser() {
+  if (currentVariationId !== 'starwars') return;
+
+  function fireDeathStarLaser() {
+    if (document.hidden || reduceMotion) return;
+    var dsX = window.innerWidth * 0.85;
+    var dsY = window.innerHeight * 0.12;
+    var targetX = Math.random() * window.innerWidth * 0.6;
+    var targetY = window.innerHeight * 0.3 + Math.random() * window.innerHeight * 0.5;
+    var dx = targetX - dsX;
+    var dy = targetY - dsY;
+    var angle = Math.atan2(dy, dx) * 180 / Math.PI;
+    var length = Math.sqrt(dx * dx + dy * dy);
+
+    var beam = document.createElement('div');
+    beam.style.cssText = 'position:fixed;z-index:4;pointer-events:none;'
+      + 'left:' + dsX + 'px;top:' + dsY + 'px;'
+      + 'width:' + length + 'px;height:3px;'
+      + 'transform-origin:0 50%;transform:rotate(' + angle + 'deg);'
+      + 'background:linear-gradient(90deg,rgba(105,240,174,0.0),rgba(105,240,174,0.9) 10%,rgba(255,255,255,0.9) 50%,rgba(105,240,174,0.9) 90%,rgba(105,240,174,0.0));'
+      + 'box-shadow:0 0 10px rgba(105,240,174,0.6),0 0 30px rgba(105,240,174,0.3);'
+      + 'border-radius:3px;opacity:0;';
+    document.body.appendChild(beam);
+
+    requestAnimationFrame(function() {
+      beam.style.transition = 'opacity 0.15s ease';
+      beam.style.opacity = '1';
+      setTimeout(function() {
+        beam.style.transition = 'opacity 0.6s ease';
+        beam.style.opacity = '0';
+
+        var impact = document.createElement('div');
+        impact.style.cssText = 'position:fixed;z-index:4;pointer-events:none;'
+          + 'left:' + (targetX - 30) + 'px;top:' + (targetY - 30) + 'px;'
+          + 'width:60px;height:60px;border-radius:50%;'
+          + 'background:radial-gradient(circle,rgba(105,240,174,0.6),rgba(79,195,247,0.3),transparent);'
+          + 'animation:sw-impact-burst 0.8s ease-out forwards;';
+        document.body.appendChild(impact);
+
+        for (var k = 0; k < 4; k++) {
+          hearts.push(new Heart(targetX + (Math.random()-0.5)*40, targetY + (Math.random()-0.5)*40, true));
+        }
+        capHearts();
+
+        setTimeout(function() { try { impact.remove(); } catch(e) {} }, 900);
+        setTimeout(function() { try { beam.remove(); } catch(e) {} }, 700);
+      }, 200);
+    });
+  }
+
+  var impactStyle = document.createElement('style');
+  impactStyle.textContent = '@keyframes sw-impact-burst{0%{transform:scale(0.3);opacity:1}50%{transform:scale(1.2);opacity:0.7}100%{transform:scale(2);opacity:0}}';
+  document.head.appendChild(impactStyle);
+
+  function scheduleNext() {
+    var delay = 8000 + Math.random() * 15000;
+    if (extraMode) delay *= 0.5;
+    if (lowPowerMode) delay *= 2;
+    setTimeout(function() {
+      fireDeathStarLaser();
+      scheduleNext();
+    }, delay);
+  }
+  setTimeout(function() { scheduleNext(); }, 5000);
+})();
+
+/* ── SW Lightsaber Ignite on First Scroll ── */
+(function initSWSaberIgnite() {
+  if (currentVariationId !== 'starwars') return;
+  var ignited = false;
+
+  window.addEventListener('scroll', function onFirstScroll() {
+    if (ignited) return;
+    if (window.scrollY < 50) return;
+    ignited = true;
+    window.removeEventListener('scroll', onFirstScroll);
+
+    var saber = document.createElement('div');
+    saber.style.cssText = 'position:fixed;z-index:9998;pointer-events:none;'
+      + 'left:50%;top:50%;transform:translate(-50%,-50%);'
+      + 'width:4px;height:0;border-radius:4px;'
+      + 'background:linear-gradient(to top,#4fc3f7,#fff,#4fc3f7);'
+      + 'box-shadow:0 0 15px #4fc3f7,0 0 30px rgba(79,195,247,0.5),0 0 60px rgba(79,195,247,0.3);'
+      + 'transition:height 0.4s ease-out, opacity 0.5s ease;';
+    document.body.appendChild(saber);
+
+    requestAnimationFrame(function() {
+      saber.style.height = '60vh';
+      triggerBeatHaptics([40, 20, 60]);
+      setTimeout(function() {
+        saber.style.opacity = '0';
+        setTimeout(function() { try { saber.remove(); } catch(e) {} }, 600);
+      }, 800);
+    });
+  }, { passive: true });
+})();
+
+/* ── SW Parallax Star Depth on Scroll ── */
+(function initSWParallaxStars() {
+  if (currentVariationId !== 'starwars') return;
+  var aurora = document.querySelector('.aurora-overlay');
+  if (!aurora) return;
+
+  window.addEventListener('scroll', function() {
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? Math.min(1, window.scrollY / docH) : 0;
+    var hue = Math.round(pct * 30);
+    aurora.style.filter = 'hue-rotate(' + hue + 'deg)';
+    aurora.style.opacity = (0.4 + pct * 0.5).toFixed(2);
+  }, { passive: true });
 })();
 </script>
 
