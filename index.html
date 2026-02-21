@@ -18,7 +18,7 @@
 <meta name="twitter:description" content="Someone sent you a love bomb. Open it.">
 <meta name="twitter:image" content="https://thumpersecure.github.io/LOVE-BOMB/assets/social-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Special+Elite&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -1124,7 +1124,7 @@ body.beat-hit .love-star-btn{filter:brightness(1.12)}
 .variation-starwars p,.variation-starwars .quote{color:#a0c0d8}
 .variation-starwars em{color:#7ecbf5}
 .variation-starwars strong{color:#ffe81f}
-.variation-starwars h2{color:#4fc3f7}
+.variation-starwars h2{color:#4fc3f7;font-family:'Orbitron','Playfair Display',serif;font-style:normal;font-size:clamp(1.2rem,3vw,1.8rem);letter-spacing:1px}
 .variation-starwars .video-section{
   background:rgba(79,195,247,0.06);
   border-color:rgba(79,195,247,0.2);
@@ -1140,6 +1140,10 @@ body.beat-hit .love-star-btn{filter:brightness(1.12)}
 }
 .variation-starwars .counter-box .counter-num{color:#ffe81f}
 .variation-starwars .counter-pulse{background:#4fc3f7}
+.variation-starwars .telegram-frame::before{font-family:'Orbitron','Inter',sans-serif;font-size:0.7rem;letter-spacing:3px}
+.variation-starwars .scene-title{font-family:'Orbitron','Inter',sans-serif}
+.variation-starwars .save-badge{font-family:'Orbitron','Inter',sans-serif}
+.variation-starwars .from-banner{font-family:'Orbitron','Inter',sans-serif;color:#4fc3f7}
 .variation-starwars .breathing-heart{filter:drop-shadow(0 0 12px rgba(79,195,247,0.5)) hue-rotate(160deg)}
 .variation-starwars .share-link-btn{border-color:rgba(79,195,247,0.5);color:#7ecbf5}
 .variation-starwars .share-link-btn:hover{background:rgba(79,195,247,0.15);border-color:#4fc3f7}
@@ -4162,6 +4166,134 @@ function triggerHyperspace() {
 (function initSWBackground() {
   if (currentVariationId !== 'starwars') return;
   document.body.style.background = 'linear-gradient(180deg, #000008 0%, #000a1a 30%, #0a0020 60%, #000010 100%)';
+})();
+
+/* ── SW Content Overrides: Rewrite page to be fully Star Wars themed ── */
+(function initSWContentOverrides() {
+  if (currentVariationId !== 'starwars') return;
+
+  var swAffirmations = [
+    { emoji: '⚔️', text: 'The Force is strong with you. It always has been.' },
+    { emoji: '🌟', text: 'In the darkest corner of the galaxy, your light shines brightest.' },
+    { emoji: '🛸', text: 'You made the Kessel Run of life in record time. And you\'re still going.' },
+    { emoji: '💫', text: 'Even Yoda would say: "Exceptional, this one is."' },
+    { emoji: '🌌', text: 'Across every star system, there\'s only one you. The galaxy got lucky.' },
+    { emoji: '🔮', text: 'The Force chose you for a reason. Trust it.' },
+    { emoji: '🚀', text: 'You don\'t need a lightsaber. Your love is already the most powerful weapon.' },
+    { emoji: '✨', text: 'You\'re the hope the Rebel Alliance fights for. Someone\'s entire galaxy.' },
+  ];
+
+  var affirmationCards = document.querySelectorAll('.affirmation-card');
+  for (var i = 0; i < affirmationCards.length && i < swAffirmations.length; i++) {
+    var card = affirmationCards[i];
+    var emojiEl = card.querySelector('.affirmation-emoji');
+    var textEl = card.querySelector('.affirmation-text');
+    if (emojiEl) emojiEl.textContent = swAffirmations[i].emoji;
+    if (textEl) textEl.textContent = swAffirmations[i].text;
+  }
+
+  var s1Para = document.querySelector('#s1 > p:first-of-type');
+  if (s1Para) {
+    s1Para.innerHTML = 'Not the scary kind. The kind that travels at lightspeed across the galaxy and arrives wrapped in starlight, whispering: <em>the Force is with you. Always.</em>';
+  }
+  var s1Para2 = document.querySelector('#s1 > p:nth-of-type(2)');
+  if (s1Para2) {
+    s1Para2.innerHTML = 'Someone in your galaxy thought of <strong>you</strong>. Out of all the star systems and all the souls, they chose you. Right now, in this moment, <span class="love-word">you are the reason this transmission exists.</span>';
+  }
+  var s1Para3 = document.querySelector('#s1 > p:nth-of-type(3)');
+  if (s1Para3) {
+    s1Para3.innerHTML = 'This was made for you. Every word. Every star. Every laser. <strong>Scroll down and feel the Force.</strong>';
+  }
+
+  var hookTitle = document.getElementById('hook-title');
+  var params = new URLSearchParams(window.location.search);
+  var senderName = params.get('from');
+  if (hookTitle && !senderName) {
+    while (hookTitle.firstChild) hookTitle.removeChild(hookTitle.firstChild);
+    hookTitle.appendChild(document.createTextNode('A galactic love transmission'));
+    hookTitle.appendChild(document.createElement('br'));
+    hookTitle.appendChild(document.createTextNode('has arrived for you.'));
+  }
+
+  var affTitle = document.querySelector('#s-affirmations h2');
+  if (affTitle) affTitle.textContent = 'Transmissions from the Force';
+  var affSub = document.querySelector('#s-affirmations > p');
+  if (affSub) affSub.textContent = 'The one who sent this wants these messages to reach your heart across the stars:';
+
+  var letterTitle = document.querySelector('#s-letter h2');
+  if (letterTitle) letterTitle.textContent = 'A holographic message from someone who loves you';
+  var letterQuote = document.querySelector('#s-letter .quote');
+  if (letterQuote) {
+    letterQuote.innerHTML = 'I\'ve traveled across galaxies in my mind just to find the right words for you. The way you carry the weight of worlds on your shoulders and still find light inside you \u2014 that\'s not just strength. That\'s the Force itself, living through you.'
+      + '<br><br>'
+      + 'You are my Alderaan \u2014 my home, my hope, my heart. And just like the Rebel Alliance never gave up, I will never stop reminding you: <strong>you are deeply, truly, cosmically loved.</strong> Not for what you do. For the light you carry.';
+  }
+  var letterAfter = document.querySelector('#s-letter > p:last-of-type');
+  if (letterAfter) letterAfter.innerHTML = 'That transmission was real. Read it again if you need to. Let it reach every corner of your heart. <em>The Force of love is with you.</em>';
+
+  var truthTitle = document.querySelector('#s4 h2');
+  if (truthTitle) truthTitle.textContent = 'The Force knows this is true';
+  var truthP = document.querySelector('#s4 > p:first-of-type');
+  if (truthP) truthP.textContent = 'Think of someone who matters to you. Your co-pilot. Your Jedi master. The one who stood by you when the galaxy seemed darkest.';
+  var truthQuote = document.querySelector('#s4 .quote');
+  if (truthQuote) truthQuote.innerHTML = 'Would they feel better or worse<br>if they knew the Force led you to think of them right now?';
+  var truthDecl = document.querySelector('#s4 .love-declaration');
+  if (truthDecl) truthDecl.textContent = 'May the Love Be With You';
+
+  var howTitle = document.querySelector('#s6 h2');
+  if (howTitle) howTitle.textContent = 'How a galactic love bomb works';
+  var howP1 = document.querySelector('#s6 > p:first-of-type');
+  if (howP1) howP1.innerHTML = 'Someone sent this because they <span class="love-word">love you across every star system</span>. They thought of you. They chose you. The Force guided them straight to your heart.';
+  var howQuote = document.querySelector('#s6 .quote');
+  if (howQuote) howQuote.innerHTML = 'One rebel sends love. Another receives it.<br>Then they transmit it forward. That\'s how the Force of love grows.';
+
+  var turnTitle = document.querySelector('#s7 h2');
+  if (turnTitle) turnTitle.textContent = 'Now it\'s your turn, Jedi';
+  var turnP1 = document.querySelector('#s7 > p:first-of-type');
+  if (turnP1) turnP1.textContent = 'You\'ve received a galactic love transmission. You felt it. That warmth in your chest right now \u2014 that\'s the Force flowing through you.';
+
+  var finalP = document.querySelector('#s8 > p:first-of-type');
+  if (finalP) finalP.innerHTML = 'You were always one with the Force.<br>Now someone made sure you know it.';
+  var finalDecl = document.querySelector('#s8 .love-declaration');
+  if (finalDecl) finalDecl.innerHTML = 'May the Force of Love Be With You \u2728';
+  var finalMade = document.querySelector('#s8 > p:last-of-type');
+  if (finalMade) {
+    finalMade.textContent = 'TRANSMITTED FROM A GALAXY OF LOVE';
+    finalMade.style.letterSpacing = '3px';
+  }
+
+  var videoH3 = document.querySelector('#s5 .video-section h3');
+  if (videoH3) videoH3.textContent = 'Let the Force flow through you.';
+  var videoSub = document.querySelector('#s5 .video-section .subtitle');
+  if (videoSub) videoSub.textContent = 'The one who sent this chose this score for your journey across the stars.';
+
+  var timestamp = document.getElementById('love-sent-time');
+  if (timestamp) {
+    var now = new Date();
+    var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var h = now.getHours(); var ampm = h >= 12 ? 'PM' : 'AM'; var h12 = h % 12 || 12;
+    var min = now.getMinutes(); var minStr = min < 10 ? '0' + min : '' + min;
+    timestamp.textContent = 'GALACTIC TRANSMISSION RECEIVED: ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ' AT ' + h12 + ':' + minStr + ' ' + ampm + ' \u2014 CORUSCANT STANDARD TIME';
+  }
+})();
+
+/* ── SW Telegram Rewrite ── */
+(function initSWTelegram() {
+  if (currentVariationId !== 'starwars') return;
+  var body = document.querySelector('.telegram-body');
+  if (!body) return;
+  body.innerHTML = 'You are <span class="love-word">loved</span>. Not in some vague, distant, across-the-galaxy way \u2014 right here, right now, by the specific being who sent you this transmission. They thought of <strong>you</strong>. They chose <strong>you</strong>. They aimed this love bomb straight at your coordinates.'
+    + '<br><br>'
+    + 'You matter more than all the kyber crystals on Ilum. Your laugh could power a lightsaber. Your kindness ripples through the Force in ways you\'ll never see. The way you care, the way you fight, even the way you doubt yourself \u2014 it means you have a heart that <span class="love-word">burns brighter than a binary sunset</span>. That\'s not weakness. That\'s the Force itself.'
+    + '<br><br>'
+    + 'If no one\'s told you lately: <span class="love-word">you are enough</span>. You don\'t need to complete your Jedi training first. You don\'t need to destroy the Death Star. Not someday. <em>Right now.</em> You \u2014 imperfect, luminous, trying-your-best you \u2014 are enough.'
+    + '<br><br>'
+    + 'The one who sent this didn\'t do it by accident. The Force guided them. Their heart said: <em>"They need to know."</em> So here it is. You\'re seen across the stars. You\'re valued by the entire Rebel Alliance of someone\'s heart. <span class="love-word">May the love be with you. Always.</span>'
+    + '<br><br>'
+    + 'Hold onto this feeling. It\'s as real as the Force. And when you\'re ready \u2014 transmit it to someone who needs to hear it too.';
+
+  var stamp = document.querySelector('.telegram-stamp');
+  if (stamp) stamp.innerHTML = 'TRANSMITTED WITH ALL MY LOVE \u2728 MAY THE FORCE BE WITH YOU';
 })();
 </script>
 
