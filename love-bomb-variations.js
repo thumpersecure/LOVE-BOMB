@@ -1,6 +1,6 @@
 /**
  * Love Bomb Variations — 5 themed editions + classic
- * 95% personal love / 5% world peace
+ * Each variation carries its own song, visual identity, and vibe.
  */
 var LOVE_BOMB_VARIATIONS = {
   default: {
@@ -12,6 +12,11 @@ var LOVE_BOMB_VARIATIONS = {
     telegramRe: 'Things you need to hear',
     hookSub: '',
     worldPeaceNote: 'And when enough people send love to each other — the whole world quietly gets a little more peaceful.',
+    videoId: 'NI6aOFI7hms',
+    videoStart: 52,
+    bpm: 108,
+    songTitle: 'Lovefool',
+    songArtist: 'The Cardigans',
   },
   philly: {
     id: 'philly',
@@ -23,6 +28,12 @@ var LOVE_BOMB_VARIATIONS = {
     telegramTo: 'You, right now, reading this',
     telegramRe: 'Things you need to hear',
     worldPeaceNote: 'Like the LOVE sculpture in our park — when we send love to each other, it radiates outward.',
+    videoId: 'rBrd_3VMC3c',
+    videoStart: 0,
+    bpm: 70,
+    songTitle: 'What a Wonderful World',
+    songArtist: 'Louis Armstrong',
+    showLoveSculpture: true,
   },
   nyc: {
     id: 'nyc',
@@ -34,6 +45,11 @@ var LOVE_BOMB_VARIATIONS = {
     telegramTo: 'You, right now, reading this',
     telegramRe: 'Things you need to hear',
     worldPeaceNote: 'In a city of 8 million, one love bomb still lands right where it matters: on you.',
+    videoId: 'btFfXgUdIzY',
+    videoStart: 0,
+    bpm: 108,
+    songTitle: 'New York, New York',
+    songArtist: 'Frank Sinatra',
   },
   usa: {
     id: 'usa',
@@ -45,6 +61,11 @@ var LOVE_BOMB_VARIATIONS = {
     telegramTo: 'You, right now, reading this',
     telegramRe: 'Things you need to hear',
     worldPeaceNote: 'One person, one love bomb, one message of love. That\'s how hearts connect across any distance.',
+    videoId: 'NI6aOFI7hms',
+    videoStart: 52,
+    bpm: 108,
+    songTitle: 'Lovefool',
+    songArtist: 'The Cardigans',
   },
   lgbtq: {
     id: 'lgbtq',
@@ -56,6 +77,12 @@ var LOVE_BOMB_VARIATIONS = {
     telegramTo: 'You, exactly as you are',
     telegramRe: 'Things you need to hear',
     worldPeaceNote: 'When we lift each other up and send love forward, we make the world gentler for everyone.',
+    videoId: 'wV1FrqwZyKw',
+    videoStart: 0,
+    bpm: 124,
+    songTitle: 'Born This Way',
+    songArtist: 'Lady Gaga',
+    heartColors: 'rainbow',
   },
   multilang: {
     id: 'multilang',
@@ -67,5 +94,10 @@ var LOVE_BOMB_VARIATIONS = {
     telegramTo: 'You / T\u00fa / Toi',
     telegramRe: 'Things you need to hear / Lo que necesitas o\u00edr',
     worldPeaceNote: 'Love needs no translation. Amor no necesita traducci\u00f3n. L\'amour n\'a pas besoin de traduction.',
+    videoId: 'EcPsB6PwaiE',
+    videoStart: 0,
+    bpm: 76,
+    songTitle: 'Imagine',
+    songArtist: 'John Lennon',
   },
 };
