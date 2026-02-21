@@ -1,26 +1,27 @@
-**Now with 5 variations!**
+**Now with 5 love bomb variations — because love should feel personal.**
 
-Philly Love Park — Love Park, the LOVE sculpture, “City of Brotherly Love”.
+💗 **Philly Love Park** — Inspired by the LOVE sculpture. The City of Brotherly Love, radiating outward.
 
-NYC — Boroughs (Brooklyn, Bronx, Queens, Manhattan), “city that never sleeps”.
+🏙️ **NYC** — From Brooklyn to Manhattan. In a city of 8 million, this one's just for you.
 
-United States — “Coast to coast,” “great land,” “united future”.
+🇺🇸 **United States** — Coast to coast. Love crosses every mile.
 
-LGBTQ+ — “Chosen family,” “You exactly as you are,” “Love is love”.
+🏳️‍🌈 **LGBTQ+** — Love is love. Chosen family. Rainbow hearts. You, exactly as you are.
 
-Multi-language — Spanish, French, Chinese (“Te amo · Je t’aime · 我爱你”), bilingual telegram fields, equation in several languages.
+🌍 **Multi-language** — Te amo · Je t'aime · 我爱你. Love needs no translation.
 
-##Variations can be selected via the picker at the top or with URL params:
+## Choose your variation
 
-• https://thumpersecure.github.io/LOVE-BOMB/?v=philly 
-• https://thumpersecure.github.io/LOVE-BOMB/?v=nyc
-• https://thumpersecure.github.io/LOVE-BOMB/?v=usa
-• https://thumpersecure.github.io/LOVE-BOMB/?v=lgbtq
-• https://thumpersecure.github.io/LOVE-BOMB/?v=multilang
+Pick at the top of the page, or share a direct link:
+
+- [Classic](https://thumpersecure.github.io/LOVE-BOMB/)
+- [Philly Love Park](https://thumpersecure.github.io/LOVE-BOMB/?v=philly)
+- [NYC](https://thumpersecure.github.io/LOVE-BOMB/?v=nyc)
+- [United States](https://thumpersecure.github.io/LOVE-BOMB/?v=usa)
+- [LGBTQ+](https://thumpersecure.github.io/LOVE-BOMB/?v=lgbtq)
+- [Multi-language](https://thumpersecure.github.io/LOVE-BOMB/?v=multilang)
 
 Shared links keep the chosen variation.
-
-
 
 <div align="center">
 
@@ -143,7 +144,7 @@ That's you. Right now. Reading this.
 
 This README is just the detonator.
 
-The full experience has **falling hearts, The Cardigans playing *Lovefool*, and an interactive love bomb you can feel.** Click anywhere and hearts explode. Turn on the music and they go wild.
+The full experience has **falling hearts, music that plays just for you, and an interactive love bomb you can feel.** Click anywhere and hearts explode. Turn on the music and they go wild. Each variation has its own song picked with love.
 
 <div align="center">
 
@@ -278,5 +279,7 @@ Send it however feels right. 💌
 <img src="assets/hearts-divider.png" alt="" width="400" />
 
 <br>
+
+*Made with nothing but love.*
 
 </div>

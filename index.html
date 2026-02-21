@@ -383,6 +383,42 @@ strong{color:#fff;font-weight:500}
   50%{box-shadow:0 0 30px rgba(255,105,180,0.6)}
 }
 
+/* ── Unmute Overlay (ad-aware countdown) ── */
+.unmute-overlay{
+  position:absolute;bottom:12px;right:12px;
+  z-index:10;
+}
+.unmute-btn{
+  padding:10px 20px;
+  background:rgba(13,2,18,0.9);
+  border:1px solid rgba(255,105,180,0.5);
+  border-radius:24px;
+  color:#ffb6c1;
+  font-family:'Inter',sans-serif;
+  font-size:0.9rem;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  display:flex;align-items:center;gap:8px;
+}
+.unmute-btn:hover:not(:disabled){
+  background:rgba(255,105,180,0.3);
+  border-color:#ff69b4;
+  color:#fff;
+}
+.unmute-btn:disabled{
+  cursor:not-allowed;
+  opacity:0.85;
+}
+.unmute-btn.ready{
+  background:rgba(255,105,180,0.2);
+  animation:unmute-ready-glow 1.5s ease-in-out infinite;
+}
+@keyframes unmute-ready-glow{
+  0%,100%{box-shadow:0 0 8px rgba(255,105,180,0.3)}
+  50%{box-shadow:0 0 20px rgba(255,105,180,0.6)}
+}
+.unmute-btn .unmute-label{white-space:nowrap}
+
 /* ── Share ── */
 .share-btn{
   display:inline-flex;align-items:center;gap:10px;
@@ -620,6 +656,65 @@ strong{color:#fff;font-weight:500}
   letter-spacing:1px;
   margin-top:12px;
   text-shadow:0 0 8px rgba(255,105,180,0.3);
+  opacity:0;
+  transition:opacity 1.5s ease 0.5s;
+}
+.song-info.visible{
+  opacity:1;
+}
+
+/* ── Breathing Heart — emotional pacing between sections ── */
+.breathing-heart{
+  display:inline-block;
+  font-size:2.4rem;
+  animation:heart-breathe 1.8s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(255,105,180,0.5));
+  margin:16px 0;
+}
+@keyframes heart-breathe{
+  0%{transform:scale(1);opacity:0.7}
+  12%{transform:scale(1.15);opacity:1}
+  24%{transform:scale(1);opacity:0.8}
+  36%{transform:scale(1.08);opacity:0.95}
+  48%{transform:scale(1);opacity:0.7}
+  100%{transform:scale(1);opacity:0.7}
+}
+
+/* ── Love Ripple Effect ── */
+.love-ripple-container{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:120px;
+  margin:24px auto;
+}
+.love-ripple{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(255,105,180,0.3);
+  animation:ripple-expand 3s ease-out infinite;
+}
+.love-ripple:nth-child(2){animation-delay:1s}
+.love-ripple:nth-child(3){animation-delay:2s}
+@keyframes ripple-expand{
+  0%{width:20px;height:20px;opacity:0.8}
+  100%{width:200px;height:200px;opacity:0}
+}
+.love-ripple-heart{
+  position:relative;z-index:1;
+  font-size:2rem;
+  animation:heart-breathe 1.8s ease-in-out infinite;
+}
+
+/* ── Timestamp glow ── */
+.love-timestamp{
+  font-family:'Special Elite',cursive;
+  font-size:0.8rem;
+  color:#a07888;
+  letter-spacing:2px;
+  margin-top:12px;
+  opacity:0.7;
 }
 
 /* ── Haptic pulse indicator ── */
@@ -730,7 +825,16 @@ strong{color:#fff;font-weight:500}
         <span class="affirmation-emoji">🔥</span>
         <span class="affirmation-text">Your heart is brave. Even when it doesn't feel that way.</span>
       </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">🌊</span>
+        <span class="affirmation-text">You've made someone smile today without even knowing it.</span>
+      </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">🕊️</span>
+        <span class="affirmation-text">The people who truly know you are the luckiest people alive.</span>
+      </div>
     </div>
+    <div class="breathing-heart">&#10084;&#65039;</div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -738,10 +842,19 @@ strong{color:#fff;font-weight:500}
   <!-- ═══ A LOVE LETTER ═══ (deepening the emotional connection) -->
   <div class="section" id="s-letter">
     <h2>A quiet truth from whoever sent this</h2>
-    <div class="quote">
-      I don't say it enough. Nobody does. But you've changed my life in ways I don't even know how to articulate. So instead of waiting for the perfect moment, I'm sending you this. Because you deserve to know — today, not someday — that <strong>you are deeply, truly, unmistakably loved.</strong>
+    <div class="love-ripple-container">
+      <div class="love-ripple"></div>
+      <div class="love-ripple"></div>
+      <div class="love-ripple"></div>
+      <span class="love-ripple-heart">&#10084;&#65039;</span>
     </div>
-    <p>They meant every word of that. Read it again if you need to.</p>
+    <div class="quote">
+      I don't say it enough. Nobody does. But you've changed my life in ways I don't even know how to articulate. The way you show up for people. The way you carry so much and still find a way to be kind. The way you light up when you talk about things you love. I notice. I've always noticed.
+      <br><br>
+      So instead of waiting for the perfect moment, I'm sending you this. Because you deserve to know — today, not someday — that <strong>you are deeply, truly, unmistakably loved.</strong> Not for what you do. For who you are.
+    </div>
+    <p>They meant every word of that. Read it again if you need to. Let it sink in. <em>That person loves you.</em></p>
+    <div class="love-timestamp" id="love-sent-time"></div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -768,6 +881,12 @@ strong{color:#fff;font-weight:500}
       <div class="song-info" id="song-info"></div>
       <div class="yt-container" id="yt-container">
         <div id="yt-player"></div>
+        <div class="unmute-overlay" id="unmute-overlay">
+          <button class="unmute-btn" id="unmute-btn" disabled>
+            <span class="unmute-icon">🔇</span>
+            <span class="unmute-label" id="unmute-label">Music in <span id="unmute-countdown">30</span>s</span>
+          </button>
+        </div>
       </div>
       <div class="tap-to-hear" id="tap-to-hear" title="Tap for sound">🔊</div>
     </div>
@@ -799,9 +918,10 @@ strong{color:#fff;font-weight:500}
   <!-- ═══ SEND ONE ═══ -->
   <div class="section" id="s7">
     <h2>Now it's your turn</h2>
-    <p>You've been love bombed. You felt it. You can't un-feel it.</p>
-    <p>Think of <strong>one person</strong> who needs to hear that they're loved today. A friend, a parent, a partner, a sibling, someone you haven't reached out to in too long. <span class="love-word">That person.</span> The one who just popped into your head.</p>
-    <p>Send them this. No explanation needed — the page does the talking. They'll open it, feel exactly what you just felt, and know that someone loves them.</p>
+    <p>You've been love bombed. You felt it. That warmth in your chest right now — that's real. You can't un-feel it.</p>
+    <p>Close your eyes for a second. Think of <strong>one person</strong> who needs to hear that they're loved today. A friend who's been quiet lately. A parent who gave everything. A partner. A sibling. Someone you haven't reached out to in too long. <span class="love-word">That person.</span> The one who just popped into your head without you even trying.</p>
+    <p>That's your heart telling you something. <em>Listen to it.</em></p>
+    <p>Send them this. No explanation needed — the page does the talking. They'll open it, feel exactly what you just felt, and know that <strong>someone in this world loves them</strong>. And that someone is you.</p>
     <p style="margin:32px 0">
       <button class="share-btn" onclick="shareLoveBomb()">
         &#128140;&ensp;Send a love bomb to someone you love
@@ -817,10 +937,13 @@ strong{color:#fff;font-weight:500}
 
   <!-- ═══ FINAL ═══ -->
   <div class="section" id="s8" style="margin-bottom:15vh">
+    <div class="breathing-heart" style="font-size:3rem">&#10084;&#65039;</div>
     <p style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-style:italic;color:#ffb6c1;margin-bottom:24px">You were always loved.<br>Now someone made sure you know it.</p>
     <div class="love-declaration" style="font-size:clamp(1.6rem,4.5vw,2.8rem)">You Are Loved &#10084;</div>
-    <p style="font-style:italic;color:#a07888;margin-top:16px">Now send it forward. Someone's waiting for theirs.</p>
-    <p style="font-style:italic;color:#806070;margin-top:8px;font-size:0.9rem">And you — you were always, always loved.</p>
+    <p style="font-style:italic;color:#c090a8;margin-top:20px">Right now, someone is waiting to feel what you just felt.</p>
+    <p style="font-style:italic;color:#a07888;margin-top:8px">Send it forward. Be the reason someone smiles today.</p>
+    <p style="font-style:italic;color:#806070;margin-top:16px;font-size:0.9rem">And you — you were always, always, always loved.</p>
+    <p style="font-family:'Special Elite',cursive;color:#604050;margin-top:24px;font-size:0.75rem;letter-spacing:3px">MADE WITH NOTHING BUT LOVE</p>
   </div>
 
 </div>
@@ -1171,11 +1294,14 @@ function detonateLoveBomb() {
   }
 }
 
-/* ── YouTube Player — variation-aware autoplay ── */
+/* ── YouTube Player — variation-aware autoplay with ad-delay and loop ── */
 var ytPlayer = null;
 var ytReady = false;
 var userHasInteracted = false;
 var audioUnlocked = false;
+var unmuteReady = false;
+var unmuteCountdownInterval = null;
+var AD_GRACE_PERIOD_SEC = 30;
 
 var tag = document.createElement('script');
 tag.src = 'https://www.youtube.com/iframe_api';
@@ -1196,9 +1322,60 @@ function updateSongInfo() {
   var artist = currentVariationConfig.songArtist;
   if (title && artist) {
     el.innerHTML = '&#9835; ' + artist + ' — <em>' + title + '</em>';
+    setTimeout(function() { el.classList.add('visible'); }, 100);
   } else {
     el.textContent = '';
+    el.classList.remove('visible');
   }
+}
+
+function hideUnmuteControls() {
+  var tapBtn = document.getElementById('tap-to-hear');
+  var unmuteBtn = document.getElementById('unmute-btn');
+  if (tapBtn) tapBtn.classList.add('hidden');
+  if (unmuteBtn) unmuteBtn.style.display = 'none';
+  if (unmuteCountdownInterval) {
+    clearInterval(unmuteCountdownInterval);
+    unmuteCountdownInterval = null;
+  }
+}
+
+function showUnmuteControls() {
+  var tapBtn = document.getElementById('tap-to-hear');
+  if (tapBtn) tapBtn.classList.remove('hidden');
+}
+
+function startUnmuteCountdown() {
+  var btn = document.getElementById('unmute-btn');
+  var label = document.getElementById('unmute-label');
+  if (!btn || !label) return;
+
+  unmuteReady = false;
+  btn.disabled = true;
+  btn.classList.remove('ready');
+  btn.style.display = '';
+  var icon = btn.querySelector('.unmute-icon');
+  if (icon) icon.textContent = '\uD83D\uDD07';
+
+  var startTime = Date.now();
+  label.innerHTML = 'Music in <span id="unmute-countdown">' + AD_GRACE_PERIOD_SEC + '</span>s';
+
+  if (unmuteCountdownInterval) clearInterval(unmuteCountdownInterval);
+  unmuteCountdownInterval = setInterval(function() {
+    var elapsed = Math.floor((Date.now() - startTime) / 1000);
+    var remaining = Math.max(0, AD_GRACE_PERIOD_SEC - elapsed);
+    var cdEl = document.getElementById('unmute-countdown');
+    if (cdEl) cdEl.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(unmuteCountdownInterval);
+      unmuteCountdownInterval = null;
+      unmuteReady = true;
+      btn.disabled = false;
+      btn.classList.add('ready');
+      if (icon) icon.textContent = '\uD83D\uDD0A';
+      label.textContent = 'Turn on the love';
+    }
+  }, 500);
 }
 
 function tryUnmutePlayer() {
@@ -1208,8 +1385,7 @@ function tryUnmutePlayer() {
     ytPlayer.setVolume(100);
     if (ytPlayer.isMuted && !ytPlayer.isMuted()) {
       audioUnlocked = true;
-      var tapBtn = document.getElementById('tap-to-hear');
-      if (tapBtn) tapBtn.classList.add('hidden');
+      hideUnmuteControls();
     }
   } catch(e) {}
 }
@@ -1223,6 +1399,9 @@ function createPlayer() {
     playerVars: {
       autoplay: 1,
       start: vc.start,
+      mute: 1,
+      loop: 1,
+      playlist: vc.videoId,
       modestbranding: 1,
       rel: 0,
       playsinline: 1,
@@ -1232,21 +1411,19 @@ function createPlayer() {
         ytReady = true;
         var container = document.getElementById('yt-container');
         container.classList.add('active');
-        event.target.setVolume(100);
-        event.target.unMute();
+        event.target.mute();
         event.target.playVideo();
         musicMode = true;
         updateSongInfo();
+        startUnmuteCountdown();
 
         setTimeout(function() {
           try {
             if (ytPlayer.isMuted()) {
-              var tapBtn = document.getElementById('tap-to-hear');
-              if (tapBtn) tapBtn.classList.remove('hidden');
+              showUnmuteControls();
             } else {
               audioUnlocked = true;
-              var tapBtn = document.getElementById('tap-to-hear');
-              if (tapBtn) tapBtn.classList.add('hidden');
+              hideUnmuteControls();
               detonateLoveBomb();
             }
           } catch(e) {}
@@ -1273,26 +1450,14 @@ function loadVariationVideo() {
   if (!ytPlayer || !ytReady) return;
   var vc = getVideoConfig();
   audioUnlocked = false;
+  unmuteReady = false;
   stopHaptics();
   try {
     ytPlayer.loadVideoById({ videoId: vc.videoId, startSeconds: vc.start });
-    ytPlayer.setVolume(100);
-    ytPlayer.unMute();
+    ytPlayer.mute();
     updateSongInfo();
-
-    setTimeout(function() {
-      try {
-        if (!ytPlayer.isMuted()) {
-          audioUnlocked = true;
-          var tapBtn = document.getElementById('tap-to-hear');
-          if (tapBtn) tapBtn.classList.add('hidden');
-          detonateLoveBomb();
-        } else {
-          var tapBtn = document.getElementById('tap-to-hear');
-          if (tapBtn) tapBtn.classList.remove('hidden');
-        }
-      } catch(e) {}
-    }, 600);
+    startUnmuteCountdown();
+    showUnmuteControls();
   } catch(e) {}
 }
 
@@ -1303,24 +1468,43 @@ window.onYouTubeIframeAPIReady = function() {
 function onUserInteraction() {
   if (userHasInteracted) return;
   userHasInteracted = true;
-  if (ytPlayer && ytReady) {
+  if (unmuteReady && ytPlayer && ytReady) {
     ytPlayer.unMute();
     ytPlayer.setVolume(100);
     ytPlayer.playVideo();
     audioUnlocked = true;
-    var tapBtn = document.getElementById('tap-to-hear');
-    if (tapBtn) tapBtn.classList.add('hidden');
+    hideUnmuteControls();
     detonateLoveBomb();
   }
 }
 
 document.getElementById('tap-to-hear').addEventListener('click', function(e) {
   e.stopPropagation();
-  onUserInteraction();
+  if (unmuteReady) {
+    onUserInteraction();
+  } else if (ytPlayer && ytReady) {
+    ytPlayer.unMute();
+    ytPlayer.setVolume(100);
+    audioUnlocked = true;
+    userHasInteracted = true;
+    hideUnmuteControls();
+    detonateLoveBomb();
+  }
+});
+
+document.addEventListener('click', function(e) {
+  if (e.target.closest('#unmute-btn') && unmuteReady && ytPlayer) {
+    ytPlayer.unMute();
+    ytPlayer.setVolume(100);
+    audioUnlocked = true;
+    userHasInteracted = true;
+    hideUnmuteControls();
+    detonateLoveBomb();
+  }
 });
 
 document.addEventListener('scroll', function onFirstScroll() {
-  onUserInteraction();
+  if (unmuteReady) onUserInteraction();
   document.removeEventListener('scroll', onFirstScroll);
 }, {passive: true});
 
@@ -1472,7 +1656,7 @@ document.addEventListener('scroll', function onFirstScroll() {
 /* ── Share Functions ── */
 function shareLoveBomb() {
   var url = window.location.href;
-  var text = 'Someone sent me a love bomb and now I\u2019m sending one to you. \u{1F48C}\n\nYou are loved. Open this:\n\n';
+  var text = 'I\u2019m sending you a love bomb because you deserve to know you\u2019re loved. \u{1F48C}\n\nThis is for you. Every word. Open it:\n\n';
   if (navigator.share) {
     navigator.share({ title: 'You\u2019ve Been Love Bombed', text: text, url: url });
   } else {
@@ -1517,10 +1701,74 @@ document.addEventListener('mousemove', function(e) {
   setTimeout(function() { s.remove(); }, 3000);
 });
 
+/* ── Love Sent Timestamp — shows when the love arrived ── */
+(function initTimestamp() {
+  var el = document.getElementById('love-sent-time');
+  if (!el) return;
+  var now = new Date();
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var h = now.getHours();
+  var ampm = h >= 12 ? 'PM' : 'AM';
+  var h12 = h % 12 || 12;
+  var min = now.getMinutes();
+  var minStr = min < 10 ? '0' + min : '' + min;
+  el.textContent = 'LOVE DELIVERED: ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ' AT ' + h12 + ':' + minStr + ' ' + ampm;
+})();
+
 /* ── Bounce arrow animation ── */
 var style = document.createElement('style');
 style.textContent = '@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}';
 document.head.appendChild(style);
+
+/* ── Felt-Not-Seen: warm welcome delay ── */
+(function warmWelcome() {
+  var s1 = document.getElementById('s1');
+  if (s1) {
+    s1.style.transitionDelay = '0.4s';
+  }
+})();
+
+/* ── Felt-Not-Seen: tab title changes as you scroll deeper ── */
+(function initTitleLove() {
+  var titles = [
+    "You've Been Love Bombed \uD83D\uDC8C",
+    "You are loved \u2764\uFE0F",
+    "Someone is thinking of you \uD83D\uDC97",
+    "You matter more than you know \u2728",
+    "Don't forget: you are loved \uD83D\uDC8C"
+  ];
+  var lastIdx = 0;
+  var origTitle = document.title;
+  window.addEventListener('scroll', function() {
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? window.scrollY / docH : 0;
+    var idx = Math.min(titles.length - 1, Math.floor(pct * titles.length));
+    if (idx !== lastIdx) {
+      lastIdx = idx;
+      document.title = titles[idx];
+    }
+  });
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      document.title = "You're still loved \u2764\uFE0F";
+    } else {
+      document.title = titles[lastIdx] || origTitle;
+    }
+  });
+})();
+
+/* ── Felt-Not-Seen: background warms as you scroll deeper ── */
+(function initWarmthGradient() {
+  var aurora = document.querySelector('.aurora-overlay');
+  if (!aurora) return;
+  window.addEventListener('scroll', function() {
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? Math.min(1, window.scrollY / docH) : 0;
+    var warmth = Math.round(pct * 4);
+    aurora.style.opacity = (0.6 + pct * 0.4).toFixed(2);
+    aurora.style.filter = 'hue-rotate(' + (-warmth * 3) + 'deg)';
+  }, {passive: true});
+})();
 
 /* ── Staggered section reveal for enchanted feel ── */
 (function initStaggeredReveal() {
