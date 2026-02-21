@@ -1340,22 +1340,29 @@ var extraMode = false;
   var fromStore = false;
   try { fromStore = localStorage.getItem('loveBombExtra') === '1'; } catch (e) {}
   extraMode = !!(fromUrl || fromStore);
-  document.body.classList.toggle('extra-mode', extraMode);
+  function extraAllowedForCurrentVariation() {
+    return currentVariationId !== 'kids';
+  }
+  function applyExtraBodyClass() {
+    document.body.classList.toggle('extra-mode', !!(extraMode && extraAllowedForCurrentVariation()));
+  }
+  applyExtraBodyClass();
 
   function syncExtraUi() {
     var btn = document.getElementById('extra-toggle');
     if (!btn) return;
-    btn.classList.toggle('active', extraMode);
-    btn.setAttribute('aria-pressed', extraMode ? 'true' : 'false');
-    btn.textContent = extraMode ? 'Extra mode: ON' : 'Extra mode: OFF';
+    var effective = !!(extraMode && extraAllowedForCurrentVariation());
+    btn.classList.toggle('active', effective);
+    btn.setAttribute('aria-pressed', effective ? 'true' : 'false');
+    btn.textContent = effective ? 'Extra mode: ON' : 'Extra mode: OFF';
   }
 
   function setExtraMode(on) {
     extraMode = !!on;
-    document.body.classList.toggle('extra-mode', extraMode);
     try { localStorage.setItem('loveBombExtra', extraMode ? '1' : '0'); } catch (e) {}
+    applyExtraBodyClass();
     syncExtraUi();
-    if (extraMode) {
+    if (extraMode && extraAllowedForCurrentVariation()) {
       onUserInteraction();
       unlockExtraTone();
     } else {
@@ -1378,6 +1385,13 @@ var extraMode = false;
       setExtraMode(!extraMode);
     }, { passive: false });
   }
+
+  /* Expose refresh hook so variation system can re-apply effective mode */
+  window.__refreshExtraModeEffective = function() {
+    applyExtraBodyClass();
+    syncExtraUi();
+    if (!(extraMode && extraAllowedForCurrentVariation())) stopExtraTone();
+  };
 })();
 
 /* ── Mobile Version Detection ── */
@@ -1666,7 +1680,7 @@ function animate() {
     beatEnergy = Math.max(0, beatEnergy - 0.05);
     if (beatEnergy > 0.001) {
       var accent = (currentVariationConfig && currentVariationConfig.accentColor) ? currentVariationConfig.accentColor : [255,105,180];
-      var mult = extraMode ? 1.8 : 1;
+      var mult = (extraMode && currentVariationId !== 'kids') ? 1.8 : 1;
       var pulse = 0.006 + beatEnergy * 0.02 * mult;
       ctx.fillStyle = 'rgba(' + accent[0] + ',' + accent[1] + ',' + accent[2] + ',' + pulse.toFixed(4) + ')';
       ctx.fillRect(0, 0, W, H);
@@ -1725,7 +1739,8 @@ function pulseVisualBeat() {
     hapticPulseEl.classList.add('active');
     setTimeout(function() { hapticPulseEl.classList.remove('active'); }, 150);
   }
-  beatEnergy = Math.min(1, beatEnergy + (extraMode ? 1 : 0.9));
+  var extraEnabled = !!(extraMode && currentVariationId !== 'kids');
+  beatEnergy = Math.min(1, beatEnergy + (extraEnabled ? 1 : 0.9));
   if (reduceMotion) return;
 
   document.body.classList.add('beat-hit');
@@ -1735,7 +1750,7 @@ function pulseVisualBeat() {
     beatPulseTimer = null;
   }, 140);
 
-  if (extraMode) {
+  if (extraEnabled) {
     /* A second, smaller after-pulse for "overwhelming" feel */
     setTimeout(function() {
       if (reduceMotion) return;
@@ -1784,7 +1799,7 @@ function startHaptics(bpm) {
     ? currentVariationConfig.vibrationPattern
     : [40, 30, 40];
   var pattern = basePattern;
-  if (extraMode) {
+  if (extraMode && currentVariationId !== 'kids') {
     var extra = (currentVariationConfig && currentVariationConfig.extraVibrationPattern)
       ? currentVariationConfig.extraVibrationPattern
       : basePattern.concat([20, 15, 25, 15, 30]);
@@ -2429,6 +2444,19 @@ document.addEventListener('scroll', function onFirstScroll() {
       var u = new URL(window.location.href);
       u.searchParams.set('v', id);
       window.history.replaceState({}, '', u.toString());
+    }
+
+    /* Kid-friendly lockdown: no top links, no extra mode */
+    var picker = document.getElementById('variation-picker');
+    if (picker) {
+      picker.style.display = (id === 'kids') ? 'none' : '';
+    }
+    if (id === 'kids') {
+      document.body.classList.remove('extra-mode');
+      try { if (window.__refreshExtraModeEffective) window.__refreshExtraModeEffective(); } catch (e) {}
+      stopExtraTone();
+    } else {
+      try { if (window.__refreshExtraModeEffective) window.__refreshExtraModeEffective(); } catch (e) {}
     }
   }
 
