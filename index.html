@@ -658,6 +658,59 @@ strong{color:#fff;font-weight:500}
   text-shadow:0 0 8px rgba(255,105,180,0.3);
 }
 
+/* ── Breathing Heart — emotional pacing between sections ── */
+.breathing-heart{
+  display:inline-block;
+  font-size:2.4rem;
+  animation:heart-breathe 1.8s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(255,105,180,0.5));
+  margin:16px 0;
+}
+@keyframes heart-breathe{
+  0%,100%{transform:scale(1);opacity:0.7}
+  15%{transform:scale(1.15);opacity:1}
+  30%{transform:scale(1);opacity:0.8}
+  45%{transform:scale(1.08);opacity:0.95}
+  60%{transform:scale(1);opacity:0.7}
+}
+
+/* ── Love Ripple Effect ── */
+.love-ripple-container{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:120px;
+  margin:24px auto;
+}
+.love-ripple{
+  position:absolute;
+  border-radius:50%;
+  border:1px solid rgba(255,105,180,0.3);
+  animation:ripple-expand 3s ease-out infinite;
+}
+.love-ripple:nth-child(2){animation-delay:1s}
+.love-ripple:nth-child(3){animation-delay:2s}
+@keyframes ripple-expand{
+  0%{width:20px;height:20px;opacity:0.8}
+  100%{width:200px;height:200px;opacity:0}
+}
+.love-ripple-heart{
+  position:relative;z-index:1;
+  font-size:2rem;
+  animation:heart-breathe 1.8s ease-in-out infinite;
+}
+
+/* ── Timestamp glow ── */
+.love-timestamp{
+  font-family:'Special Elite',cursive;
+  font-size:0.8rem;
+  color:#a07888;
+  letter-spacing:2px;
+  margin-top:12px;
+  opacity:0.7;
+}
+
 /* ── Haptic pulse indicator ── */
 .haptic-pulse{
   position:fixed;bottom:20px;right:20px;
@@ -766,7 +819,16 @@ strong{color:#fff;font-weight:500}
         <span class="affirmation-emoji">🔥</span>
         <span class="affirmation-text">Your heart is brave. Even when it doesn't feel that way.</span>
       </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">🌊</span>
+        <span class="affirmation-text">You've made someone smile today without even knowing it.</span>
+      </div>
+      <div class="affirmation-card">
+        <span class="affirmation-emoji">🕊️</span>
+        <span class="affirmation-text">The people who truly know you are the luckiest people alive.</span>
+      </div>
     </div>
+    <div class="breathing-heart">&#10084;&#65039;</div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -774,10 +836,19 @@ strong{color:#fff;font-weight:500}
   <!-- ═══ A LOVE LETTER ═══ (deepening the emotional connection) -->
   <div class="section" id="s-letter">
     <h2>A quiet truth from whoever sent this</h2>
-    <div class="quote">
-      I don't say it enough. Nobody does. But you've changed my life in ways I don't even know how to articulate. So instead of waiting for the perfect moment, I'm sending you this. Because you deserve to know — today, not someday — that <strong>you are deeply, truly, unmistakably loved.</strong>
+    <div class="love-ripple-container">
+      <div class="love-ripple"></div>
+      <div class="love-ripple"></div>
+      <div class="love-ripple"></div>
+      <span class="love-ripple-heart">&#10084;&#65039;</span>
     </div>
-    <p>They meant every word of that. Read it again if you need to.</p>
+    <div class="quote">
+      I don't say it enough. Nobody does. But you've changed my life in ways I don't even know how to articulate. The way you show up for people. The way you carry so much and still find a way to be kind. The way you light up when you talk about things you love. I notice. I've always noticed.
+      <br><br>
+      So instead of waiting for the perfect moment, I'm sending you this. Because you deserve to know — today, not someday — that <strong>you are deeply, truly, unmistakably loved.</strong> Not for what you do. For who you are.
+    </div>
+    <p>They meant every word of that. Read it again if you need to. Let it sink in. <em>That person loves you.</em></p>
+    <div class="love-timestamp" id="love-sent-time"></div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -841,9 +912,10 @@ strong{color:#fff;font-weight:500}
   <!-- ═══ SEND ONE ═══ -->
   <div class="section" id="s7">
     <h2>Now it's your turn</h2>
-    <p>You've been love bombed. You felt it. You can't un-feel it.</p>
-    <p>Think of <strong>one person</strong> who needs to hear that they're loved today. A friend, a parent, a partner, a sibling, someone you haven't reached out to in too long. <span class="love-word">That person.</span> The one who just popped into your head.</p>
-    <p>Send them this. No explanation needed — the page does the talking. They'll open it, feel exactly what you just felt, and know that someone loves them.</p>
+    <p>You've been love bombed. You felt it. That warmth in your chest right now — that's real. You can't un-feel it.</p>
+    <p>Close your eyes for a second. Think of <strong>one person</strong> who needs to hear that they're loved today. A friend who's been quiet lately. A parent who gave everything. A partner. A sibling. Someone you haven't reached out to in too long. <span class="love-word">That person.</span> The one who just popped into your head without you even trying.</p>
+    <p>That's your heart telling you something. <em>Listen to it.</em></p>
+    <p>Send them this. No explanation needed — the page does the talking. They'll open it, feel exactly what you just felt, and know that <strong>someone in this world loves them</strong>. And that someone is you.</p>
     <p style="margin:32px 0">
       <button class="share-btn" onclick="shareLoveBomb()">
         &#128140;&ensp;Send a love bomb to someone you love
@@ -859,10 +931,13 @@ strong{color:#fff;font-weight:500}
 
   <!-- ═══ FINAL ═══ -->
   <div class="section" id="s8" style="margin-bottom:15vh">
+    <div class="breathing-heart" style="font-size:3rem">&#10084;&#65039;</div>
     <p style="font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.6rem);font-style:italic;color:#ffb6c1;margin-bottom:24px">You were always loved.<br>Now someone made sure you know it.</p>
     <div class="love-declaration" style="font-size:clamp(1.6rem,4.5vw,2.8rem)">You Are Loved &#10084;</div>
-    <p style="font-style:italic;color:#a07888;margin-top:16px">Now send it forward. Someone's waiting for theirs.</p>
-    <p style="font-style:italic;color:#806070;margin-top:8px;font-size:0.9rem">And you — you were always, always loved.</p>
+    <p style="font-style:italic;color:#c090a8;margin-top:20px">Right now, someone is waiting to feel what you just felt.</p>
+    <p style="font-style:italic;color:#a07888;margin-top:8px">Send it forward. Be the reason someone smiles today.</p>
+    <p style="font-style:italic;color:#806070;margin-top:16px;font-size:0.9rem">And you — you were always, always, always loved.</p>
+    <p style="font-family:'Special Elite',cursive;color:#604050;margin-top:24px;font-size:0.75rem;letter-spacing:3px">MADE WITH NOTHING BUT LOVE</p>
   </div>
 
 </div>
@@ -1573,7 +1648,7 @@ document.addEventListener('scroll', function onFirstScroll() {
 /* ── Share Functions ── */
 function shareLoveBomb() {
   var url = window.location.href;
-  var text = 'Someone sent me a love bomb and now I\u2019m sending one to you. \u{1F48C}\n\nYou are loved. Open this:\n\n';
+  var text = 'I\u2019m sending you a love bomb because you deserve to know you\u2019re loved. \u{1F48C}\n\nThis is for you. Every word. Open it:\n\n';
   if (navigator.share) {
     navigator.share({ title: 'You\u2019ve Been Love Bombed', text: text, url: url });
   } else {
@@ -1617,6 +1692,20 @@ document.addEventListener('mousemove', function(e) {
   document.body.appendChild(s);
   setTimeout(function() { s.remove(); }, 3000);
 });
+
+/* ── Love Sent Timestamp — shows when the love arrived ── */
+(function initTimestamp() {
+  var el = document.getElementById('love-sent-time');
+  if (!el) return;
+  var now = new Date();
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var h = now.getHours();
+  var ampm = h >= 12 ? 'PM' : 'AM';
+  var h12 = h % 12 || 12;
+  var min = now.getMinutes();
+  var minStr = min < 10 ? '0' + min : '' + min;
+  el.textContent = 'LOVE DELIVERED: ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ' AT ' + h12 + ':' + minStr + ' ' + ampm;
+})();
 
 /* ── Bounce arrow animation ── */
 var style = document.createElement('style');
