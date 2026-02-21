@@ -353,32 +353,9 @@ strong{color:#fff;font-weight:500}
   margin-top:24px;border-radius:16px;overflow:hidden;
   display:none;
   box-shadow:0 0 40px rgba(255,105,180,0.2);
-  position:relative;
 }
 .yt-container.active{display:block;animation:fade-in 0.8s ease}
 .yt-container iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
-.unmute-overlay{
-  position:absolute;bottom:12px;right:12px;
-  z-index:10;
-}
-.unmute-btn{
-  padding:10px 20px;
-  background:rgba(13,2,18,0.9);
-  border:1px solid rgba(255,105,180,0.5);
-  border-radius:24px;
-  color:#ffb6c1;
-  font-family:'Inter',sans-serif;
-  font-size:0.9rem;
-  cursor:pointer;
-  transition:all 0.3s ease;
-  display:flex;align-items:center;gap:8px;
-}
-.unmute-btn:hover{
-  background:rgba(255,105,180,0.3);
-  border-color:#ff69b4;
-  color:#fff;
-}
-.unmute-btn .unmute-label{white-space:nowrap}
 @keyframes fade-in{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
 
 /* ── Tap to hear overlay ── */
@@ -1456,15 +1433,15 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
   <!-- ═══ VIDEO ═══ -->
   <div class="section" id="s5">
     <div class="video-section">
-      <h3>While you're here, let this play.</h3>
+      <h3>Let this play while you take it in.</h3>
       <div class="subtitle">The person who sent this picked this song for you.</div>
       <div class="song-info" id="song-info"></div>
       <div class="yt-container" id="yt-container">
         <div id="yt-player"></div>
         <div class="unmute-overlay" id="unmute-overlay">
-          <button class="unmute-btn" id="unmute-btn">
+          <button class="unmute-btn" id="unmute-btn" disabled>
             <span class="unmute-icon">🔇</span>
-            <span class="unmute-label" id="unmute-label">Turn on music</span>
+            <span class="unmute-label" id="unmute-label">Music in <span id="unmute-countdown">30</span>s</span>
           </button>
         </div>
       </div>
@@ -2300,13 +2277,33 @@ function startUnmuteCountdown() {
   var btn = document.getElementById('unmute-btn');
   var label = document.getElementById('unmute-label');
   if (!btn || !label) return;
-  unmuteReady = true;
-  btn.disabled = false;
-  btn.classList.add('ready');
+
+  unmuteReady = false;
+  btn.disabled = true;
+  btn.classList.remove('ready');
   btn.style.display = '';
   var icon = btn.querySelector('.unmute-icon');
-  if (icon) icon.textContent = '\uD83D\uDD0A';
-  label.textContent = 'Turn on music';
+  if (icon) icon.textContent = '\uD83D\uDD07';
+
+  var startTime = Date.now();
+  label.innerHTML = 'Music in <span id="unmute-countdown">' + AD_GRACE_PERIOD_SEC + '</span>s';
+
+  if (unmuteCountdownInterval) clearInterval(unmuteCountdownInterval);
+  unmuteCountdownInterval = setInterval(function() {
+    var elapsed = Math.floor((Date.now() - startTime) / 1000);
+    var remaining = Math.max(0, AD_GRACE_PERIOD_SEC - elapsed);
+    var cdEl = document.getElementById('unmute-countdown');
+    if (cdEl) cdEl.textContent = remaining;
+    if (remaining <= 0) {
+      clearInterval(unmuteCountdownInterval);
+      unmuteCountdownInterval = null;
+      unmuteReady = true;
+      btn.disabled = false;
+      btn.classList.add('ready');
+      if (icon) icon.textContent = '\uD83D\uDD0A';
+      label.textContent = 'Turn on the love';
+    }
+  }, 500);
 }
 
 function tryUnmutePlayer() {
@@ -2371,7 +2368,7 @@ function createPlayer() {
     videoId: vc.videoId,
     playerVars: {
       autoplay: 1,
-      start: vc.start || 0,
+      start: vc.start,
       mute: 1,
       loop: 1,
       playlist: vc.videoId,
@@ -2384,14 +2381,13 @@ function createPlayer() {
         ytReady = true;
         videoRecoveryAttempted = false;
         hasDetonatedForTrack = false;
-        unmuteReady = true;
         var container = document.getElementById('yt-container');
         container.classList.add('active');
         event.target.mute();
         event.target.playVideo();
         musicMode = true;
         updateSongInfo();
-        showUnmuteControls();
+        startUnmuteCountdown();
 
         setTimeout(function() {
           try {
@@ -2554,11 +2550,13 @@ var unmuteBtnEl = document.getElementById('unmute-btn');
 if (unmuteBtnEl) {
   unmuteBtnEl.addEventListener('click', function(e) {
     e.stopPropagation();
+    if (!unmuteReady) return;
     onUserInteraction();
   });
   unmuteBtnEl.addEventListener('touchend', function(e) {
     e.preventDefault();
     e.stopPropagation();
+    if (!unmuteReady) return;
     onUserInteraction();
   }, { passive: false });
 }
