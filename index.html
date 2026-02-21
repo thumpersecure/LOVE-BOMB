@@ -680,6 +680,191 @@ body.mobile-version .unmute-btn{width:100%;justify-content:center}
   color:#ff69b4;
 }
 
+/* ── Star Wars-ish Love Scene (original graphics) ── */
+.starwars-scene{
+  display:none;
+  margin:28px auto 10px;
+  max-width:560px;
+  padding:18px 14px 16px;
+  border-radius:18px;
+  border:1px solid rgba(var(--accent),0.22);
+  background:radial-gradient(ellipse 120% 90% at 50% 20%, rgba(var(--accent),0.10), rgba(13,2,18,0.0) 55%),
+             linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  position:relative;
+  overflow:hidden;
+}
+.starwars-scene.active{display:block}
+.starwars-scene .scene-title{
+  font-family:'Special Elite',cursive;
+  font-size:0.78rem;
+  letter-spacing:2px;
+  color:rgba(255,255,255,0.72);
+  margin-bottom:10px;
+}
+.starwars-scene .scene-sub{
+  font-size:0.88rem;
+  color:#c8b6c6;
+  margin-top:10px;
+  margin-bottom:0;
+}
+.scene-space{
+  position:relative;
+  height:200px;
+  border-radius:16px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255,255,255,0.08), transparent 35%),
+    radial-gradient(circle at 75% 40%, rgba(var(--accent),0.10), transparent 40%),
+    radial-gradient(circle at 45% 70%, rgba(255,105,180,0.06), transparent 45%),
+    linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.0));
+  border:1px solid rgba(255,255,255,0.06);
+}
+.scene-stars{
+  position:absolute; inset:0;
+  background-image:
+    radial-gradient(circle at 12% 30%, rgba(255,255,255,0.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 35% 18%, rgba(255,255,255,0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 62% 32%, rgba(255,255,255,0.65) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 22%, rgba(255,255,255,0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 18% 72%, rgba(255,255,255,0.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 55% 78%, rgba(255,255,255,0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 88% 74%, rgba(255,255,255,0.6) 0 1px, transparent 2px);
+  opacity:0.75;
+  filter:drop-shadow(0 0 8px rgba(255,255,255,0.08));
+  animation:scene-twinkle 6s ease-in-out infinite alternate;
+}
+@keyframes scene-twinkle{0%{opacity:0.6}100%{opacity:0.9}}
+
+.love-star-btn{
+  position:absolute;
+  left:18px;
+  top:34px;
+  width:88px;
+  height:88px;
+  border-radius:999px;
+  border:1px solid rgba(var(--accent),0.35);
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.92), rgba(var(--accent),0.75) 32%, rgba(255,105,180,0.25) 60%, rgba(0,0,0,0) 72%),
+    radial-gradient(circle at 55% 70%, rgba(var(--accent),0.25), rgba(0,0,0,0) 58%);
+  box-shadow:
+    0 0 25px rgba(var(--accent),0.22),
+    0 0 60px rgba(255,105,180,0.10);
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform 0.16s ease, filter 0.16s ease;
+}
+.love-star-btn:active{transform:scale(0.98)}
+.love-star-btn .core{
+  width:26px;height:26px;border-radius:999px;
+  background:radial-gradient(circle at 40% 40%, #fff, rgba(var(--accent),0.9) 45%, rgba(255,105,180,0.25) 75%);
+  box-shadow:0 0 18px rgba(255,255,255,0.28), 0 0 26px rgba(var(--accent),0.22);
+}
+.love-star-btn .heart{
+  position:absolute;
+  font-size:18px;
+  filter:drop-shadow(0 0 10px rgba(255,105,180,0.5));
+  transform:translateY(-2px);
+}
+.love-star-btn::after{
+  content:'';
+  position:absolute; inset:-30px;
+  border-radius:999px;
+  background:conic-gradient(from 0deg, rgba(var(--accent),0.0), rgba(var(--accent),0.18), rgba(255,105,180,0.12), rgba(var(--accent),0.0));
+  opacity:0.55;
+  animation:star-halo 5.5s linear infinite;
+}
+@keyframes star-halo{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+body.beat-hit.variation-starwars .love-star-btn{filter:brightness(1.1)}
+body.beat-hit .love-star-btn{filter:brightness(1.12)}
+
+.planet{
+  position:absolute;
+  right:22px;
+  bottom:22px;
+  width:98px;
+  height:98px;
+  border-radius:999px;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(255,255,255,0.65), rgba(var(--accent),0.35) 25%, rgba(60,80,200,0.10) 55%, rgba(0,0,0,0) 72%),
+    radial-gradient(circle at 60% 65%, rgba(255,105,180,0.08), rgba(0,0,0,0) 60%),
+    radial-gradient(circle at 50% 55%, rgba(0,0,0,0.22), rgba(0,0,0,0) 60%);
+  box-shadow:0 0 26px rgba(var(--accent),0.14), inset 0 -16px 24px rgba(0,0,0,0.28);
+  border:1px solid rgba(255,255,255,0.08);
+  overflow:hidden;
+}
+.planet::before{
+  content:'';
+  position:absolute; inset:-20%;
+  background:
+    radial-gradient(circle at 20% 40%, rgba(255,255,255,0.10), transparent 40%),
+    radial-gradient(circle at 70% 25%, rgba(255,255,255,0.08), transparent 45%),
+    radial-gradient(circle at 55% 75%, rgba(0,0,0,0.20), transparent 50%);
+  opacity:0.9;
+  animation:planet-drift 7.5s ease-in-out infinite alternate;
+}
+@keyframes planet-drift{0%{transform:translate(-2%,1%) rotate(-2deg)}100%{transform:translate(2%,-1%) rotate(2deg)}}
+.planet.saved{
+  box-shadow:0 0 40px rgba(140,255,200,0.18), 0 0 80px rgba(var(--accent),0.18), inset 0 -14px 24px rgba(0,0,0,0.26);
+}
+.planet.saved::after{
+  content:'';
+  position:absolute; inset:-18px;
+  border-radius:999px;
+  border:1px solid rgba(140,255,200,0.25);
+  box-shadow:0 0 24px rgba(140,255,200,0.18);
+  animation:planet-saved 2.4s ease-out infinite;
+}
+@keyframes planet-saved{0%{transform:scale(0.85);opacity:0.0}18%{opacity:0.9}100%{transform:scale(1.15);opacity:0}}
+
+.laser-layer{position:absolute; inset:0; pointer-events:none;}
+.love-laser{
+  position:absolute;
+  left:56px;
+  top:78px;
+  width:220px;
+  height:6px;
+  border-radius:999px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.0), rgba(var(--accent),0.85), rgba(255,105,180,0.55), rgba(255,255,255,0.0));
+  transform-origin:0% 50%;
+  opacity:0;
+  filter:drop-shadow(0 0 14px rgba(var(--accent),0.22));
+  animation:laser-fire 520ms ease-out forwards;
+}
+@keyframes laser-fire{
+  0%{opacity:0;transform:rotate(var(--ang)) scaleX(0.1)}
+  18%{opacity:1;transform:rotate(var(--ang)) scaleX(1)}
+  100%{opacity:0;transform:rotate(var(--ang)) scaleX(1.35)}
+}
+.save-badge{
+  position:absolute;
+  left:118px;
+  top:22px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(13,2,18,0.68);
+  border:1px solid rgba(255,255,255,0.10);
+  color:#fff;
+  font-size:0.78rem;
+  letter-spacing:1px;
+  opacity:0;
+  transform:translateY(-6px);
+  transition:opacity 0.25s ease, transform 0.25s ease;
+}
+.save-badge.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+.save-badge .love-word{color:rgb(var(--accent))}
+
+@media(max-width:600px){
+  .scene-space{height:184px}
+  .love-star-btn{width:78px;height:78px}
+  .planet{width:88px;height:88px}
+  .love-laser{width:190px}
+}
+
 /* ── Rainbow overrides for LGBTQ ── */
 .rainbow-active .heart-divider{
   background:linear-gradient(90deg,#e40303,#ff8c00,#ffed00,#008026,#004dff,#750787);
@@ -1114,6 +1299,22 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
     <p>Someone thought of <strong>you</strong>. Out of everyone in their world, they chose you. Right now, in this moment, <span class="love-word">you are the reason this page exists.</span></p>
     <p>This was made for you. Every word. Every heart. Every glow. <strong>Scroll down and feel it.</strong></p>
     <p id="variation-hook-sub" style="font-size:0.95rem;color:#c090a8;margin-top:16px"></p>
+
+    <!-- Star Wars-ish Love Scene (hidden unless starwars variation) -->
+    <div class="starwars-scene" id="starwars-scene" aria-hidden="true">
+      <div class="scene-title">LOVE STAR PROTOCOL</div>
+      <div class="scene-space" role="group" aria-label="Love Star saving a planet with love">
+        <div class="scene-stars" aria-hidden="true"></div>
+        <div class="laser-layer" id="laser-layer" aria-hidden="true"></div>
+        <button class="love-star-btn" id="love-star-btn" type="button" aria-label="Fire love lasers and save the planet">
+          <span class="heart" aria-hidden="true">💗</span>
+          <span class="core" aria-hidden="true"></span>
+        </button>
+        <div class="save-badge" id="save-badge" aria-live="polite"></div>
+        <div class="planet" id="love-planet" aria-hidden="true"></div>
+      </div>
+      <p class="scene-sub">Tap the Love Star. Send <span class="love-word">love lasers</span>. Save a planet with love.</p>
+    </div>
 
     <!-- Philly LOVE Sculpture (hidden unless philly variation) -->
     <div class="love-sculpture-wrap" id="love-sculpture">
@@ -2431,6 +2632,18 @@ document.addEventListener('scroll', function onFirstScroll() {
       }
     }
 
+    /* Star Wars-ish love scene */
+    var swScene = document.getElementById('starwars-scene');
+    if (swScene) {
+      if (id === 'starwars') {
+        swScene.classList.add('active');
+        swScene.setAttribute('aria-hidden', 'false');
+      } else {
+        swScene.classList.remove('active');
+        swScene.setAttribute('aria-hidden', 'true');
+      }
+    }
+
     /* Song info */
     updateSongInfo();
 
@@ -2474,6 +2687,89 @@ document.addEventListener('scroll', function onFirstScroll() {
     });
   }
   applyVariation(varId, false);
+})();
+
+/* ── Star Wars-ish interaction: love lasers save a planet ── */
+(function initStarWarsLove() {
+  var starBtn = document.getElementById('love-star-btn');
+  var planet = document.getElementById('love-planet');
+  var layer = document.getElementById('laser-layer');
+  var badge = document.getElementById('save-badge');
+  if (!starBtn || !planet || !layer || !badge) return;
+
+  var saving = false;
+  var lastFireMs = 0;
+
+  function showBadge(text) {
+    while (badge.firstChild) badge.removeChild(badge.firstChild);
+    var parts = ('' + text).split('LOVE');
+    badge.appendChild(document.createTextNode(parts[0] || ''));
+    var span = document.createElement('span');
+    span.className = 'love-word';
+    span.textContent = 'LOVE';
+    badge.appendChild(span);
+    badge.appendChild(document.createTextNode(parts.slice(1).join('LOVE') || ''));
+    badge.classList.add('visible');
+    setTimeout(function() { badge.classList.remove('visible'); }, 1400);
+  }
+
+  function fireLasers(count) {
+    if (!layer) return;
+    var beams = count || 8;
+    var baseAngles = [-18, -8, 0, 10, 20, 32, -28, 44, -42, 56];
+    for (var i = 0; i < beams; i++) {
+      var b = document.createElement('div');
+      b.className = 'love-laser';
+      var ang = baseAngles[i % baseAngles.length] + (Math.random() * 10 - 5);
+      b.style.setProperty('--ang', ang + 'deg');
+      layer.appendChild(b);
+      (function(el) {
+        setTimeout(function() {
+          try { el.remove(); } catch (e) {}
+        }, 800);
+      })(b);
+    }
+  }
+
+  function savePlanetWithLove() {
+    var now = Date.now();
+    if (saving || (now - lastFireMs) < 450) return;
+    lastFireMs = now;
+    if (currentVariationId !== 'starwars') return;
+    saving = true;
+
+    onUserInteraction();
+    runLoveQuake();
+
+    var beamCount = (extraMode ? 14 : 9);
+    fireLasers(beamCount);
+    planet.classList.add('saved');
+    showBadge('PLANET SAVED WITH LOVE');
+
+    var burst = (W <= 600) ? (extraMode ? 16 : 10) : (extraMode ? 34 : 22);
+    for (var i = 0; i < burst; i++) {
+      hearts.push(new Heart(W * 0.68 + Math.random() * W * 0.26, H * 0.50 + Math.random() * H * 0.22, true));
+    }
+    capHearts();
+
+    triggerBeatHaptics(extraMode ? [25, 10, 25, 10, 25, 10, 60, 25, 90] : [30, 20, 50, 30, 80]);
+
+    setTimeout(function() {
+      saving = false;
+      if (!extraMode) {
+        setTimeout(function() { planet.classList.remove('saved'); }, 2000);
+      }
+    }, 380);
+  }
+
+  starBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    savePlanetWithLove();
+  });
+  starBtn.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    savePlanetWithLove();
+  }, { passive: false });
 })();
 
 /* ── Share Functions ── */
