@@ -1080,31 +1080,454 @@ body.beat-hit .love-star-btn{filter:brightness(1.12)}
 .variation-multilang .affirmation-card{border-color:rgba(255,200,100,0.15)}
 .variation-multilang .affirmation-card:hover{border-color:rgba(255,200,100,0.4);box-shadow:0 8px 24px rgba(255,200,100,0.1)}
 
-.variation-starwars{--accent:160,210,255;--accent-hue:210}
+.variation-starwars{--accent:160,210,255;--accent-hue:210;--saber-blue:#4fc3f7;--saber-red:#ff1744;--saber-green:#69f0ae;--sw-gold:#ffe81f;--sw-space:#000008}
 .variation-starwars .aurora-overlay{
   background:
-    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(160,210,255,0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(120,140,255,0.04) 0%, transparent 70%),
-    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.018) 0%, transparent 70%);
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(79,195,247,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255,23,68,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,232,31,0.015) 0%, transparent 70%);
 }
 .variation-starwars h1{
-  background:linear-gradient(135deg,#fff 0%,#d6e7ff 40%,#a0d2ff 70%,#fff 100%);
+  background:linear-gradient(135deg,#ffe81f 0%,#fff 40%,#ffe81f 70%,#fff 100%);
   background-size:200% 200%;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
 }
-.variation-starwars .love-word{color:#a0d2ff;text-shadow:0 0 6px rgba(160,210,255,0.26)}
-.variation-starwars .heart-divider{color:#a0d2ff}
-.variation-starwars .telegram-frame{border-color:rgba(160,210,255,0.22)}
-.variation-starwars .telegram-frame::before{color:#a0d2ff;text-shadow:0 0 10px rgba(160,210,255,0.35)}
+.variation-starwars .love-word{color:#ffe81f;text-shadow:0 0 8px rgba(255,232,31,0.4)}
+.variation-starwars .heart-divider{color:#ffe81f;opacity:0.7}
+.variation-starwars .telegram-frame{
+  border-color:rgba(255,232,31,0.22);
+  background:rgba(0,0,20,0.6);
+  backdrop-filter:blur(16px);
+}
+.variation-starwars .telegram-frame::before{color:#ffe81f;text-shadow:0 0 12px rgba(255,232,31,0.45);content:'GALACTIC LOVE TRANSMISSION'}
 .variation-starwars .love-declaration{
-  background:linear-gradient(135deg,#a0d2ff,#5aa7ff,#fff,#a0d2ff);
+  background:linear-gradient(135deg,#ffe81f,#fff,#4fc3f7,#ffe81f);
   background-size:400% 400%;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 22px rgba(160,210,255,0.22));
+  filter:drop-shadow(0 0 28px rgba(255,232,31,0.35));
 }
-.variation-starwars .share-btn{background:linear-gradient(135deg,#5aa7ff,#a0d2ff,#5aa7ff)}
-.variation-starwars .affirmation-card{border-color:rgba(160,210,255,0.12)}
-.variation-starwars .affirmation-card:hover{border-color:rgba(160,210,255,0.32);box-shadow:0 8px 24px rgba(160,210,255,0.08)}
+.variation-starwars .share-btn{background:linear-gradient(135deg,#1565c0,#4fc3f7,#1565c0)}
+.variation-starwars .affirmation-card{
+  border-color:rgba(79,195,247,0.18);
+  background:rgba(0,0,30,0.5);
+}
+.variation-starwars .affirmation-card:hover{border-color:rgba(255,232,31,0.4);box-shadow:0 8px 24px rgba(79,195,247,0.15)}
+.variation-starwars .telegram-body{color:#c8dce8}
+.variation-starwars .telegram-header{color:#5a8a9a}
+.variation-starwars .telegram-header span{color:#ffe81f}
+.variation-starwars .telegram-stamp{color:#5a8a9a}
+.variation-starwars .quote{
+  border-left-color:#4fc3f7;
+  background:rgba(79,195,247,0.04);
+}
+.variation-starwars .quote::after{background:linear-gradient(180deg,#4fc3f7,#1565c0,#4fc3f7)}
+.variation-starwars p,.variation-starwars .quote{color:#a0c0d8}
+.variation-starwars em{color:#7ecbf5}
+.variation-starwars strong{color:#ffe81f}
+.variation-starwars h2{color:#4fc3f7}
+.variation-starwars .video-section{
+  background:rgba(79,195,247,0.06);
+  border-color:rgba(79,195,247,0.2);
+}
+.variation-starwars .video-section::before{
+  background:linear-gradient(135deg,rgba(79,195,247,0.2),transparent,rgba(255,232,31,0.15));
+}
+.variation-starwars .video-section h3{color:#4fc3f7}
+.variation-starwars .counter-box{
+  background:rgba(79,195,247,0.08);
+  border-color:rgba(79,195,247,0.2);
+  color:#7ecbf5;
+}
+.variation-starwars .counter-box .counter-num{color:#ffe81f}
+.variation-starwars .counter-pulse{background:#4fc3f7}
+.variation-starwars .breathing-heart{filter:drop-shadow(0 0 12px rgba(79,195,247,0.5)) hue-rotate(160deg)}
+.variation-starwars .share-link-btn{border-color:rgba(79,195,247,0.5);color:#7ecbf5}
+.variation-starwars .share-link-btn:hover{background:rgba(79,195,247,0.15);border-color:#4fc3f7}
+
+/* ── SW Opening Crawl ── */
+.sw-crawl-container{
+  display:none;
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:10000;
+  background:#000;
+  overflow:hidden;
+  cursor:pointer;
+}
+.sw-crawl-container.active{display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sw-crawl-skip{
+  position:absolute;bottom:24px;right:24px;
+  font-family:'Inter',sans-serif;font-size:0.8rem;
+  color:rgba(255,232,31,0.5);letter-spacing:2px;
+  z-index:10001;
+  animation:sw-skip-pulse 2s ease-in-out infinite;
+}
+@keyframes sw-skip-pulse{0%,100%{opacity:0.4}50%{opacity:0.8}}
+.sw-intro-text{
+  color:#4fc3f7;
+  font-family:'Inter',sans-serif;
+  font-size:clamp(1rem,2.5vw,1.4rem);
+  text-align:center;
+  opacity:0;
+  animation:sw-intro-fade 4s ease-in-out forwards;
+}
+@keyframes sw-intro-fade{0%{opacity:0}20%{opacity:1}80%{opacity:1}100%{opacity:0}}
+.sw-logo{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(2.5rem,8vw,6rem);
+  font-weight:900;
+  color:#ffe81f;
+  text-align:center;
+  letter-spacing:0.08em;
+  line-height:1;
+  text-shadow:0 0 40px rgba(255,232,31,0.5),0 0 80px rgba(255,232,31,0.3);
+  opacity:0;
+  transform:scale(1.5);
+  animation:sw-logo-zoom 6s ease-in-out forwards;
+  animation-delay:4.5s;
+}
+@keyframes sw-logo-zoom{0%{opacity:0;transform:scale(1.5)}15%{opacity:1;transform:scale(1.2)}30%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(0)}}
+.sw-crawl-perspective{
+  position:absolute;bottom:0;left:50%;
+  width:min(90vw,700px);
+  transform:translateX(-50%);
+  perspective:400px;
+  overflow:hidden;
+  height:100%;
+  opacity:0;
+  animation:sw-crawl-appear 1s ease forwards;
+  animation-delay:10s;
+}
+@keyframes sw-crawl-appear{0%{opacity:0}100%{opacity:1}}
+.sw-crawl-text{
+  position:absolute;
+  top:100%;
+  width:100%;
+  transform-origin:50% 100%;
+  transform:rotateX(25deg);
+  animation:sw-crawl-scroll 55s linear forwards;
+  animation-delay:10s;
+}
+@keyframes sw-crawl-scroll{
+  0%{top:100%}
+  100%{top:-300%}
+}
+.sw-crawl-text h2{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(1.6rem,4vw,2.4rem);
+  color:#ffe81f;
+  text-align:center;
+  margin-bottom:24px;
+  font-weight:700;
+}
+.sw-crawl-text p{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(1rem,2.5vw,1.35rem);
+  color:#ffe81f;
+  text-align:justify;
+  line-height:1.8;
+  margin-bottom:20px;
+  opacity:0.95;
+}
+.sw-stars-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 40% 20%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 55% 45%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 70% 10%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1px 1px at 85% 60%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 15% 75%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 45% 85%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 65% 70%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.8), transparent),
+    radial-gradient(1.5px 1.5px at 20% 50%, rgba(79,195,247,0.6), transparent),
+    radial-gradient(1.5px 1.5px at 80% 80%, rgba(255,232,31,0.4), transparent);
+}
+
+/* ── SW Hyperspace Effect ── */
+.sw-hyperspace{
+  display:none;
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:9999;pointer-events:none;
+  background:radial-gradient(ellipse at center,rgba(79,195,247,0.3),transparent 60%);
+}
+.sw-hyperspace.active{display:block;animation:sw-hyperspace-flash 1.5s ease-out forwards}
+@keyframes sw-hyperspace-flash{
+  0%{opacity:0;background:radial-gradient(ellipse at center,rgba(255,255,255,0.0),transparent 40%)}
+  15%{opacity:1;background:radial-gradient(ellipse at center,rgba(255,255,255,1),rgba(79,195,247,0.8) 30%,transparent 70%)}
+  40%{opacity:0.8;background:radial-gradient(ellipse at center,rgba(79,195,247,0.6),transparent 50%)}
+  100%{opacity:0;background:radial-gradient(ellipse at center,rgba(0,0,30,0.0),transparent)}
+}
+.sw-hyperspace-lines{
+  position:absolute;inset:0;
+  overflow:hidden;
+}
+.sw-hyper-line{
+  position:absolute;
+  left:50%;top:50%;
+  width:3px;height:0;
+  background:linear-gradient(to bottom,transparent,#fff,#4fc3f7,transparent);
+  transform-origin:center top;
+  animation:sw-hyper-streak 0.8s ease-out forwards;
+}
+@keyframes sw-hyper-streak{
+  0%{height:0;opacity:1}
+  100%{height:100vh;opacity:0}
+}
+
+/* ── SW Falling Stars ── */
+.sw-falling-star{
+  position:fixed;
+  width:3px;height:3px;
+  border-radius:50%;
+  background:#fff;
+  z-index:3;pointer-events:none;
+  box-shadow:0 0 6px #fff,0 0 12px rgba(79,195,247,0.5);
+  animation:sw-fall-streak var(--fall-dur,2s) linear forwards;
+}
+.sw-falling-star::after{
+  content:'';
+  position:absolute;
+  top:0;left:50%;
+  transform:translateX(-50%);
+  width:1px;height:60px;
+  background:linear-gradient(to top,transparent,rgba(255,255,255,0.8),transparent);
+}
+@keyframes sw-fall-streak{
+  0%{transform:translate(0,0) scale(1);opacity:1}
+  70%{opacity:0.8}
+  100%{transform:translate(var(--fall-dx,-100px),var(--fall-dy,100vh)) scale(0.3);opacity:0}
+}
+
+/* ── SW Lightsaber Glow Dividers ── */
+.variation-starwars .heart-divider{
+  position:relative;
+  letter-spacing:0;
+  font-size:0;
+  height:4px;
+  margin:48px auto;
+  width:80%;max-width:500px;
+  background:linear-gradient(90deg,transparent,#4fc3f7 20%,#fff 50%,#4fc3f7 80%,transparent);
+  border-radius:4px;
+  box-shadow:0 0 12px rgba(79,195,247,0.6),0 0 30px rgba(79,195,247,0.3);
+  animation:sw-saber-divider-pulse 3s ease-in-out infinite;
+  opacity:1;
+  overflow:visible;
+}
+.variation-starwars .heart-divider::before,.variation-starwars .heart-divider::after{
+  content:'';
+  position:absolute;top:50%;
+  width:12px;height:12px;border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 8px #4fc3f7,0 0 20px rgba(79,195,247,0.6);
+  transform:translateY(-50%);
+}
+.variation-starwars .heart-divider::before{left:-6px}
+.variation-starwars .heart-divider::after{right:-6px}
+@keyframes sw-saber-divider-pulse{
+  0%,100%{box-shadow:0 0 12px rgba(79,195,247,0.6),0 0 30px rgba(79,195,247,0.3);opacity:0.7}
+  50%{box-shadow:0 0 20px rgba(79,195,247,0.9),0 0 50px rgba(79,195,247,0.5);opacity:1}
+}
+
+/* ── SW Laser Blasters (page-wide) ── */
+.sw-laser{
+  position:fixed;
+  z-index:4;pointer-events:none;
+  height:2px;
+  border-radius:2px;
+  animation:sw-laser-shoot var(--laser-dur,0.6s) linear forwards;
+  opacity:0;
+}
+.sw-laser.blue{
+  background:linear-gradient(90deg,transparent,#4fc3f7,#fff,#4fc3f7,transparent);
+  box-shadow:0 0 6px #4fc3f7,0 0 15px rgba(79,195,247,0.5);
+}
+.sw-laser.red{
+  background:linear-gradient(90deg,transparent,#ff1744,#ff8a80,#ff1744,transparent);
+  box-shadow:0 0 6px #ff1744,0 0 15px rgba(255,23,68,0.5);
+}
+.sw-laser.green{
+  background:linear-gradient(90deg,transparent,#69f0ae,#b9f6ca,#69f0ae,transparent);
+  box-shadow:0 0 6px #69f0ae,0 0 15px rgba(105,240,174,0.5);
+}
+@keyframes sw-laser-shoot{
+  0%{opacity:0;transform:scaleX(0) translateX(0)}
+  10%{opacity:1}
+  60%{opacity:1;transform:scaleX(1) translateX(var(--laser-tx,50vw))}
+  100%{opacity:0;transform:scaleX(1.2) translateX(var(--laser-tx,50vw))}
+}
+
+/* ── SW Character Cards ── */
+.sw-characters-grid{
+  display:none;
+  grid-template-columns:repeat(auto-fill,minmax(140px,1fr));
+  gap:14px;
+  max-width:620px;
+  margin:28px auto;
+}
+.variation-starwars .sw-characters-grid{display:grid}
+.sw-char-card{
+  background:rgba(0,0,30,0.7);
+  border:1px solid rgba(79,195,247,0.2);
+  border-radius:14px;
+  padding:16px 10px;
+  text-align:center;
+  transition:all 0.35s ease;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+}
+.sw-char-card::before{
+  content:'';position:absolute;inset:-50%;
+  background:radial-gradient(circle,rgba(79,195,247,0.05),transparent 60%);
+  opacity:0;transition:opacity 0.4s ease;
+}
+.sw-char-card:hover::before{opacity:1}
+.sw-char-card:hover{
+  border-color:rgba(255,232,31,0.4);
+  transform:translateY(-3px);
+  box-shadow:0 6px 20px rgba(79,195,247,0.12);
+}
+.sw-char-icon{font-size:2.2rem;margin-bottom:6px;display:block}
+.sw-char-name{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:0.85rem;
+  color:#ffe81f;
+  font-weight:700;
+  letter-spacing:0.5px;
+}
+.sw-char-title{
+  font-size:0.72rem;
+  color:#5a8a9a;
+  margin-top:3px;
+  font-style:italic;
+}
+.sw-char-quote{
+  font-size:0.7rem;
+  color:#7ecbf5;
+  margin-top:6px;
+  font-style:italic;
+  line-height:1.4;
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+  transition:all 0.4s ease;
+}
+.sw-char-card:hover .sw-char-quote{opacity:1;max-height:80px;margin-top:8px}
+@media(max-width:600px){
+  .sw-characters-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .sw-char-icon{font-size:1.8rem}
+}
+
+/* ── SW Yoda Wisdom Section ── */
+.sw-yoda-section{
+  display:none;
+  text-align:center;
+  margin:40px auto;
+  max-width:560px;
+}
+.variation-starwars .sw-yoda-section{display:block}
+.sw-yoda-icon{font-size:3.5rem;margin-bottom:16px;display:block;filter:drop-shadow(0 0 20px rgba(105,240,174,0.4))}
+.sw-yoda-quote{
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:clamp(1.1rem,3vw,1.5rem);
+  color:#69f0ae;
+  font-style:italic;
+  line-height:1.7;
+  text-shadow:0 0 15px rgba(105,240,174,0.2);
+  position:relative;
+  padding:20px 28px;
+  border:1px solid rgba(105,240,174,0.15);
+  border-radius:16px;
+  background:rgba(105,240,174,0.03);
+}
+.sw-yoda-quote::before{content:'"';position:absolute;top:8px;left:12px;font-size:2.5rem;color:rgba(105,240,174,0.3)}
+.sw-yoda-quote::after{content:'"';position:absolute;bottom:-8px;right:12px;font-size:2.5rem;color:rgba(105,240,174,0.3)}
+.sw-yoda-attr{
+  font-size:0.8rem;
+  color:#5a8a7a;
+  margin-top:12px;
+  letter-spacing:2px;
+  font-family:'Special Elite',cursive;
+}
+
+/* ── SW Scene Canvas (TIE Fighters, X-Wings, Death Star) ── */
+#sw-scene-canvas{
+  display:none;
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:1;pointer-events:none;
+}
+.variation-starwars #sw-scene-canvas{display:block}
+
+/* ── SW Force Particles ── */
+.sw-force-particle{
+  position:fixed;
+  width:2px;height:2px;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:3;
+  animation:sw-force-float var(--fp-dur,4s) ease-in-out forwards;
+}
+@keyframes sw-force-float{
+  0%{opacity:0;transform:translate(0,0) scale(0.5)}
+  20%{opacity:1}
+  80%{opacity:0.8}
+  100%{opacity:0;transform:translate(var(--fp-dx,20px),var(--fp-dy,-80px)) scale(0)}
+}
+
+/* ── SW Hologram effect on telegram ── */
+.variation-starwars .telegram-frame{
+  animation:sw-hologram-flicker 8s ease-in-out infinite;
+}
+@keyframes sw-hologram-flicker{
+  0%,100%{box-shadow:0 0 15px rgba(79,195,247,0.08),inset 0 0 15px rgba(79,195,247,0.03)}
+  20%{box-shadow:0 0 20px rgba(79,195,247,0.12),inset 0 0 20px rgba(79,195,247,0.05)}
+  21%{box-shadow:0 0 5px rgba(79,195,247,0.02),inset 0 0 5px rgba(79,195,247,0.01)}
+  23%{box-shadow:0 0 25px rgba(79,195,247,0.15),inset 0 0 25px rgba(79,195,247,0.06)}
+  50%{box-shadow:0 0 30px rgba(79,195,247,0.18),inset 0 0 30px rgba(79,195,247,0.08)}
+  70%{box-shadow:0 0 20px rgba(79,195,247,0.10),inset 0 0 20px rgba(79,195,247,0.04)}
+  71%{box-shadow:0 0 3px rgba(79,195,247,0.01),inset 0 0 3px rgba(79,195,247,0.01)}
+  73%{box-shadow:0 0 22px rgba(79,195,247,0.13),inset 0 0 22px rgba(79,195,247,0.05)}
+}
+
+/* ── SW scanline overlay on telegram ── */
+.variation-starwars .telegram-frame::after{
+  content:'';
+  position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(79,195,247,0.02) 2px,rgba(79,195,247,0.02) 4px);
+  pointer-events:none;
+  border-radius:18px;
+  animation:sw-scanlines 0.1s steps(2) infinite;
+}
+@keyframes sw-scanlines{0%{transform:translateY(0)}100%{transform:translateY(4px)}}
+
+/* ── SW Episode Badges ── */
+.sw-episode-badges{
+  display:none;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin:24px auto;
+  max-width:560px;
+}
+.variation-starwars .sw-episode-badges{display:flex}
+.sw-episode-badge{
+  padding:8px 16px;
+  border:1px solid rgba(255,232,31,0.25);
+  border-radius:20px;
+  font-family:Georgia,'Times New Roman',serif;
+  font-size:0.75rem;
+  color:#ffe81f;
+  letter-spacing:1px;
+  background:rgba(255,232,31,0.04);
+  transition:all 0.3s ease;
+}
+.sw-episode-badge:hover{
+  background:rgba(255,232,31,0.1);
+  border-color:rgba(255,232,31,0.5);
+  box-shadow:0 0 15px rgba(255,232,31,0.1);
+}
 
 /* ── Accessibility: Reduced Motion ── */
 @media(prefers-reduced-motion:reduce){
@@ -1298,6 +1721,31 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
 </head>
 <body>
 
+<!-- SW Opening Crawl (shown only for starwars variation) -->
+<div class="sw-crawl-container" id="sw-crawl-container" aria-hidden="true">
+  <div class="sw-stars-bg" aria-hidden="true"></div>
+  <div class="sw-intro-text" id="sw-intro-text">A long time ago in a galaxy far, far away....</div>
+  <div class="sw-logo" id="sw-logo">LOVE<br>WARS</div>
+  <div class="sw-crawl-perspective" id="sw-crawl-perspective">
+    <div class="sw-crawl-text" id="sw-crawl-text">
+      <h2>Episode IV<br>A NEW LOVE</h2>
+      <p>It is a period of quiet hearts. Across the galaxy, people have forgotten to tell each other the most important truth: you are loved.</p>
+      <p>But a rebel alliance of love bombers has emerged, armed with nothing but kindness, courage, and an unstoppable belief that love is the most powerful force in the universe.</p>
+      <p>One brave soul has intercepted this transmission and sent it directly to you — a love bomb of galactic proportions, carrying a message that even the Empire cannot silence:</p>
+      <p>You are loved. You have always been loved. And the Force of love surrounds you, penetrates you, and binds the galaxy together....</p>
+    </div>
+  </div>
+  <div class="sw-crawl-skip" id="sw-crawl-skip">TAP TO SKIP</div>
+</div>
+
+<!-- SW Hyperspace Transition -->
+<div class="sw-hyperspace" id="sw-hyperspace" aria-hidden="true">
+  <div class="sw-hyperspace-lines" id="sw-hyperspace-lines"></div>
+</div>
+
+<!-- SW Scene Canvas (TIE fighters, X-Wings, Death Star) -->
+<canvas id="sw-scene-canvas"></canvas>
+
 <canvas id="star-canvas"></canvas>
 <div class="aurora-overlay"></div>
 <canvas id="heart-canvas"></canvas>
@@ -1337,6 +1785,20 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
         <div class="planet" id="love-planet" aria-hidden="true"></div>
       </div>
       <p class="scene-sub">Tap the Love Star. Send <span class="love-word">love lasers</span>. Save a planet with love.</p>
+    </div>
+
+    <!-- SW Episode Badges (Original Trilogy) -->
+    <div class="sw-episode-badges" aria-label="The Original Trilogy">
+      <span class="sw-episode-badge">EP IV · A New Hope</span>
+      <span class="sw-episode-badge">EP V · The Empire Strikes Back</span>
+      <span class="sw-episode-badge">EP VI · Return of the Jedi</span>
+    </div>
+
+    <!-- SW Yoda Wisdom (rotates quotes) -->
+    <div class="sw-yoda-section" id="sw-yoda-section">
+      <span class="sw-yoda-icon">🧙‍♂️</span>
+      <div class="sw-yoda-quote" id="sw-yoda-quote">Do or do not. There is no try. But love — love you must always try.</div>
+      <div class="sw-yoda-attr">— MASTER YODA</div>
     </div>
 
     <!-- Philly LOVE Sculpture (hidden unless philly variation) -->
@@ -1419,6 +1881,77 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
 
+  <!-- ═══ SW HEROES OF THE ORIGINAL TRILOGY ═══ -->
+  <div class="section" id="s-sw-characters">
+    <h2 class="sw-yoda-section" style="display:none;color:#ffe81f;font-style:normal;font-family:Georgia,'Times New Roman',serif">Heroes of the Original Trilogy</h2>
+    <p class="sw-yoda-section" style="display:none">Every character in this saga taught us something about love, loyalty, and the light inside all of us.</p>
+    <div class="sw-characters-grid" id="sw-characters-grid">
+      <div class="sw-char-card">
+        <span class="sw-char-icon">⚔️</span>
+        <span class="sw-char-name">Luke Skywalker</span>
+        <span class="sw-char-title">The Last Hope</span>
+        <span class="sw-char-quote">"I am a Jedi, like my father before me."</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">👑</span>
+        <span class="sw-char-name">Princess Leia</span>
+        <span class="sw-char-title">Leader of the Rebellion</span>
+        <span class="sw-char-quote">"Help me, Obi-Wan Kenobi. You're my only hope."</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">🚀</span>
+        <span class="sw-char-name">Han Solo</span>
+        <span class="sw-char-title">Scoundrel with a Heart</span>
+        <span class="sw-char-quote">"I know." — the most romantic line ever spoken.</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">🧙‍♂️</span>
+        <span class="sw-char-name">Yoda</span>
+        <span class="sw-char-title">Jedi Grand Master</span>
+        <span class="sw-char-quote">"Luminous beings are we, not this crude matter."</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">🌟</span>
+        <span class="sw-char-name">Obi-Wan Kenobi</span>
+        <span class="sw-char-title">The Wise Guardian</span>
+        <span class="sw-char-quote">"The Force will be with you. Always."</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">😈</span>
+        <span class="sw-char-name">Darth Vader</span>
+        <span class="sw-char-title">Redeemed by Love</span>
+        <span class="sw-char-quote">"You were right about me. Tell your sister... you were right."</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">🐻</span>
+        <span class="sw-char-name">Chewbacca</span>
+        <span class="sw-char-title">Loyal Co-Pilot</span>
+        <span class="sw-char-quote">RRRAARRWHHGWWR! (Translation: I love you, pal.)</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">🤖</span>
+        <span class="sw-char-name">R2-D2 & C-3PO</span>
+        <span class="sw-char-title">The Best Duo in the Galaxy</span>
+        <span class="sw-char-quote">"We're doomed!" — but love always saves the day.</span>
+      </div>
+      <div class="sw-char-card">
+        <span class="sw-char-icon">🎭</span>
+        <span class="sw-char-name">Lando Calrissian</span>
+        <span class="sw-char-title">Galactic Smooth Operator</span>
+        <span class="sw-char-quote">"This deal is getting better all the time."</span>
+      </div>
+    </div>
+
+    <!-- Second Yoda Wisdom Block -->
+    <div class="sw-yoda-section" id="sw-yoda-section-2" style="margin-top:32px">
+      <span class="sw-yoda-icon">✨</span>
+      <div class="sw-yoda-quote" id="sw-yoda-quote-2">Fear is the path to the dark side. But love — love is the path to everything luminous.</div>
+      <div class="sw-yoda-attr">— MASTER YODA</div>
+    </div>
+  </div>
+
+  <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
+
   <!-- ═══ A LOVE LETTER ═══ (deepening the emotional connection) -->
   <div class="section" id="s-letter">
     <h2>A quiet truth from whoever sent this</h2>
@@ -1449,6 +1982,13 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
     <p>The answer has never once been <em>"worse."</em></p>
     <p>That's the whole secret of a love bomb. <span class="love-word">Love works.</span> When you send it. When you receive it. Between two people. No conditions, no fine print. It just <em>works.</em></p>
     <div class="love-declaration">You Are Loved</div>
+
+    <!-- SW Force Wisdom after declaration -->
+    <div class="sw-yoda-section" id="sw-yoda-section-3" style="margin-top:24px">
+      <span class="sw-yoda-icon">💫</span>
+      <div class="sw-yoda-quote" id="sw-yoda-quote-3">Truly wonderful, the mind of a loved one is. Already inside you, this love is. Recognize it, you must.</div>
+      <div class="sw-yoda-attr">— MASTER YODA</div>
+    </div>
   </div>
 
   <div class="heart-divider">&#10084; &#10084; &#10084; &#10084; &#10084;</div>
@@ -3059,6 +3599,569 @@ document.head.appendChild(style);
     card.setAttribute('role', 'article');
     })(cards[i]);
   }
+})();
+
+/* ═══════════════════════════════════════════════ */
+/* STAR WARS EPIC EXPERIENCE ENGINE               */
+/* ═══════════════════════════════════════════════ */
+
+/* ── SW Opening Crawl ── */
+(function initSWCrawl() {
+  if (currentVariationId !== 'starwars') return;
+
+  var crawlContainer = document.getElementById('sw-crawl-container');
+  if (!crawlContainer) return;
+
+  var hasSeenCrawl = false;
+  try { hasSeenCrawl = sessionStorage.getItem('sw-crawl-seen') === '1'; } catch(e) {}
+
+  if (hasSeenCrawl) return;
+
+  crawlContainer.classList.add('active');
+  crawlContainer.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+
+  function endCrawl() {
+    try { sessionStorage.setItem('sw-crawl-seen', '1'); } catch(e) {}
+    crawlContainer.style.transition = 'opacity 1.5s ease';
+    crawlContainer.style.opacity = '0';
+    setTimeout(function() {
+      crawlContainer.classList.remove('active');
+      crawlContainer.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      triggerHyperspace();
+    }, 1500);
+  }
+
+  crawlContainer.addEventListener('click', endCrawl);
+  crawlContainer.addEventListener('touchend', function(e) { e.preventDefault(); endCrawl(); }, { passive: false });
+  setTimeout(endCrawl, 60000);
+})();
+
+/* ── SW Hyperspace Jump ── */
+function triggerHyperspace() {
+  if (currentVariationId !== 'starwars') return;
+  var hyper = document.getElementById('sw-hyperspace');
+  var linesContainer = document.getElementById('sw-hyperspace-lines');
+  if (!hyper || !linesContainer) return;
+
+  while (linesContainer.firstChild) linesContainer.removeChild(linesContainer.firstChild);
+  var lineCount = Math.min(60, Math.max(20, Math.floor(window.innerWidth / 15)));
+  for (var i = 0; i < lineCount; i++) {
+    var line = document.createElement('div');
+    line.className = 'sw-hyper-line';
+    var angle = Math.random() * 360;
+    var rad = angle * Math.PI / 180;
+    line.style.transform = 'rotate(' + angle + 'deg)';
+    line.style.animationDelay = (Math.random() * 0.3) + 's';
+    line.style.left = (50 + Math.cos(rad) * 5) + '%';
+    line.style.top = (50 + Math.sin(rad) * 5) + '%';
+    line.style.opacity = (0.5 + Math.random() * 0.5).toFixed(2);
+    linesContainer.appendChild(line);
+  }
+
+  hyper.classList.add('active');
+  hyper.setAttribute('aria-hidden', 'false');
+
+  runLoveQuake();
+  triggerBeatHaptics([30, 15, 30, 15, 60, 30, 120]);
+
+  setTimeout(function() {
+    hyper.classList.remove('active');
+    hyper.setAttribute('aria-hidden', 'true');
+  }, 1800);
+}
+
+/* ── SW Falling Stars (continuous) ── */
+(function initSWFallingStars() {
+  if (currentVariationId !== 'starwars') return;
+
+  function spawnFallingStar() {
+    if (document.hidden || reduceMotion) return;
+    var star = document.createElement('div');
+    star.className = 'sw-falling-star';
+    var startX = Math.random() * window.innerWidth;
+    var startY = -20;
+    star.style.left = startX + 'px';
+    star.style.top = startY + 'px';
+    var dx = (Math.random() - 0.5) * 300;
+    var dy = window.innerHeight + 100;
+    var dur = 1.5 + Math.random() * 2;
+    star.style.setProperty('--fall-dx', dx + 'px');
+    star.style.setProperty('--fall-dy', dy + 'px');
+    star.style.setProperty('--fall-dur', dur + 's');
+    var size = 1 + Math.random() * 3;
+    star.style.width = size + 'px';
+    star.style.height = size + 'px';
+    document.body.appendChild(star);
+    setTimeout(function() { try { star.remove(); } catch(e) {} }, dur * 1000 + 200);
+  }
+
+  function scheduleNext() {
+    var delay = 800 + Math.random() * 3000;
+    if (lowPowerMode) delay *= 2;
+    setTimeout(function() {
+      spawnFallingStar();
+      scheduleNext();
+    }, delay);
+  }
+  scheduleNext();
+})();
+
+/* ── SW Page-Wide Laser Blasters ── */
+(function initSWLasers() {
+  if (currentVariationId !== 'starwars') return;
+
+  function fireLaser() {
+    if (document.hidden || reduceMotion) return;
+    var laser = document.createElement('div');
+    var colors = ['blue', 'red', 'green', 'blue', 'blue', 'red'];
+    laser.className = 'sw-laser ' + colors[Math.floor(Math.random() * colors.length)];
+
+    var fromLeft = Math.random() > 0.5;
+    var y = Math.random() * window.innerHeight;
+    var width = 80 + Math.random() * 200;
+    var dur = 0.4 + Math.random() * 0.5;
+
+    laser.style.top = y + 'px';
+    laser.style.width = width + 'px';
+    laser.style.setProperty('--laser-dur', dur + 's');
+
+    if (fromLeft) {
+      laser.style.left = '-' + width + 'px';
+      laser.style.setProperty('--laser-tx', (window.innerWidth + width * 2) + 'px');
+    } else {
+      laser.style.right = '-' + width + 'px';
+      laser.style.setProperty('--laser-tx', '-' + (window.innerWidth + width * 2) + 'px');
+    }
+
+    document.body.appendChild(laser);
+    setTimeout(function() { try { laser.remove(); } catch(e) {} }, dur * 1000 + 300);
+  }
+
+  function scheduleNext() {
+    var delay = 2000 + Math.random() * 6000;
+    if (lowPowerMode) delay *= 2;
+    if (extraMode) delay *= 0.5;
+    setTimeout(function() {
+      fireLaser();
+      if (Math.random() > 0.6) {
+        setTimeout(fireLaser, 80 + Math.random() * 150);
+      }
+      scheduleNext();
+    }, delay);
+  }
+  scheduleNext();
+})();
+
+/* ── SW Force Particles on Scroll ── */
+(function initSWForceParticles() {
+  if (currentVariationId !== 'starwars') return;
+  var lastScroll = 0;
+
+  window.addEventListener('scroll', function() {
+    if (reduceMotion || lowPowerMode) return;
+    var now = Date.now();
+    if (now - lastScroll < 300) return;
+    lastScroll = now;
+
+    var count = extraMode ? 4 : 2;
+    for (var i = 0; i < count; i++) {
+      var p = document.createElement('div');
+      p.className = 'sw-force-particle';
+      var colors = ['#4fc3f7', '#69f0ae', '#ffe81f', '#fff', '#4fc3f7'];
+      p.style.background = colors[Math.floor(Math.random() * colors.length)];
+      p.style.boxShadow = '0 0 6px ' + p.style.background;
+      p.style.left = (Math.random() * window.innerWidth) + 'px';
+      p.style.top = (window.innerHeight * 0.3 + Math.random() * window.innerHeight * 0.4) + 'px';
+      var dx = (Math.random() - 0.5) * 100;
+      var dy = -60 - Math.random() * 100;
+      var dur = 2 + Math.random() * 3;
+      p.style.setProperty('--fp-dx', dx + 'px');
+      p.style.setProperty('--fp-dy', dy + 'px');
+      p.style.setProperty('--fp-dur', dur + 's');
+      var size = 1 + Math.random() * 3;
+      p.style.width = size + 'px';
+      p.style.height = size + 'px';
+      document.body.appendChild(p);
+      (function(el, d) { setTimeout(function() { try { el.remove(); } catch(e) {} }, d * 1000 + 200); })(p, dur);
+    }
+  }, { passive: true });
+})();
+
+/* ── SW Scene Canvas: TIE Fighters, X-Wings, Death Star ── */
+(function initSWSceneCanvas() {
+  if (currentVariationId !== 'starwars') return;
+
+  var cvs = document.getElementById('sw-scene-canvas');
+  if (!cvs) return;
+  var c = cvs.getContext('2d');
+  var sw, sh;
+
+  function resizeSWCanvas() {
+    sw = cvs.width = window.innerWidth;
+    sh = cvs.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resizeSWCanvas);
+  resizeSWCanvas();
+
+  var deathStarX, deathStarY, deathStarR;
+  function positionDeathStar() {
+    deathStarR = Math.min(sw, sh) * 0.08;
+    deathStarX = sw * 0.85;
+    deathStarY = sh * 0.12;
+  }
+  positionDeathStar();
+  window.addEventListener('resize', positionDeathStar);
+
+  function drawDeathStar(pulse) {
+    c.save();
+    c.globalAlpha = 0.25 + pulse * 0.1;
+    c.beginPath();
+    c.arc(deathStarX, deathStarY, deathStarR, 0, Math.PI * 2);
+    var grad = c.createRadialGradient(deathStarX - deathStarR * 0.3, deathStarY - deathStarR * 0.3, 0, deathStarX, deathStarY, deathStarR);
+    grad.addColorStop(0, 'rgba(180,180,180,0.5)');
+    grad.addColorStop(0.5, 'rgba(100,100,100,0.3)');
+    grad.addColorStop(1, 'rgba(40,40,40,0.2)');
+    c.fillStyle = grad;
+    c.fill();
+
+    c.beginPath();
+    c.arc(deathStarX, deathStarY, deathStarR, 0, Math.PI * 2);
+    c.strokeStyle = 'rgba(79,195,247,' + (0.15 + pulse * 0.1).toFixed(2) + ')';
+    c.lineWidth = 1;
+    c.stroke();
+
+    c.beginPath();
+    c.moveTo(deathStarX - deathStarR, deathStarY - deathStarR * 0.1);
+    c.quadraticCurveTo(deathStarX, deathStarY - deathStarR * 0.2, deathStarX + deathStarR, deathStarY - deathStarR * 0.1);
+    c.strokeStyle = 'rgba(79,195,247,0.2)';
+    c.lineWidth = 0.8;
+    c.stroke();
+
+    c.beginPath();
+    c.arc(deathStarX + deathStarR * 0.2, deathStarY - deathStarR * 0.35, deathStarR * 0.18, 0, Math.PI * 2);
+    c.fillStyle = 'rgba(105,240,174,' + (0.15 + pulse * 0.2).toFixed(2) + ')';
+    c.fill();
+    c.strokeStyle = 'rgba(105,240,174,0.3)';
+    c.lineWidth = 0.5;
+    c.stroke();
+
+    if (pulse > 0.3) {
+      c.globalAlpha = pulse * 0.15;
+      c.beginPath();
+      c.arc(deathStarX, deathStarY, deathStarR * 1.4, 0, Math.PI * 2);
+      c.strokeStyle = 'rgba(105,240,174,0.2)';
+      c.lineWidth = 1;
+      c.stroke();
+    }
+    c.restore();
+  }
+
+  var ships = [];
+  var maxShips = lowPowerMode ? 3 : 6;
+
+  function TIEFighter() {
+    this.type = 'tie';
+    this.x = Math.random() > 0.5 ? -40 : sw + 40;
+    this.y = Math.random() * sh * 0.5;
+    this.vx = this.x < 0 ? (0.5 + Math.random() * 1.5) : -(0.5 + Math.random() * 1.5);
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.size = 8 + Math.random() * 6;
+    this.alpha = 0.2 + Math.random() * 0.3;
+  }
+  TIEFighter.prototype.update = function() {
+    this.x += this.vx;
+    this.y += this.vy;
+    return this.x > -60 && this.x < sw + 60 && this.y > -40 && this.y < sh + 40;
+  };
+  TIEFighter.prototype.draw = function() {
+    c.save();
+    c.globalAlpha = this.alpha;
+    c.translate(this.x, this.y);
+    var s = this.size;
+    c.fillStyle = '#667788';
+    c.fillRect(-s * 0.8, -s, s * 0.15, s * 2);
+    c.fillRect(s * 0.65, -s, s * 0.15, s * 2);
+    c.beginPath();
+    c.arc(0, 0, s * 0.4, 0, Math.PI * 2);
+    c.fillStyle = '#556677';
+    c.fill();
+    c.strokeStyle = 'rgba(79,195,247,0.4)';
+    c.lineWidth = 0.5;
+    c.stroke();
+    c.beginPath();
+    c.moveTo(-s * 0.65, 0);
+    c.lineTo(-s * 0.4, 0);
+    c.moveTo(s * 0.4, 0);
+    c.lineTo(s * 0.65, 0);
+    c.strokeStyle = '#778899';
+    c.lineWidth = 1;
+    c.stroke();
+    c.restore();
+  };
+
+  function XWing() {
+    this.type = 'xwing';
+    this.x = Math.random() > 0.5 ? -40 : sw + 40;
+    this.y = sh * 0.3 + Math.random() * sh * 0.5;
+    this.vx = this.x < 0 ? (0.8 + Math.random() * 2) : -(0.8 + Math.random() * 2);
+    this.vy = (Math.random() - 0.5) * 0.4;
+    this.size = 6 + Math.random() * 5;
+    this.alpha = 0.25 + Math.random() * 0.3;
+  }
+  XWing.prototype.update = function() {
+    this.x += this.vx;
+    this.y += this.vy;
+    return this.x > -60 && this.x < sw + 60;
+  };
+  XWing.prototype.draw = function() {
+    c.save();
+    c.globalAlpha = this.alpha;
+    c.translate(this.x, this.y);
+    var s = this.size;
+    var dir = this.vx > 0 ? 1 : -1;
+    c.fillStyle = '#99aabb';
+    c.fillRect(-s * dir, -s * 0.1, s * 2 * dir, s * 0.2);
+    c.fillStyle = '#aabbcc';
+    c.fillRect(-s * 0.8 * dir, -s * 0.8, s * 0.15 * dir, s * 1.6);
+    c.fillRect(s * 0.3 * dir, -s * 0.6, s * 0.12 * dir, s * 1.2);
+
+    c.fillStyle = '#ff6644';
+    c.beginPath();
+    c.arc(s * 1.0 * dir, 0, s * 0.12, 0, Math.PI * 2);
+    c.fill();
+
+    c.fillStyle = 'rgba(255,100,50,0.15)';
+    c.beginPath();
+    c.moveTo(-s * 1.2 * dir, -s * 0.05);
+    c.lineTo(-s * 2 * dir, 0);
+    c.lineTo(-s * 1.2 * dir, s * 0.05);
+    c.fill();
+    c.restore();
+  };
+
+  var shipSpawnTimer = 0;
+
+  function spawnShip() {
+    if (ships.length >= maxShips) return;
+    if (Math.random() > 0.5) {
+      ships.push(new TIEFighter());
+    } else {
+      ships.push(new XWing());
+    }
+  }
+
+  var swFrame = 0;
+  function animateSWScene() {
+    swFrame++;
+    if (lowPowerMode && swFrame % 3) {
+      requestAnimationFrame(animateSWScene);
+      return;
+    }
+    c.clearRect(0, 0, sw, sh);
+
+    if (currentVariationId !== 'starwars') {
+      requestAnimationFrame(animateSWScene);
+      return;
+    }
+
+    var pulse = 0.5 + Math.sin(swFrame * 0.02) * 0.5;
+    drawDeathStar(pulse);
+
+    shipSpawnTimer++;
+    var spawnRate = lowPowerMode ? 300 : 150;
+    if (shipSpawnTimer >= spawnRate) {
+      shipSpawnTimer = 0;
+      spawnShip();
+    }
+
+    ships = ships.filter(function(s) { return s.update(); });
+    ships.forEach(function(s) { s.draw(); });
+
+    requestAnimationFrame(animateSWScene);
+  }
+  animateSWScene();
+})();
+
+/* ── SW Yoda Quote Rotation ── */
+(function initSWYodaRotation() {
+  if (currentVariationId !== 'starwars') return;
+
+  var yodaQuotes = [
+    "Do or do not. There is no try. But love — love you must always try.",
+    "The greatest teacher, failure is. But love — love is the greatest healer.",
+    "Luminous beings are we, not this crude matter. Love, our true nature is.",
+    "In a dark place we find ourselves, and a little more love lights our way.",
+    "Size matters not. Look at me. Judge me by my size, do you? And well you should not. For love, size does not determine.",
+    "Always pass on what you have learned — especially love.",
+    "You must unlearn what you have learned. About being unlovable, that is.",
+    "Named must your fear be before banish it you can. But love — love banishes all fear.",
+    "Wars not make one great. But love — great, love makes everyone.",
+    "Patience you must have, young one. Love, in time, reveals itself it does.",
+    "When you look at the dark side, careful you must be. But love — love is the light that never fades.",
+    "Strong in the Force of love, you are. Know this, you must."
+  ];
+
+  var yodaQuotes2 = [
+    "Fear is the path to the dark side. But love — love is the path to everything luminous.",
+    "Attachment leads to jealousy. But selfless love — selfless love leads to peace.",
+    "The Force will be with you. Always. And so will love.",
+    "Train yourself to let go of everything you fear to lose. But love — hold onto love, you must.",
+    "Once you start down the dark path, forever will it dominate your destiny. Choose love, always.",
+    "Feel the Force of love around you. Between you, me, the tree, the rock — everywhere, love is."
+  ];
+
+  var yodaQuotes3 = [
+    "Truly wonderful, the mind of a loved one is. Already inside you, this love is. Recognize it, you must.",
+    "Much to learn, you still have. But loved, you already are.",
+    "To answer power with power, the Jedi way this is not. To answer darkness with love — that is the way.",
+    "Powerful you have become. The dark side I sense in you. But more powerful still — your love is.",
+    "Around the survivors, a perimeter create. Around the ones you love — your heart, forever open keep."
+  ];
+
+  function rotateQuote(elId, quotes, interval) {
+    var el = document.getElementById(elId);
+    if (!el) return;
+    var idx = 0;
+    setInterval(function() {
+      idx = (idx + 1) % quotes.length;
+      el.style.opacity = '0';
+      setTimeout(function() {
+        el.textContent = quotes[idx];
+        el.style.opacity = '1';
+      }, 500);
+    }, interval);
+    el.style.transition = 'opacity 0.5s ease';
+  }
+
+  rotateQuote('sw-yoda-quote', yodaQuotes, 8000);
+  rotateQuote('sw-yoda-quote-2', yodaQuotes2, 10000);
+  rotateQuote('sw-yoda-quote-3', yodaQuotes3, 12000);
+})();
+
+/* ── SW Character Card Lightsaber Glow on Hover ── */
+(function initSWCharCards() {
+  if (currentVariationId !== 'starwars') return;
+  var cards = document.querySelectorAll('.sw-char-card');
+  var saberColors = ['#4fc3f7', '#69f0ae', '#ffe81f', '#ff1744', '#4fc3f7', '#ff1744', '#69f0ae', '#4fc3f7', '#ffe81f'];
+  for (var i = 0; i < cards.length; i++) {
+    (function(card, color) {
+      card.addEventListener('mouseenter', function() {
+        card.style.boxShadow = '0 0 20px ' + color + '33, 0 0 40px ' + color + '1a, inset 0 0 15px ' + color + '0d';
+        card.style.borderColor = color + '66';
+      });
+      card.addEventListener('mouseleave', function() {
+        card.style.boxShadow = '';
+        card.style.borderColor = '';
+      });
+      card.addEventListener('click', function() {
+        triggerBeatHaptics([20, 10, 20]);
+        for (var j = 0; j < 6; j++) {
+          var rect = card.getBoundingClientRect();
+          hearts.push(new Heart(rect.left + rect.width * Math.random(), rect.top + rect.height * 0.5, true));
+        }
+        capHearts();
+      });
+    })(cards[i], saberColors[i % saberColors.length]);
+  }
+})();
+
+/* ── SW Starfield Enhancement: More Stars, Blue/White Tint ── */
+(function enhanceSWStarfield() {
+  if (currentVariationId !== 'starwars') return;
+
+  var starCanvas = document.getElementById('star-canvas');
+  if (!starCanvas) return;
+  var sctx = starCanvas.getContext('2d');
+
+  var extraStars = [];
+  var count = lowPowerMode ? 40 : 100;
+  for (var i = 0; i < count; i++) {
+    extraStars.push({
+      x: Math.random() * starCanvas.width,
+      y: Math.random() * starCanvas.height,
+      r: 0.3 + Math.random() * 1.2,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.003 + Math.random() * 0.01,
+      color: Math.random() > 0.6
+        ? [79, 195, 247]
+        : Math.random() > 0.3
+          ? [200, 220, 255]
+          : [255, 232, 31],
+    });
+  }
+
+  var swStarFrame = 0;
+  function drawExtraStars() {
+    swStarFrame++;
+    if (lowPowerMode && swStarFrame % 3) {
+      requestAnimationFrame(drawExtraStars);
+      return;
+    }
+    if (currentVariationId !== 'starwars') {
+      requestAnimationFrame(drawExtraStars);
+      return;
+    }
+    for (var i = 0; i < extraStars.length; i++) {
+      var s = extraStars[i];
+      s.phase += s.speed;
+      var alpha = 0.15 + Math.sin(s.phase) * 0.35 + 0.35;
+      sctx.beginPath();
+      sctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      sctx.fillStyle = 'rgba(' + s.color[0] + ',' + s.color[1] + ',' + s.color[2] + ',' + alpha.toFixed(2) + ')';
+      sctx.fill();
+    }
+    requestAnimationFrame(drawExtraStars);
+  }
+  drawExtraStars();
+})();
+
+/* ── SW Ambient Laser Bursts on Click ── */
+(function initSWClickLasers() {
+  if (currentVariationId !== 'starwars') return;
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('button') || e.target.closest('.yt-container') || e.target.closest('.sw-crawl-container')) return;
+
+    var count = extraMode ? 6 : 3;
+    for (var i = 0; i < count; i++) {
+      (function(idx) {
+        setTimeout(function() {
+          var laser = document.createElement('div');
+          var colors = ['blue', 'green', 'blue'];
+          laser.className = 'sw-laser ' + colors[idx % colors.length];
+          var angle = Math.random() * 360;
+          var width = 40 + Math.random() * 120;
+          laser.style.left = e.clientX + 'px';
+          laser.style.top = e.clientY + 'px';
+          laser.style.width = width + 'px';
+          laser.style.transformOrigin = '0 50%';
+          laser.style.transform = 'rotate(' + angle + 'deg)';
+          laser.style.setProperty('--laser-dur', '0.5s');
+          laser.style.setProperty('--laser-tx', '0px');
+          laser.style.animation = 'none';
+          laser.style.opacity = '0';
+          document.body.appendChild(laser);
+          requestAnimationFrame(function() {
+            laser.style.transition = 'opacity 0.1s ease';
+            laser.style.opacity = '1';
+            setTimeout(function() {
+              laser.style.transition = 'opacity 0.3s ease';
+              laser.style.opacity = '0';
+              setTimeout(function() { try { laser.remove(); } catch(e) {} }, 400);
+            }, 150);
+          });
+        }, idx * 60);
+      })(i);
+    }
+  });
+})();
+
+/* ── SW Dynamic Background: Deep Space Gradient ── */
+(function initSWBackground() {
+  if (currentVariationId !== 'starwars') return;
+  document.body.style.background = 'linear-gradient(180deg, #000008 0%, #000a1a 30%, #0a0020 60%, #000010 100%)';
 })();
 </script>
 
