@@ -2178,18 +2178,73 @@ function recoverVideoPlayback(errorCode) {
   } catch (e) {}
 }
 
+var __oembedCache = {};
+var __oembedInflight = {};
+function __setSongInfo(el, artist, title, note) {
+  if (!el) return;
+  while (el.firstChild) el.removeChild(el.firstChild);
+  var prefix = '♪ ';
+  if (note) prefix = prefix + note + ' · ';
+  if (artist) {
+    el.appendChild(document.createTextNode(prefix + artist + ' — '));
+  } else {
+    el.appendChild(document.createTextNode(prefix));
+  }
+  var em = document.createElement('em');
+  em.textContent = title || '';
+  el.appendChild(em);
+  setTimeout(function() { el.classList.add('visible'); }, 100);
+}
+function __fetchOembed(videoId, cb) {
+  if (!videoId) return cb(null);
+  if (__oembedCache[videoId]) return cb(__oembedCache[videoId]);
+  if (__oembedInflight[videoId]) return __oembedInflight[videoId].push(cb);
+  if (!window.fetch) return cb(null);
+
+  __oembedInflight[videoId] = [cb];
+  var url = 'https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=' + encodeURIComponent(videoId) + '&format=json';
+  fetch(url).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
+    if (data && data.title) {
+      __oembedCache[videoId] = { title: data.title, author: data.author_name || '' };
+    } else {
+      __oembedCache[videoId] = null;
+    }
+  }).catch(function() {
+    __oembedCache[videoId] = null;
+  }).finally(function() {
+    var list = __oembedInflight[videoId] || [];
+    delete __oembedInflight[videoId];
+    for (var i = 0; i < list.length; i++) {
+      try { list[i](__oembedCache[videoId]); } catch (e) {}
+    }
+  });
+}
+
 function updateSongInfo() {
   var el = document.getElementById('song-info');
   if (!el || !currentVariationConfig) return;
-  var title = currentVariationConfig.songTitle;
-  var artist = currentVariationConfig.songArtist;
+  var cfg = currentVariationConfig;
+  var title = cfg.songTitle;
+  var artist = cfg.songArtist;
+  var intendedId = cfg.videoId;
+  var actualId = activeVideoIdOverride || intendedId;
+  var isFallback = !!(activeVideoIdOverride && intendedId && activeVideoIdOverride !== intendedId);
+
+  if (isFallback) {
+    __setSongInfo(el, '', 'Loading fallback track…', 'Fallback');
+    __fetchOembed(actualId, function(info) {
+      if (!el) return;
+      if (info && info.title) {
+        __setSongInfo(el, info.author || '', info.title, 'Fallback video');
+      } else {
+        __setSongInfo(el, artist || '', title || 'Fallback video', 'Fallback');
+      }
+    });
+    return;
+  }
+
   if (title && artist) {
-    while (el.firstChild) el.removeChild(el.firstChild);
-    el.appendChild(document.createTextNode('♪ ' + artist + ' — '));
-    var em = document.createElement('em');
-    em.textContent = title;
-    el.appendChild(em);
-    setTimeout(function() { el.classList.add('visible'); }, 100);
+    __setSongInfo(el, artist, title, '');
   } else {
     el.textContent = '';
     el.classList.remove('visible');
