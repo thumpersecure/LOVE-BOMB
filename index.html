@@ -1284,7 +1284,7 @@ resize();
 window.addEventListener('scroll', function() {
   var docHeight = document.documentElement.scrollHeight - window.innerHeight;
   scrollProgress = docHeight > 0 ? Math.min(1, window.scrollY / docHeight) : 0;
-});
+}, { passive: true });
 
 function drawHeart(cx, cy, size, angle, color, alpha) {
   ctx.save();
@@ -1430,7 +1430,7 @@ document.addEventListener('touchstart', function(e) {
   for (var i = 0; i < touchBurstCount; i++) {
     hearts.push(new Heart(t.clientX, t.clientY, true));
   }
-});
+}, { passive: true });
 
 /* ── Scroll Reveal ── */
 var observer = new IntersectionObserver(function(entries) {
@@ -1438,7 +1438,8 @@ var observer = new IntersectionObserver(function(entries) {
     if (e.isIntersecting) e.target.classList.add('visible');
   });
 }, { threshold: 0.15 });
-document.querySelectorAll('.section').forEach(function(s) { observer.observe(s); });
+var __sections = document.querySelectorAll('.section');
+for (var __i = 0; __i < __sections.length; __i++) observer.observe(__sections[__i]);
 
 /* ── Haptics Engine — syncs vibration to song BPM with variation patterns ── */
 var hapticsInterval = null;
@@ -1647,7 +1648,11 @@ function updateSongInfo() {
   var title = currentVariationConfig.songTitle;
   var artist = currentVariationConfig.songArtist;
   if (title && artist) {
-    el.innerHTML = '&#9835; ' + artist + ' — <em>' + title + '</em>';
+    while (el.firstChild) el.removeChild(el.firstChild);
+    el.appendChild(document.createTextNode('♪ ' + artist + ' — '));
+    var em = document.createElement('em');
+    em.textContent = title;
+    el.appendChild(em);
     setTimeout(function() { el.classList.add('visible'); }, 100);
   } else {
     el.textContent = '';
@@ -1804,6 +1809,14 @@ function createPlayer() {
       },
       onStateChange: function(e) {
         musicMode = (e.data === YT.PlayerState.PLAYING);
+        if (e.data === YT.PlayerState.ENDED) {
+          var vc = getVideoConfig();
+          try {
+            ytPlayer.seekTo(vc.start || 0, true);
+            ytPlayer.playVideo();
+          } catch (err) {}
+          return;
+        }
         if (e.data === YT.PlayerState.PLAYING) {
           if (userHasInteracted && !audioUnlocked) {
             tryUnmutePlayer();
@@ -1981,9 +1994,11 @@ document.addEventListener('scroll', function onFirstScroll() {
       hookSub.style.display = c.hookSub ? 'block' : 'none';
     }
     if (worldNote && c.worldPeaceNote) worldNote.textContent = c.worldPeaceNote;
-    document.querySelectorAll('.variation-btn').forEach(function(btn) {
+    var vBtns = document.querySelectorAll('.variation-btn');
+    for (var bi = 0; bi < vBtns.length; bi++) {
+      var btn = vBtns[bi];
       btn.classList.toggle('active', btn.dataset.var === id);
-    });
+    }
 
     /* Per-variation body class */
     Object.keys(LOVE_BOMB_VARIATIONS).forEach(function(k) {
@@ -2049,16 +2064,44 @@ document.addEventListener('scroll', function onFirstScroll() {
 })();
 
 /* ── Share Functions ── */
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    return navigator.clipboard.writeText(text);
+  }
+  return new Promise(function(resolve, reject) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-1000px';
+      ta.style.left = '-1000px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      var ok = document.execCommand('copy');
+      ta.remove();
+      if (ok) resolve();
+      else reject(new Error('copy failed'));
+    } catch (e) {
+      reject(e);
+    }
+  });
+}
+
 function shareLoveBomb() {
   var url = window.location.href;
   var text = 'I\u2019m sending you a love bomb because you deserve to know you\u2019re loved. \u{1F48C}\n\nThis is for you. Every word. Open it:\n\n';
   if (navigator.share) {
     navigator.share({ title: 'You\u2019ve Been Love Bombed', text: text, url: url });
   } else {
-    navigator.clipboard.writeText(text + url).then(function() {
+    copyToClipboard(text + url).then(function() {
       var btn = document.querySelector('.share-btn');
       btn.textContent = '\u{1F48C} Copied! Now send it to someone you love.';
       setTimeout(function() { btn.innerHTML = '\u{1F48C}&ensp;Send a love bomb to someone you love'; }, 3000);
+    }).catch(function() {
+      alert('Copy failed. You can manually copy this link:\\n\\n' + url);
     });
   }
   for (var i = 0; i < 25; i++) {
@@ -2072,10 +2115,12 @@ function shareLoveBomb() {
 
 function copyLink() {
   var url = window.location.href;
-  navigator.clipboard.writeText(url).then(function() {
+  copyToClipboard(url).then(function() {
     var btn = document.querySelector('.share-link-btn');
     btn.textContent = '\u{1F517} Copied!';
     setTimeout(function() { btn.innerHTML = '\u{1F517}&ensp;Copy link'; }, 2000);
+  }).catch(function() {
+    alert('Copy failed. You can manually copy this link:\\n\\n' + url);
   });
 }
 
@@ -2142,7 +2187,7 @@ document.head.appendChild(style);
       lastIdx = idx;
       document.title = titles[idx];
     }
-  });
+  }, { passive: true });
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
       document.title = "You're still loved \u2764\uFE0F";
@@ -2166,29 +2211,35 @@ document.head.appendChild(style);
 /* ── Staggered section reveal for enchanted feel ── */
 (function initStaggeredReveal() {
   var sections = document.querySelectorAll('.section');
-  sections.forEach(function(section) {
-    var cards = section.querySelectorAll('.affirmation-card');
-    if (cards.length > 0) {
+  for (var si = 0; si < sections.length; si++) {
+    (function(section) {
+      var cards = section.querySelectorAll('.affirmation-card');
+      if (cards.length <= 0) return;
+
       var cardObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            cards.forEach(function(card, i) {
+        for (var ei = 0; ei < entries.length; ei++) {
+          var entry = entries[ei];
+          if (!entry.isIntersecting) continue;
+          for (var ci = 0; ci < cards.length; ci++) {
+            (function(card, i) {
               setTimeout(function() {
                 card.style.opacity = '1';
                 card.style.transform = 'translateY(0)';
               }, i * 120);
-            });
+            })(cards[ci], ci);
           }
-        });
+        }
       }, { threshold: 0.2 });
       cardObserver.observe(section);
-      cards.forEach(function(card) {
+
+      for (var i = 0; i < cards.length; i++) {
+        var card = cards[i];
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
         card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      });
-    }
-  });
+      }
+    })(sections[si]);
+  }
 })();
 
 /* ── Personalization: ?from= URL parameter ── */
@@ -2196,7 +2247,7 @@ document.head.appendChild(style);
   var params = new URLSearchParams(window.location.search);
   var senderName = params.get('from');
   if (!senderName) return;
-  senderName = decodeURIComponent(senderName).substring(0, 50);
+  senderName = ('' + senderName).substring(0, 50);
 
   var banner = document.getElementById('from-banner');
   if (banner) {
@@ -2206,7 +2257,10 @@ document.head.appendChild(style);
 
   var hookTitle = document.getElementById('hook-title');
   if (hookTitle) {
-    hookTitle.innerHTML = senderName + ' just sent you<br>a love bomb.';
+    while (hookTitle.firstChild) hookTitle.removeChild(hookTitle.firstChild);
+    hookTitle.appendChild(document.createTextNode(senderName + ' just sent you'));
+    hookTitle.appendChild(document.createElement('br'));
+    hookTitle.appendChild(document.createTextNode('a love bomb.'));
   }
 
   var telegramFrom = document.getElementById('var-from');
@@ -2217,7 +2271,9 @@ document.head.appendChild(style);
 
 /* ── Touch Feedback: gentle vibration when tapping affirmation cards ── */
 (function initCardFeedback() {
-  document.querySelectorAll('.affirmation-card').forEach(function(card) {
+  var cards = document.querySelectorAll('.affirmation-card');
+  for (var i = 0; i < cards.length; i++) {
+    (function(card) {
     card.addEventListener('click', function() {
       triggerBeatHaptics(15);
       card.style.transform = 'translateY(-4px) scale(1.02)';
@@ -2226,7 +2282,8 @@ document.head.appendChild(style);
       }, 300);
     });
     card.setAttribute('role', 'article');
-  });
+    })(cards[i]);
+  }
 })();
 </script>
 
