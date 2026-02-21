@@ -531,14 +531,53 @@ strong{color:#fff;font-weight:500}
 }
 
 /* ── Responsive ── */
+@media(max-width:768px){
+  .section{margin:56px 0}
+  .heart-divider{letter-spacing:8px;font-size:1.2rem}
+  @keyframes divider-twinkle{
+    0%,100%{opacity:0.4;letter-spacing:8px}
+    50%{opacity:0.8;letter-spacing:10px}
+  }
+  .love-ripple-container{height:100px}
+  @keyframes ripple-expand{
+    0%{width:16px;height:16px;opacity:0.8}
+    100%{width:140px;height:140px;opacity:0}
+  }
+  .quote{max-width:100%}
+}
 @media(max-width:600px){
-  .content{padding:24px 16px}
-  .section:first-child{margin-top:10vh}
-  .telegram-frame{padding:28px 20px}
-  .video-section{padding:28px 20px}
-  .share-btn{padding:14px 28px;font-size:0.95rem}
-  .variation-btn{padding:6px 12px;font-size:0.8rem}
+  .content{padding:24px 16px;padding-bottom:calc(24px + env(safe-area-inset-bottom,0px))}
+  .section{margin:40px 0}
+  .section#s1{margin-top:10vh}
+  .telegram-frame{padding:24px 16px}
+  .video-section{padding:24px 16px}
+  .share-btn{padding:14px 24px;font-size:0.95rem;width:100%;justify-content:center}
+  .share-link-btn{padding:14px 24px;font-size:0.95rem;width:100%;justify-content:center}
+  .variation-btn{padding:10px 14px;font-size:0.82rem;min-height:44px;display:inline-flex;align-items:center}
+  .variation-btns{gap:6px}
   .affirmation-grid{grid-template-columns:1fr;gap:12px}
+  .affirmation-card{padding:16px 14px}
+  .counter-box{padding:8px 16px;font-size:0.85rem;flex-wrap:wrap;justify-content:center}
+  .unmute-btn{padding:12px 20px;min-height:44px}
+  .tap-to-hear{width:64px;height:64px;font-size:1.4rem}
+  .heart-divider{margin:32px auto;letter-spacing:6px;font-size:1.1rem}
+  @keyframes divider-twinkle{
+    0%,100%{opacity:0.4;letter-spacing:6px}
+    50%{opacity:0.8;letter-spacing:8px}
+  }
+  .love-ripple-container{height:80px}
+  @keyframes ripple-expand{
+    0%{width:14px;height:14px;opacity:0.8}
+    100%{width:100px;height:100px;opacity:0}
+  }
+  .breathing-heart{font-size:2rem}
+  .from-banner{font-size:0.75rem;letter-spacing:1px}
+  .love-timestamp{font-size:0.7rem;letter-spacing:1px}
+}
+/* ── Safe areas for notched phones ── */
+@supports(padding:env(safe-area-inset-bottom)){
+  .haptic-pulse{bottom:calc(20px + env(safe-area-inset-bottom))}
+  .content{padding-bottom:calc(24px + env(safe-area-inset-bottom))}
 }
 
 /* ── Philly LOVE Sculpture ── */
@@ -1075,7 +1114,8 @@ var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
   var starCanvas = document.getElementById('star-canvas');
   var sctx = starCanvas.getContext('2d');
   var stars = [];
-  var STAR_COUNT = 120;
+  var isMobile = window.innerWidth <= 600;
+  var STAR_COUNT = isMobile ? 50 : 120;
 
   function resizeStars() {
     starCanvas.width = window.innerWidth;
@@ -1123,7 +1163,7 @@ var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
 
 /* ── Magical Floating Orbs ── */
 (function initOrbs() {
-  var orbCount = 3;
+  var orbCount = (window.innerWidth <= 600) ? 2 : 3;
   for (var i = 0; i < orbCount; i++) {
     var orb = document.createElement('div');
     orb.className = 'magic-orb';
@@ -1316,9 +1356,10 @@ function animate() {
 }
 animate();
 
+var touchBurstCount = (window.innerWidth <= 600) ? 6 : 12;
 document.addEventListener('click', function(e) {
   if (e.target.closest('button') || e.target.closest('.yt-container') || e.target.closest('.tap-to-hear')) return;
-  for (var i = 0; i < 12; i++) {
+  for (var i = 0; i < touchBurstCount; i++) {
     hearts.push(new Heart(e.clientX, e.clientY, true));
   }
 });
@@ -1326,7 +1367,7 @@ document.addEventListener('click', function(e) {
 document.addEventListener('touchstart', function(e) {
   if (e.target.closest('button') || e.target.closest('.yt-container') || e.target.closest('.tap-to-hear')) return;
   var t = e.touches[0];
-  for (var i = 0; i < 12; i++) {
+  for (var i = 0; i < touchBurstCount; i++) {
     hearts.push(new Heart(t.clientX, t.clientY, true));
   }
 });
@@ -1391,7 +1432,8 @@ function detonateLoveBomb() {
   document.body.appendChild(flash);
   setTimeout(function() { flash.remove(); }, 2000);
 
-  for (var i = 0; i < 80; i++) {
+  var detonateCount = (W <= 600) ? 30 : 80;
+  for (var i = 0; i < detonateCount; i++) {
     (function(idx) {
       setTimeout(function() {
         hearts.push(new Heart(
