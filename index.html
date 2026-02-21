@@ -243,17 +243,10 @@ strong{color:#fff;font-weight:500}
   transition:all 0.3s ease;
   display:flex;align-items:center;gap:8px;
 }
-.unmute-btn:hover:not(:disabled){
+.unmute-btn:hover{
   background:rgba(255,105,180,0.3);
   border-color:#ff69b4;
   color:#fff;
-}
-.unmute-btn:disabled{
-  cursor:not-allowed;
-  opacity:0.85;
-}
-.unmute-btn.ready{
-  background:rgba(255,105,180,0.2);
 }
 .unmute-btn .unmute-label{white-space:nowrap}
 @keyframes fade-in{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
@@ -420,9 +413,9 @@ strong{color:#fff;font-weight:500}
       <div class="yt-container" id="yt-container">
         <div id="yt-player"></div>
         <div class="unmute-overlay" id="unmute-overlay">
-          <button class="unmute-btn" id="unmute-btn" disabled>
+          <button class="unmute-btn" id="unmute-btn">
             <span class="unmute-icon">🔇</span>
-            <span class="unmute-label" id="unmute-label">Music in <span id="unmute-countdown">30</span>s</span>
+            <span class="unmute-label">Turn on music</span>
           </button>
         </div>
       </div>
@@ -688,10 +681,6 @@ document.querySelectorAll('.section').forEach(s => observer.observe(s));
 let ytPlayer = null;
 let ytReady = false;
 let autoplayDone = false;
-let unmuteReady = false;
-let unmuteCountdownInterval = null;
-const UNMUTE_DELAY_SEC = 35; // Wait for typical pre-roll ads to finish before enabling sound
-
 const YT_VIDEO_ID = 'NI6aOFI7hms'; // The Cardigans - Lovefool (Official)
 
 const tag = document.createElement('script');
@@ -728,7 +717,6 @@ window.onYouTubeIframeAPIReady = function() {
                 hearts.push(new Heart(W/2 + (Math.random()-0.5)*200, H/2, true));
               }, i * 50);
             }
-            startUnmuteCountdown();
           }
         }, 5000);
       },
@@ -739,39 +727,10 @@ window.onYouTubeIframeAPIReady = function() {
   });
 };
 
-function startUnmuteCountdown() {
-  const btn = document.getElementById('unmute-btn');
-  const label = document.getElementById('unmute-label');
-  if (!btn || !label) return;
-
-  const startTime = Date.now();
-  label.innerHTML = 'Music in <span id="unmute-countdown">' + UNMUTE_DELAY_SEC + '</span>s';
-
-  unmuteCountdownInterval = setInterval(function() {
-    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-    const remaining = Math.max(0, UNMUTE_DELAY_SEC - elapsed);
-    const cdEl = document.getElementById('unmute-countdown');
-    if (cdEl) cdEl.textContent = remaining;
-    if (remaining <= 0) {
-      clearInterval(unmuteCountdownInterval);
-      unmuteCountdownInterval = null;
-      unmuteReady = true;
-      btn.disabled = false;
-      btn.classList.add('ready');
-      var icon = btn.querySelector('.unmute-icon');
-      if (icon) icon.textContent = '\u{1F50A}';
-      label.textContent = 'Turn on music';
-    }
-  }, 500);
-}
-
 document.addEventListener('click', function(e) {
-  if (e.target.closest('#unmute-btn') && unmuteReady && ytPlayer) {
-    const btn = document.getElementById('unmute-btn');
-    if (btn && !btn.disabled) {
-      ytPlayer.unMute();
-      btn.style.display = 'none';
-    }
+  if (e.target.closest('#unmute-btn') && ytPlayer) {
+    ytPlayer.unMute();
+    document.getElementById('unmute-btn').style.display = 'none';
   }
 });
 
