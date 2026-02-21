@@ -480,6 +480,32 @@ strong{color:#fff;font-weight:500}
 .variation-btns{
   display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
 }
+.top-controls{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+  margin-top:10px;
+}
+.mode-toggle{
+  padding:8px 14px;
+  font-size:0.82rem;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.14);
+  border-radius:999px;
+  color:#ffe6f0;
+  cursor:pointer;
+  transition:transform 0.15s ease, background 0.2s ease, border-color 0.2s ease;
+  font-family:'Inter',sans-serif;
+  min-height:40px;
+}
+.mode-toggle:hover{transform:translateY(-1px);background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.22)}
+.mode-toggle.active{
+  background:linear-gradient(135deg,rgba(var(--accent),0.28),rgba(255,255,255,0.08));
+  border-color:rgba(var(--accent),0.55);
+  color:#fff;
+}
 .variation-btn{
   padding:8px 16px;
   font-size:0.85rem;
@@ -740,6 +766,32 @@ body.mobile-version .unmute-btn{width:100%;justify-content:center}
 .variation-nyc .affirmation-card{border-color:rgba(255,180,80,0.15)}
 .variation-nyc .affirmation-card:hover{border-color:rgba(255,180,80,0.4);box-shadow:0 8px 24px rgba(255,180,80,0.1)}
 
+.variation-friend{--accent:140,255,200;--accent-hue:155}
+.variation-friend .aurora-overlay{
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(140,255,200,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(60,180,255,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%);
+}
+.variation-friend h1{
+  background:linear-gradient(135deg,#fff 0%,#d7fff1 40%,#8cffe6 70%,#fff 100%);
+  background-size:200% 200%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.variation-friend .love-word{color:#8cffe6;text-shadow:0 0 6px rgba(140,255,200,0.28)}
+.variation-friend .heart-divider{color:#8cffe6}
+.variation-friend .telegram-frame{border-color:rgba(140,255,200,0.25)}
+.variation-friend .telegram-frame::before{color:#8cffe6;text-shadow:0 0 10px rgba(140,255,200,0.4)}
+.variation-friend .love-declaration{
+  background:linear-gradient(135deg,#8cffe6,#2aa7ff,#44d7b6,#8cffe6);
+  background-size:300% 300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(140,255,200,0.25));
+}
+.variation-friend .share-btn{background:linear-gradient(135deg,#44d7b6,#2aa7ff,#44d7b6)}
+.variation-friend .affirmation-card{border-color:rgba(140,255,200,0.14)}
+.variation-friend .affirmation-card:hover{border-color:rgba(140,255,200,0.35);box-shadow:0 8px 24px rgba(140,255,200,0.08)}
+
 .variation-usa{--accent:120,140,255;--accent-hue:230}
 .variation-usa .aurora-overlay{
   background:
@@ -768,6 +820,32 @@ body.mobile-version .unmute-btn{width:100%;justify-content:center}
 .variation-usa .affirmation-card{border-color:rgba(120,140,255,0.15)}
 .variation-usa .affirmation-card:hover{border-color:rgba(120,140,255,0.4);box-shadow:0 8px 24px rgba(120,140,255,0.1)}
 
+.variation-kids{--accent:255,220,140;--accent-hue:40}
+.variation-kids .aurora-overlay{
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(255,220,140,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255,105,180,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%);
+}
+.variation-kids h1{
+  background:linear-gradient(135deg,#fff 0%,#fff1c8 40%,#ffd06a 70%,#fff 100%);
+  background-size:200% 200%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.variation-kids .love-word{color:#ffd06a;text-shadow:0 0 6px rgba(255,220,140,0.3)}
+.variation-kids .heart-divider{color:#ffd06a}
+.variation-kids .telegram-frame{border-color:rgba(255,220,140,0.25)}
+.variation-kids .telegram-frame::before{color:#ffd06a;text-shadow:0 0 10px rgba(255,220,140,0.4)}
+.variation-kids .love-declaration{
+  background:linear-gradient(135deg,#ffd06a,#ffb347,#fff1c8,#ffd06a);
+  background-size:300% 300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(255,220,140,0.25));
+}
+.variation-kids .share-btn{background:linear-gradient(135deg,#ffb347,#ffd06a,#ffb347)}
+.variation-kids .affirmation-card{border-color:rgba(255,220,140,0.14)}
+.variation-kids .affirmation-card:hover{border-color:rgba(255,220,140,0.35);box-shadow:0 8px 24px rgba(255,220,140,0.08)}
+
 .variation-multilang{--accent:255,200,100;--accent-hue:40}
 .variation-multilang .aurora-overlay{
   background:
@@ -793,6 +871,32 @@ body.mobile-version .unmute-btn{width:100%;justify-content:center}
 .variation-multilang .share-btn{background:linear-gradient(135deg,#ffc850,#e6a800,#cc9500)}
 .variation-multilang .affirmation-card{border-color:rgba(255,200,100,0.15)}
 .variation-multilang .affirmation-card:hover{border-color:rgba(255,200,100,0.4);box-shadow:0 8px 24px rgba(255,200,100,0.1)}
+
+.variation-starwars{--accent:160,210,255;--accent-hue:210}
+.variation-starwars .aurora-overlay{
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(160,210,255,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(120,140,255,0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.018) 0%, transparent 70%);
+}
+.variation-starwars h1{
+  background:linear-gradient(135deg,#fff 0%,#d6e7ff 40%,#a0d2ff 70%,#fff 100%);
+  background-size:200% 200%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.variation-starwars .love-word{color:#a0d2ff;text-shadow:0 0 6px rgba(160,210,255,0.26)}
+.variation-starwars .heart-divider{color:#a0d2ff}
+.variation-starwars .telegram-frame{border-color:rgba(160,210,255,0.22)}
+.variation-starwars .telegram-frame::before{color:#a0d2ff;text-shadow:0 0 10px rgba(160,210,255,0.35)}
+.variation-starwars .love-declaration{
+  background:linear-gradient(135deg,#a0d2ff,#5aa7ff,#fff,#a0d2ff);
+  background-size:400% 400%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 22px rgba(160,210,255,0.22));
+}
+.variation-starwars .share-btn{background:linear-gradient(135deg,#5aa7ff,#a0d2ff,#5aa7ff)}
+.variation-starwars .affirmation-card{border-color:rgba(160,210,255,0.12)}
+.variation-starwars .affirmation-card:hover{border-color:rgba(160,210,255,0.32);box-shadow:0 8px 24px rgba(160,210,255,0.08)}
 
 /* ── Accessibility: Reduced Motion ── */
 @media(prefers-reduced-motion:reduce){
@@ -902,7 +1006,7 @@ body.mobile-version .unmute-btn{width:100%;justify-content:center}
 .haptic-pulse{
   position:fixed;bottom:20px;left:20px;
   width:12px;height:12px;border-radius:50%;
-  background:#ff69b4;
+  background:rgb(var(--accent));
   z-index:50;pointer-events:none;
   opacity:0;
   transition:opacity 0.3s;
@@ -912,8 +1016,75 @@ body.mobile-version .unmute-btn{width:100%;justify-content:center}
   animation:haptic-beat 0.15s ease-out;
 }
 @keyframes haptic-beat{
-  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,105,180,0.6)}
-  100%{transform:scale(2);box-shadow:0 0 0 12px rgba(255,105,180,0)}
+  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(var(--accent),0.6)}
+  100%{transform:scale(2);box-shadow:0 0 0 12px rgba(var(--accent),0)}
+}
+
+/* ── Beat-synced UI pulse (subtle, non-strobing) ── */
+#hook-title,
+.telegram-frame,
+.video-section,
+.love-declaration,
+.share-btn,
+.share-link-btn,
+.heart-divider,
+.breathing-heart,
+.love-ripple-heart{
+  will-change:transform,filter;
+  transition:transform 140ms ease,filter 180ms ease;
+}
+body.beat-hit #hook-title{
+  filter:drop-shadow(0 0 16px rgba(var(--accent),0.18));
+}
+body.beat-hit .telegram-frame,
+body.beat-hit .video-section{
+  transform:translateZ(0) scale(1.004);
+  filter:drop-shadow(0 0 18px rgba(var(--accent),0.14));
+}
+body.beat-hit .love-declaration{
+  transform:translateZ(0) scale(1.006);
+  filter:drop-shadow(0 0 26px rgba(var(--accent),0.22));
+}
+body.beat-hit .share-btn{
+  transform:translateZ(0) scale(1.02);
+}
+body.beat-hit .share-link-btn{
+  transform:translateZ(0) scale(1.01);
+}
+body.beat-hit .heart-divider{
+  transform:translateZ(0) scale(1.01);
+}
+body.beat-hit .breathing-heart,
+body.beat-hit .love-ripple-heart{
+  transform:translateZ(0) scale(1.04);
+}
+
+/* Extra mode = intentionally overwhelming */
+body.extra-mode.beat-hit .telegram-frame,
+body.extra-mode.beat-hit .video-section{
+  transform:translateZ(0) scale(1.012);
+  filter:drop-shadow(0 0 26px rgba(var(--accent),0.22));
+}
+body.extra-mode.beat-hit .love-declaration{
+  transform:translateZ(0) scale(1.02);
+  filter:drop-shadow(0 0 44px rgba(var(--accent),0.32));
+}
+body.extra-mode.beat-hit .share-btn{transform:translateZ(0) scale(1.05)}
+body.extra-mode .haptic-pulse{width:14px;height:14px}
+
+@media(prefers-reduced-motion:reduce){
+  body.beat-hit #hook-title,
+  body.beat-hit .telegram-frame,
+  body.beat-hit .video-section,
+  body.beat-hit .love-declaration,
+  body.beat-hit .share-btn,
+  body.beat-hit .share-link-btn,
+  body.beat-hit .heart-divider,
+  body.beat-hit .breathing-heart,
+  body.beat-hit .love-ripple-heart{
+    transform:none !important;
+    filter:none !important;
+  }
 }
 </style>
 </head>
@@ -929,6 +1100,9 @@ body.mobile-version .unmute-btn{width:100%;justify-content:center}
   <!-- ═══ VARIATION PICKER ═══ -->
   <div class="section" id="variation-picker" style="margin-bottom:24px">
     <p style="font-size:0.85rem;color:#a07888;margin-bottom:12px">Choose your love bomb:</p>
+    <div class="top-controls">
+      <button class="mode-toggle" id="extra-toggle" type="button" aria-pressed="false">Extra mode: OFF</button>
+    </div>
     <div class="variation-btns" id="variation-btns"></div>
   </div>
 
@@ -1145,6 +1319,67 @@ var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
   currentVariationConfig = LOVE_BOMB_VARIATIONS[currentVariationId];
 })();
 
+/* ── Motion/Power Preferences (mobile stability) ── */
+var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var saveData = !!(navigator.connection && navigator.connection.saveData);
+var lowPowerMode = saveData;
+try {
+  var __rmq = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (__rmq) {
+    var __onRM = function(e) { reduceMotion = !!(e && e.matches); };
+    if (__rmq.addEventListener) __rmq.addEventListener('change', __onRM);
+    else if (__rmq.addListener) __rmq.addListener(__onRM);
+  }
+} catch (e) {}
+
+/* ── Extra Mode (opt-in chaos) ── */
+var extraMode = false;
+(function initExtraMode() {
+  var params = new URLSearchParams(window.location.search);
+  var fromUrl = params.get('extra') === '1';
+  var fromStore = false;
+  try { fromStore = localStorage.getItem('loveBombExtra') === '1'; } catch (e) {}
+  extraMode = !!(fromUrl || fromStore);
+  document.body.classList.toggle('extra-mode', extraMode);
+
+  function syncExtraUi() {
+    var btn = document.getElementById('extra-toggle');
+    if (!btn) return;
+    btn.classList.toggle('active', extraMode);
+    btn.setAttribute('aria-pressed', extraMode ? 'true' : 'false');
+    btn.textContent = extraMode ? 'Extra mode: ON' : 'Extra mode: OFF';
+  }
+
+  function setExtraMode(on) {
+    extraMode = !!on;
+    document.body.classList.toggle('extra-mode', extraMode);
+    try { localStorage.setItem('loveBombExtra', extraMode ? '1' : '0'); } catch (e) {}
+    syncExtraUi();
+    if (extraMode) {
+      onUserInteraction();
+      unlockExtraTone();
+    } else {
+      stopExtraTone();
+    }
+  }
+
+  window.__setExtraMode = setExtraMode;
+  document.addEventListener('DOMContentLoaded', syncExtraUi);
+
+  var btn = document.getElementById('extra-toggle');
+  if (btn) {
+    syncExtraUi();
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      setExtraMode(!extraMode);
+    });
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      setExtraMode(!extraMode);
+    }, { passive: false });
+  }
+})();
+
 /* ── Mobile Version Detection ── */
 (function initMobileVersion() {
   var params = new URLSearchParams(window.location.search);
@@ -1175,7 +1410,7 @@ var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
   var sctx = starCanvas.getContext('2d');
   var stars = [];
   var isMobile = window.innerWidth <= 600;
-  var STAR_COUNT = isMobile ? 50 : 120;
+  var STAR_COUNT = lowPowerMode ? (isMobile ? 24 : 70) : (isMobile ? 50 : 120);
 
   function resizeStars() {
     starCanvas.width = window.innerWidth;
@@ -1199,7 +1434,13 @@ var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
     });
   }
 
+  var starFrame = 0;
   function animateStars() {
+    starFrame++;
+    if (lowPowerMode && starFrame % 2) {
+      requestAnimationFrame(animateStars);
+      return;
+    }
     sctx.clearRect(0, 0, starCanvas.width, starCanvas.height);
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
@@ -1223,7 +1464,7 @@ var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
 
 /* ── Magical Floating Orbs ── */
 (function initOrbs() {
-  var orbCount = (window.innerWidth <= 600) ? 2 : 3;
+  var orbCount = lowPowerMode ? 1 : ((window.innerWidth <= 600) ? 2 : 3);
   for (var i = 0; i < orbCount; i++) {
     var orb = document.createElement('div');
     orb.className = 'magic-orb';
@@ -1245,6 +1486,16 @@ var W, H;
 var hearts = [];
 var musicMode = false;
 var scrollProgress = 0;
+var beatEnergy = 0;
+var MAX_HEARTS = (window.innerWidth <= 600)
+  ? (lowPowerMode ? 160 : 240)
+  : (lowPowerMode ? 320 : 520);
+
+function capHearts() {
+  if (hearts.length > MAX_HEARTS) {
+    hearts.splice(0, hearts.length - MAX_HEARTS);
+  }
+}
 
 var DEFAULT_HEART_COLORS = [
   [255,105,180], [255,69,100], [255,182,193],
@@ -1379,7 +1630,13 @@ function collide(a, b) {
 }
 
 var spawnTimer = 0;
+var heartFrame = 0;
 function animate() {
+  heartFrame++;
+  if (lowPowerMode && heartFrame % 2) {
+    requestAnimationFrame(animate);
+    return;
+  }
   ctx.clearRect(0, 0, W, H);
   spawnTimer++;
   var baseMusicRate = musicMode ? 2 : 4;
@@ -1394,6 +1651,7 @@ function animate() {
     if (scrollProgress < 0.2 && musicMode) {
       hearts.push(new Heart());
     }
+    capHearts();
   }
 
   hearts = hearts.filter(function(h) { return h.update(); });
@@ -1404,11 +1662,15 @@ function animate() {
     }
   }
 
-  if (musicMode) {
-    var t = Date.now() * 0.001;
-    var pulse = 0.02 + Math.sin(t * 2) * 0.01;
-    ctx.fillStyle = 'rgba(255,105,180,' + pulse + ')';
-    ctx.fillRect(0, 0, W, H);
+  if (musicMode && !reduceMotion) {
+    beatEnergy = Math.max(0, beatEnergy - 0.05);
+    if (beatEnergy > 0.001) {
+      var accent = (currentVariationConfig && currentVariationConfig.accentColor) ? currentVariationConfig.accentColor : [255,105,180];
+      var mult = extraMode ? 1.8 : 1;
+      var pulse = 0.006 + beatEnergy * 0.02 * mult;
+      ctx.fillStyle = 'rgba(' + accent[0] + ',' + accent[1] + ',' + accent[2] + ',' + pulse.toFixed(4) + ')';
+      ctx.fillRect(0, 0, W, H);
+    }
   }
 
   hearts.forEach(function(h) { h.draw(); });
@@ -1416,12 +1678,13 @@ function animate() {
 }
 animate();
 
-var touchBurstCount = (window.innerWidth <= 600) ? 6 : 12;
+var touchBurstCount = (window.innerWidth <= 600) ? (lowPowerMode ? 4 : 6) : (lowPowerMode ? 8 : 12);
 document.addEventListener('click', function(e) {
   if (e.target.closest('button') || e.target.closest('.yt-container') || e.target.closest('.tap-to-hear')) return;
   for (var i = 0; i < touchBurstCount; i++) {
     hearts.push(new Heart(e.clientX, e.clientY, true));
   }
+  capHearts();
 });
 
 document.addEventListener('touchstart', function(e) {
@@ -1430,6 +1693,7 @@ document.addEventListener('touchstart', function(e) {
   for (var i = 0; i < touchBurstCount; i++) {
     hearts.push(new Heart(t.clientX, t.clientY, true));
   }
+  capHearts();
 }, { passive: true });
 
 /* ── Scroll Reveal ── */
@@ -1461,13 +1725,29 @@ function pulseVisualBeat() {
     hapticPulseEl.classList.add('active');
     setTimeout(function() { hapticPulseEl.classList.remove('active'); }, 150);
   }
+  beatEnergy = Math.min(1, beatEnergy + (extraMode ? 1 : 0.9));
+  if (reduceMotion) return;
+
+  document.body.classList.add('beat-hit');
+  if (beatPulseTimer) clearTimeout(beatPulseTimer);
+  beatPulseTimer = setTimeout(function() {
+    document.body.classList.remove('beat-hit');
+    beatPulseTimer = null;
+  }, 140);
+
+  if (extraMode) {
+    /* A second, smaller after-pulse for "overwhelming" feel */
+    setTimeout(function() {
+      if (reduceMotion) return;
+      document.body.classList.add('beat-hit');
+      setTimeout(function() { document.body.classList.remove('beat-hit'); }, 120);
+    }, 120);
+    triggerExtraTone();
+  }
+
   if (document.body.classList.contains('mobile-version')) {
     document.body.classList.add('beat-pulse');
-    if (beatPulseTimer) clearTimeout(beatPulseTimer);
-    beatPulseTimer = setTimeout(function() {
-      document.body.classList.remove('beat-pulse');
-      beatPulseTimer = null;
-    }, 120);
+    setTimeout(function() { document.body.classList.remove('beat-pulse'); }, 120);
   }
 }
 
@@ -1500,9 +1780,29 @@ function startHaptics(bpm) {
   if (!bpm) return;
   if (document.hidden) return;
   var beatMs = Math.round(60000 / bpm);
-  var pattern = (currentVariationConfig && currentVariationConfig.vibrationPattern)
+  var basePattern = (currentVariationConfig && currentVariationConfig.vibrationPattern)
     ? currentVariationConfig.vibrationPattern
     : [40, 30, 40];
+  var pattern = basePattern;
+  if (extraMode) {
+    var extra = (currentVariationConfig && currentVariationConfig.extraVibrationPattern)
+      ? currentVariationConfig.extraVibrationPattern
+      : basePattern.concat([20, 15, 25, 15, 30]);
+    pattern = extra;
+  }
+
+  function normalizePatternToBeat(pat) {
+    if (!pat || !pat.length) return [40, 30, 40];
+    var total = 0;
+    for (var i = 0; i < pat.length; i++) total += Math.max(0, pat[i] | 0);
+    var maxTotal = Math.max(120, Math.floor(beatMs * 0.7));
+    if (total <= maxTotal) return pat;
+    var scale = maxTotal / Math.max(1, total);
+    var out = [];
+    for (var j = 0; j < pat.length; j++) out.push(Math.max(5, Math.round(pat[j] * scale)));
+    return out;
+  }
+  pattern = normalizePatternToBeat(pattern);
 
   function doBeat() {
     if (document.hidden) return;
@@ -1524,6 +1824,7 @@ function stopHaptics() {
   } catch(e) {}
   if (hapticPulseEl) hapticPulseEl.classList.remove('active');
   document.body.classList.remove('beat-pulse');
+  stopExtraTone();
 }
 
 if (isiPhone && !hasVibrationApi && !hasIOSHapticBridge) {
@@ -1539,13 +1840,31 @@ document.addEventListener('visibilitychange', function() {
 });
 
 /* ── Detonation Effect — the "bomb" moment ── */
+function runLoveQuake() {
+  if (reduceMotion) return;
+  var content = document.querySelector('.content');
+  if (!content || !content.animate) return;
+  try {
+    content.animate([
+      { transform: 'translate3d(0,0,0)' },
+      { transform: 'translate3d(-2px,1px,0)' },
+      { transform: 'translate3d(2px,-1px,0)' },
+      { transform: 'translate3d(-3px,2px,0)' },
+      { transform: 'translate3d(3px,-2px,0)' },
+      { transform: 'translate3d(-1px,1px,0)' },
+      { transform: 'translate3d(0,0,0)' }
+    ], { duration: 650, easing: 'ease-out' });
+  } catch (e) {}
+}
+
 function detonateLoveBomb() {
+  runLoveQuake();
   var flash = document.createElement('div');
   flash.className = 'detonate-flash';
   document.body.appendChild(flash);
   setTimeout(function() { flash.remove(); }, 2000);
 
-  var detonateCount = (W <= 600) ? 30 : 80;
+  var detonateCount = (W <= 600) ? (lowPowerMode ? 18 : 30) : (lowPowerMode ? 50 : 80);
   for (var i = 0; i < detonateCount; i++) {
     (function(idx) {
       setTimeout(function() {
@@ -1554,6 +1873,7 @@ function detonateLoveBomb() {
           H * 0.2 + Math.random() * H * 0.6,
           true
         ));
+        capHearts();
       }, idx * 20);
     })(i);
   }
@@ -1865,6 +2185,71 @@ function onUserInteraction() {
   if (ytPlayer && ytReady) attemptAudioUnlockFromGesture();
 }
 
+/* ── Extra mode tones (beat-synced blips) ── */
+var extraToneCtx = null;
+var extraToneGain = null;
+var extraToneUnlocked = false;
+function unlockExtraTone() {
+  if (!extraMode) return;
+  if (reduceMotion) {} /* no-op: audio isn't motion, but keep consistency */
+  if (extraToneCtx && extraToneCtx.state === 'running') {
+    extraToneUnlocked = true;
+    return;
+  }
+  try {
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    if (!extraToneCtx) {
+      extraToneCtx = new Ctx();
+      extraToneGain = extraToneCtx.createGain();
+      extraToneGain.gain.value = 0.0;
+      extraToneGain.connect(extraToneCtx.destination);
+    }
+    if (extraToneCtx.state === 'suspended' && extraToneCtx.resume) {
+      extraToneCtx.resume().then(function() { extraToneUnlocked = true; }).catch(function() {});
+    } else {
+      extraToneUnlocked = true;
+    }
+  } catch (e) {}
+}
+
+function stopExtraTone() {
+  if (extraToneGain) {
+    try { extraToneGain.gain.setTargetAtTime(0.0, extraToneCtx.currentTime, 0.02); } catch (e) {}
+  }
+}
+
+function triggerExtraTone() {
+  if (!extraMode) return;
+  if (!userHasInteracted) return;
+  if (!audioUnlocked) return;
+  unlockExtraTone();
+  if (!extraToneCtx || !extraToneGain || !extraToneUnlocked) return;
+
+  try {
+    var now = extraToneCtx.currentTime;
+    var osc = extraToneCtx.createOscillator();
+    var accent = (currentVariationConfig && currentVariationConfig.accentHue) ? currentVariationConfig.accentHue : 330;
+    var freq = 220 + ((accent % 360) / 360) * 660; /* 220–880Hz */
+    osc.type = extraMode ? 'square' : 'sine';
+    osc.frequency.setValueAtTime(freq, now);
+
+    var g = extraToneCtx.createGain();
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.03, now + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+    osc.connect(g);
+    g.connect(extraToneGain);
+    extraToneGain.gain.setTargetAtTime(0.35, now, 0.01);
+    osc.start(now);
+    osc.stop(now + 0.07);
+    osc.onended = function() {
+      try { g.disconnect(); } catch (e) {}
+      try { osc.disconnect(); } catch (e) {}
+    };
+  } catch (e) {}
+}
+
 var tapToHearEl = document.getElementById('tap-to-hear');
 if (tapToHearEl) {
   tapToHearEl.addEventListener('click', function(e) {
@@ -2049,7 +2434,7 @@ document.addEventListener('scroll', function onFirstScroll() {
 
   var btns = document.getElementById('variation-btns');
   if (btns) {
-    ['default','philly','nyc','usa','lgbtq','multilang'].forEach(function(id) {
+    ['default','friend','kids','philly','nyc','usa','lgbtq','multilang','starwars'].forEach(function(id) {
       var c = LOVE_BOMB_VARIATIONS[id];
       if (!c) return;
       var b = document.createElement('button');
@@ -2104,10 +2489,12 @@ function shareLoveBomb() {
       alert('Copy failed. You can manually copy this link:\\n\\n' + url);
     });
   }
-  for (var i = 0; i < 25; i++) {
+  var shareBurst = lowPowerMode ? 15 : 25;
+  for (var i = 0; i < shareBurst; i++) {
     (function(idx) {
       setTimeout(function() {
         hearts.push(new Heart(Math.random()*W, H, true));
+        capHearts();
       }, idx * 40);
     })(i);
   }
@@ -2127,6 +2514,7 @@ function copyLink() {
 /* ── Sparkles on mouse move ── */
 var sparkleTimer = 0;
 document.addEventListener('mousemove', function(e) {
+  if (lowPowerMode || reduceMotion) return;
   sparkleTimer++;
   if (sparkleTimer % 3 !== 0) return;
   var s = document.createElement('div');

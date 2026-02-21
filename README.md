@@ -1,4 +1,8 @@
-**Now with 5 love bomb variations — because love should feel personal.**
+**Now with 9 love bomb variations — because love should feel personal.**
+
+🤝 **Friend** — For your person. Your day-one. A love bomb that’s pure friendship.
+
+🧸 **Kid-Friendly** — Gentle, safe-for-all-ages love. Soft hearts, kind words.
 
 💗 **Philly Love Park** — Inspired by the LOVE sculpture. The City of Brotherly Love, radiating outward.
 
@@ -10,16 +14,21 @@
 
 🌍 **Multi-language** — Te amo · Je t'aime · 我爱你. Love needs no translation.
 
+✨ **Star Wars (Love)** — Space‑opera love vibes. Love is the force.
+
 ## Choose your variation
 
 Pick at the top of the page, or share a direct link:
 
 - [Classic](https://thumpersecure.github.io/LOVE-BOMB/)
+- [Friend](https://thumpersecure.github.io/LOVE-BOMB/?v=friend)
+- [Kid-Friendly](https://thumpersecure.github.io/LOVE-BOMB/?v=kids)
 - [Philly Love Park](https://thumpersecure.github.io/LOVE-BOMB/?v=philly)
 - [NYC](https://thumpersecure.github.io/LOVE-BOMB/?v=nyc)
 - [United States](https://thumpersecure.github.io/LOVE-BOMB/?v=usa)
 - [LGBTQ+](https://thumpersecure.github.io/LOVE-BOMB/?v=lgbtq)
 - [Multi-language](https://thumpersecure.github.io/LOVE-BOMB/?v=multilang)
+- [Star Wars](https://thumpersecure.github.io/LOVE-BOMB/?v=starwars)
 
 Shared links keep the chosen variation.
 
