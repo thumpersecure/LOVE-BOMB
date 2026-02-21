@@ -418,6 +418,15 @@ strong{color:#fff;font-weight:500}
   50%{box-shadow:0 0 20px rgba(255,105,180,0.6)}
 }
 .unmute-btn .unmute-label{white-space:nowrap}
+.haptics-status{
+  margin-top:12px;
+  min-height:1.2em;
+  font-size:0.78rem;
+  color:#a88998;
+  opacity:0;
+  transition:opacity 0.25s ease;
+}
+.haptics-status.visible{opacity:1}
 
 /* ── Share ── */
 .share-btn{
@@ -558,7 +567,8 @@ strong{color:#fff;font-weight:500}
   .affirmation-grid{grid-template-columns:1fr;gap:12px}
   .affirmation-card{padding:16px 14px}
   .counter-box{padding:8px 16px;font-size:0.85rem;flex-wrap:wrap;justify-content:center}
-  .unmute-btn{padding:12px 20px;min-height:44px}
+  .unmute-overlay{left:12px;right:12px;bottom:12px}
+  .unmute-btn{padding:12px 20px;min-height:44px;width:100%;justify-content:center}
   .tap-to-hear{width:64px;height:64px;font-size:1.4rem}
   .heart-divider{margin:32px auto;letter-spacing:6px;font-size:1.1rem}
   @keyframes divider-twinkle{
@@ -573,6 +583,31 @@ strong{color:#fff;font-weight:500}
   .breathing-heart{font-size:2rem}
   .from-banner{font-size:0.75rem;letter-spacing:1px}
   .love-timestamp{font-size:0.7rem;letter-spacing:1px}
+}
+/* ── Mobile-first mode (touch devices / forced mobile) ── */
+body.mobile-version{
+  min-height:calc(var(--app-vh,1vh) * 100);
+  -webkit-text-size-adjust:100%;
+  overscroll-behavior-y:contain;
+}
+body.mobile-version .content{
+  max-width:100%;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  transition:transform 0.12s ease;
+}
+body.mobile-version.beat-pulse .content{transform:scale(0.998)}
+body.mobile-version .variation-btns{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  width:100%;
+}
+body.mobile-version .variation-btn{width:100%;justify-content:center}
+body.mobile-version .video-section{max-width:100%}
+body.mobile-version .unmute-overlay{left:12px;right:12px;bottom:12px}
+body.mobile-version .unmute-btn{width:100%;justify-content:center}
+@media(max-width:420px){
+  body.mobile-version .variation-btns{grid-template-columns:1fr}
 }
 /* ── Safe areas for notched phones ── */
 @supports(padding:env(safe-area-inset-bottom)){
@@ -1036,6 +1071,7 @@ strong{color:#fff;font-weight:500}
         </div>
       </div>
       <div class="tap-to-hear" id="tap-to-hear" title="Tap for sound" role="button" aria-label="Enable music" tabindex="0">🔊</div>
+      <div class="haptics-status" id="haptics-status" aria-live="polite"></div>
     </div>
     <p style="margin-top:24px;font-size:0.95rem;color:#a07888">Let the music play. Watch the hearts. <span class="love-word">Feel the love.</span></p>
   </div>
@@ -1107,6 +1143,30 @@ var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
   var v = params.get('v') || 'default';
   currentVariationId = LOVE_BOMB_VARIATIONS[v] ? v : 'default';
   currentVariationConfig = LOVE_BOMB_VARIATIONS[currentVariationId];
+})();
+
+/* ── Mobile Version Detection ── */
+(function initMobileVersion() {
+  var params = new URLSearchParams(window.location.search);
+  var forceMobile = params.get('mobile') === '1';
+  var compactViewport = window.matchMedia('(max-width: 820px)');
+  var coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
+
+  function setViewportHeightVar() {
+    document.documentElement.style.setProperty('--app-vh', (window.innerHeight * 0.01) + 'px');
+  }
+
+  function applyMobileClass() {
+    var enableMobile = forceMobile || compactViewport.matches || coarsePointer.matches;
+    document.body.classList.toggle('mobile-version', enableMobile);
+  }
+
+  setViewportHeightVar();
+  applyMobileClass();
+  window.addEventListener('resize', function() {
+    setViewportHeightVar();
+    applyMobileClass();
+  });
 })();
 
 /* ── Starfield — twinkling stars background (magical layer) ── */
@@ -1383,6 +1443,56 @@ document.querySelectorAll('.section').forEach(function(s) { observer.observe(s);
 /* ── Haptics Engine — syncs vibration to song BPM with variation patterns ── */
 var hapticsInterval = null;
 var hapticPulseEl = document.getElementById('haptic-pulse');
+var hapticsStatusEl = document.getElementById('haptics-status');
+var beatPulseTimer = null;
+var isiPhone = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+var hasVibrationApi = typeof navigator.vibrate === 'function';
+var hasIOSHapticBridge = !!(window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.haptics);
+
+function setHapticsStatus(message) {
+  if (!hapticsStatusEl) return;
+  hapticsStatusEl.textContent = message || '';
+  hapticsStatusEl.classList.toggle('visible', !!message);
+}
+
+function pulseVisualBeat() {
+  if (hapticPulseEl) {
+    hapticPulseEl.classList.add('active');
+    setTimeout(function() { hapticPulseEl.classList.remove('active'); }, 150);
+  }
+  if (document.body.classList.contains('mobile-version')) {
+    document.body.classList.add('beat-pulse');
+    if (beatPulseTimer) clearTimeout(beatPulseTimer);
+    beatPulseTimer = setTimeout(function() {
+      document.body.classList.remove('beat-pulse');
+      beatPulseTimer = null;
+    }, 120);
+  }
+}
+
+function triggerBeatHaptics(pattern) {
+  var didTriggerHardwareHaptic = false;
+
+  if (hasVibrationApi) {
+    try {
+      navigator.vibrate(pattern);
+      didTriggerHardwareHaptic = true;
+    } catch (e) {}
+  } else if (hasIOSHapticBridge) {
+    try {
+      window.webkit.messageHandlers.haptics.postMessage({ pattern: pattern });
+      didTriggerHardwareHaptic = true;
+    } catch (e) {}
+  }
+
+  if (!didTriggerHardwareHaptic && isiPhone) {
+    setHapticsStatus('iPhone Safari blocks vibration API. Beat pulse fallback is active.');
+  } else if (didTriggerHardwareHaptic) {
+    setHapticsStatus('');
+  }
+
+  pulseVisualBeat();
+}
 
 function startHaptics(bpm) {
   stopHaptics();
@@ -1395,13 +1505,7 @@ function startHaptics(bpm) {
 
   function doBeat() {
     if (document.hidden) return;
-    if (navigator.vibrate) {
-      navigator.vibrate(pattern);
-    }
-    if (hapticPulseEl) {
-      hapticPulseEl.classList.add('active');
-      setTimeout(function() { hapticPulseEl.classList.remove('active'); }, 150);
-    }
+    triggerBeatHaptics(pattern);
   }
 
   doBeat();
@@ -1413,8 +1517,16 @@ function stopHaptics() {
     clearInterval(hapticsInterval);
     hapticsInterval = null;
   }
-  try { if (navigator.vibrate) navigator.vibrate(0); } catch(e) {}
+  try {
+    if (hasVibrationApi) navigator.vibrate(0);
+    if (hasIOSHapticBridge) window.webkit.messageHandlers.haptics.postMessage({ stop: true });
+  } catch(e) {}
   if (hapticPulseEl) hapticPulseEl.classList.remove('active');
+  document.body.classList.remove('beat-pulse');
+}
+
+if (isiPhone && !hasVibrationApi && !hasIOSHapticBridge) {
+  setHapticsStatus('iPhone Safari blocks vibration API. Beat pulse fallback is active.');
 }
 
 document.addEventListener('visibilitychange', function() {
@@ -1445,9 +1557,7 @@ function detonateLoveBomb() {
     })(i);
   }
 
-  if (navigator.vibrate) {
-    navigator.vibrate([60, 20, 60, 20, 60, 20, 80, 40, 120, 60, 200]);
-  }
+  triggerBeatHaptics([60, 20, 60, 20, 60, 20, 80, 40, 120, 60, 200]);
 
   if (currentVariationConfig && currentVariationConfig.bpm) {
     setTimeout(function() {
@@ -1464,6 +1574,13 @@ var audioUnlocked = false;
 var unmuteReady = false;
 var unmuteCountdownInterval = null;
 var AD_GRACE_PERIOD_SEC = 30;
+var hasDetonatedForTrack = false;
+var lastUnlockGestureMs = 0;
+var activeVideoIdOverride = null;
+var videoRecoveryAttempted = false;
+var videoFallbackByVariation = {
+  multilang: ['Hwot-sobbFQ'],
+};
 
 var tag = document.createElement('script');
 tag.src = 'https://www.youtube.com/iframe_api';
@@ -1471,10 +1588,57 @@ document.head.appendChild(tag);
 
 function getVideoConfig() {
   var cfg = currentVariationConfig || LOVE_BOMB_VARIATIONS['default'];
+  var selectedVideoId = activeVideoIdOverride || cfg.videoId || 'NI6aOFI7hms';
   return {
-    videoId: cfg.videoId || 'NI6aOFI7hms',
-    start: cfg.videoStart || 0,
+    videoId: selectedVideoId,
+    start: activeVideoIdOverride ? 0 : (cfg.videoStart || 0),
   };
+}
+
+function getFallbackVideoId() {
+  var cfg = currentVariationConfig || LOVE_BOMB_VARIATIONS['default'];
+  var currentVideoId = activeVideoIdOverride || cfg.videoId;
+  var candidates = [];
+
+  if (cfg.fallbackVideoIds && cfg.fallbackVideoIds.length) {
+    candidates = candidates.concat(cfg.fallbackVideoIds);
+  }
+  if (videoFallbackByVariation[currentVariationId]) {
+    candidates = candidates.concat(videoFallbackByVariation[currentVariationId]);
+  }
+
+  var defaultVideoId = (LOVE_BOMB_VARIATIONS['default'] && LOVE_BOMB_VARIATIONS['default'].videoId) || 'NI6aOFI7hms';
+  candidates.push(defaultVideoId);
+
+  for (var i = 0; i < candidates.length; i++) {
+    var id = candidates[i];
+    if (id && id !== currentVideoId) return id;
+  }
+  return null;
+}
+
+function recoverVideoPlayback(errorCode) {
+  if (!ytPlayer || !ytReady || videoRecoveryAttempted) return;
+  var fallbackId = getFallbackVideoId();
+  if (!fallbackId) return;
+
+  videoRecoveryAttempted = true;
+  activeVideoIdOverride = fallbackId;
+  audioUnlocked = false;
+  hasDetonatedForTrack = false;
+  stopHaptics();
+
+  try {
+    ytPlayer.loadVideoById({ videoId: fallbackId, startSeconds: 0 });
+    ytPlayer.mute();
+    startUnmuteCountdown();
+    showUnmuteControls();
+    var label = document.getElementById('unmute-label');
+    if (label) {
+      label.textContent = 'Tap to start music';
+    }
+    console.warn('Recovered video playback after YouTube error code:', errorCode);
+  } catch (e) {}
 }
 
 function updateSongInfo() {
@@ -1543,13 +1707,55 @@ function startUnmuteCountdown() {
 function tryUnmutePlayer() {
   if (!ytPlayer || !ytReady || audioUnlocked) return;
   try {
+    ytPlayer.playVideo();
     ytPlayer.unMute();
     ytPlayer.setVolume(100);
-    if (ytPlayer.isMuted && !ytPlayer.isMuted()) {
+  } catch(e) {}
+  setTimeout(function() {
+    try {
+      if (ytPlayer.isMuted && !ytPlayer.isMuted()) {
+        audioUnlocked = true;
+        hideUnmuteControls();
+        if (!hasDetonatedForTrack) {
+          detonateLoveBomb();
+          hasDetonatedForTrack = true;
+        }
+      } else {
+        audioUnlocked = false;
+        showUnmuteControls();
+      }
+    } catch(e) {}
+  }, 220);
+}
+
+function attemptAudioUnlockFromGesture() {
+  if (!ytPlayer || !ytReady) return;
+  userHasInteracted = true;
+  try {
+    ytPlayer.playVideo();
+    ytPlayer.unMute();
+    ytPlayer.setVolume(100);
+  } catch(e) {}
+  setTimeout(function() {
+    var unlocked = false;
+    try {
+      unlocked = ytPlayer.isMuted && !ytPlayer.isMuted();
+    } catch (err) {}
+    if (unlocked) {
       audioUnlocked = true;
       hideUnmuteControls();
+      if (!hasDetonatedForTrack) {
+        detonateLoveBomb();
+        hasDetonatedForTrack = true;
+      }
+      if (!hapticsInterval && currentVariationConfig && currentVariationConfig.bpm) {
+        startHaptics(currentVariationConfig.bpm);
+      }
+    } else {
+      audioUnlocked = false;
+      showUnmuteControls();
     }
-  } catch(e) {}
+  }, 220);
 }
 
 function createPlayer() {
@@ -1571,6 +1777,8 @@ function createPlayer() {
     events: {
       onReady: function(event) {
         ytReady = true;
+        videoRecoveryAttempted = false;
+        hasDetonatedForTrack = false;
         var container = document.getElementById('yt-container');
         container.classList.add('active');
         event.target.mute();
@@ -1586,7 +1794,10 @@ function createPlayer() {
             } else {
               audioUnlocked = true;
               hideUnmuteControls();
-              detonateLoveBomb();
+              if (!hasDetonatedForTrack) {
+                detonateLoveBomb();
+                hasDetonatedForTrack = true;
+              }
             }
           } catch(e) {}
         }, 500);
@@ -1603,15 +1814,21 @@ function createPlayer() {
         } else {
           stopHaptics();
         }
-      }
+      },
+      onError: function(e) {
+        recoverVideoPlayback(e.data);
+      },
     }
   });
 }
 
 function loadVariationVideo() {
   if (!ytPlayer || !ytReady) return;
+  activeVideoIdOverride = null;
+  videoRecoveryAttempted = false;
   var vc = getVideoConfig();
   audioUnlocked = false;
+  hasDetonatedForTrack = false;
   unmuteReady = false;
   stopHaptics();
   try {
@@ -1628,42 +1845,46 @@ window.onYouTubeIframeAPIReady = function() {
 };
 
 function onUserInteraction() {
-  if (userHasInteracted) return;
+  var now = Date.now();
+  if (now - lastUnlockGestureMs < 250) return;
+  lastUnlockGestureMs = now;
   userHasInteracted = true;
-  if (unmuteReady && ytPlayer && ytReady) {
-    ytPlayer.unMute();
-    ytPlayer.setVolume(100);
-    ytPlayer.playVideo();
-    audioUnlocked = true;
-    hideUnmuteControls();
-    detonateLoveBomb();
-  }
+  if (ytPlayer && ytReady) attemptAudioUnlockFromGesture();
 }
 
-document.getElementById('tap-to-hear').addEventListener('click', function(e) {
-  e.stopPropagation();
-  if (unmuteReady) {
+var tapToHearEl = document.getElementById('tap-to-hear');
+if (tapToHearEl) {
+  tapToHearEl.addEventListener('click', function(e) {
+    e.stopPropagation();
     onUserInteraction();
-  } else if (ytPlayer && ytReady) {
-    ytPlayer.unMute();
-    ytPlayer.setVolume(100);
-    audioUnlocked = true;
-    userHasInteracted = true;
-    hideUnmuteControls();
-    detonateLoveBomb();
-  }
-});
+  });
+  tapToHearEl.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    onUserInteraction();
+  }, { passive: false });
+  tapToHearEl.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      onUserInteraction();
+    }
+  });
+}
 
-document.addEventListener('click', function(e) {
-  if (e.target.closest('#unmute-btn') && unmuteReady && ytPlayer) {
-    ytPlayer.unMute();
-    ytPlayer.setVolume(100);
-    audioUnlocked = true;
-    userHasInteracted = true;
-    hideUnmuteControls();
-    detonateLoveBomb();
-  }
-});
+var unmuteBtnEl = document.getElementById('unmute-btn');
+if (unmuteBtnEl) {
+  unmuteBtnEl.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (!unmuteReady) return;
+    onUserInteraction();
+  });
+  unmuteBtnEl.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!unmuteReady) return;
+    onUserInteraction();
+  }, { passive: false });
+}
 
 document.addEventListener('scroll', function onFirstScroll() {
   if (unmuteReady) onUserInteraction();
@@ -1998,7 +2219,7 @@ document.head.appendChild(style);
 (function initCardFeedback() {
   document.querySelectorAll('.affirmation-card').forEach(function(card) {
     card.addEventListener('click', function() {
-      if (navigator.vibrate) navigator.vibrate(15);
+      triggerBeatHaptics(15);
       card.style.transform = 'translateY(-4px) scale(1.02)';
       setTimeout(function() {
         card.style.transform = 'translateY(0) scale(1)';
