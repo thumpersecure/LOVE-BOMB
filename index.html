@@ -656,6 +656,11 @@ strong{color:#fff;font-weight:500}
   letter-spacing:1px;
   margin-top:12px;
   text-shadow:0 0 8px rgba(255,105,180,0.3);
+  opacity:0;
+  transition:opacity 1.5s ease 0.5s;
+}
+.song-info.visible{
+  opacity:1;
 }
 
 /* ── Breathing Heart — emotional pacing between sections ── */
@@ -667,11 +672,12 @@ strong{color:#fff;font-weight:500}
   margin:16px 0;
 }
 @keyframes heart-breathe{
-  0%,100%{transform:scale(1);opacity:0.7}
-  15%{transform:scale(1.15);opacity:1}
-  30%{transform:scale(1);opacity:0.8}
-  45%{transform:scale(1.08);opacity:0.95}
-  60%{transform:scale(1);opacity:0.7}
+  0%{transform:scale(1);opacity:0.7}
+  12%{transform:scale(1.15);opacity:1}
+  24%{transform:scale(1);opacity:0.8}
+  36%{transform:scale(1.08);opacity:0.95}
+  48%{transform:scale(1);opacity:0.7}
+  100%{transform:scale(1);opacity:0.7}
 }
 
 /* ── Love Ripple Effect ── */
@@ -1316,8 +1322,10 @@ function updateSongInfo() {
   var artist = currentVariationConfig.songArtist;
   if (title && artist) {
     el.innerHTML = '&#9835; ' + artist + ' — <em>' + title + '</em>';
+    setTimeout(function() { el.classList.add('visible'); }, 100);
   } else {
     el.textContent = '';
+    el.classList.remove('visible');
   }
 }
 
@@ -1711,6 +1719,56 @@ document.addEventListener('mousemove', function(e) {
 var style = document.createElement('style');
 style.textContent = '@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}';
 document.head.appendChild(style);
+
+/* ── Felt-Not-Seen: warm welcome delay ── */
+(function warmWelcome() {
+  var s1 = document.getElementById('s1');
+  if (s1) {
+    s1.style.transitionDelay = '0.4s';
+  }
+})();
+
+/* ── Felt-Not-Seen: tab title changes as you scroll deeper ── */
+(function initTitleLove() {
+  var titles = [
+    "You've Been Love Bombed \uD83D\uDC8C",
+    "You are loved \u2764\uFE0F",
+    "Someone is thinking of you \uD83D\uDC97",
+    "You matter more than you know \u2728",
+    "Don't forget: you are loved \uD83D\uDC8C"
+  ];
+  var lastIdx = 0;
+  var origTitle = document.title;
+  window.addEventListener('scroll', function() {
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? window.scrollY / docH : 0;
+    var idx = Math.min(titles.length - 1, Math.floor(pct * titles.length));
+    if (idx !== lastIdx) {
+      lastIdx = idx;
+      document.title = titles[idx];
+    }
+  });
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      document.title = "You're still loved \u2764\uFE0F";
+    } else {
+      document.title = titles[lastIdx] || origTitle;
+    }
+  });
+})();
+
+/* ── Felt-Not-Seen: background warms as you scroll deeper ── */
+(function initWarmthGradient() {
+  var aurora = document.querySelector('.aurora-overlay');
+  if (!aurora) return;
+  window.addEventListener('scroll', function() {
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docH > 0 ? Math.min(1, window.scrollY / docH) : 0;
+    var warmth = Math.round(pct * 4);
+    aurora.style.opacity = (0.6 + pct * 0.4).toFixed(2);
+    aurora.style.filter = 'hue-rotate(' + (-warmth * 3) + 'deg)';
+  }, {passive: true});
+})();
 
 /* ── Staggered section reveal for enchanted feel ── */
 (function initStaggeredReveal() {
