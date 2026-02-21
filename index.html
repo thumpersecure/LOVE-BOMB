@@ -2203,21 +2203,27 @@ function __fetchOembed(videoId, cb) {
 
   __oembedInflight[videoId] = [cb];
   var url = 'https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=' + encodeURIComponent(videoId) + '&format=json';
-  fetch(url).then(function(r) { return r.ok ? r.json() : null; }).then(function(data) {
-    if (data && data.title) {
-      __oembedCache[videoId] = { title: data.title, author: data.author_name || '' };
-    } else {
-      __oembedCache[videoId] = null;
-    }
-  }).catch(function() {
-    __oembedCache[videoId] = null;
-  }).finally(function() {
+  function done() {
     var list = __oembedInflight[videoId] || [];
     delete __oembedInflight[videoId];
     for (var i = 0; i < list.length; i++) {
       try { list[i](__oembedCache[videoId]); } catch (e) {}
     }
-  });
+  }
+  fetch(url)
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (data && data.title) {
+        __oembedCache[videoId] = { title: data.title, author: data.author_name || '' };
+      } else {
+        __oembedCache[videoId] = null;
+      }
+      done();
+    })
+    .catch(function() {
+      __oembedCache[videoId] = null;
+      done();
+    });
 }
 
 function updateSongInfo() {
