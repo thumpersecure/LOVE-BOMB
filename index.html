@@ -504,6 +504,141 @@ strong{color:#fff;font-weight:500}
   .variation-btn{padding:6px 12px;font-size:0.8rem}
   .affirmation-grid{grid-template-columns:1fr;gap:12px}
 }
+
+/* ── Philly LOVE Sculpture ── */
+.love-sculpture-wrap{
+  display:none;
+  margin:30px auto;
+  text-align:center;
+}
+.love-sculpture-wrap.active{
+  display:block;
+  animation:sculpture-entrance 1s ease forwards;
+}
+@keyframes sculpture-entrance{
+  0%{opacity:0;transform:scale(0.4) rotate(-15deg)}
+  60%{opacity:1;transform:scale(1.05) rotate(2deg)}
+  100%{opacity:1;transform:scale(1) rotate(0deg)}
+}
+.love-sculpture{
+  display:inline-grid;
+  grid-template-columns:1fr 1fr;
+  font-family:Georgia,'Times New Roman',serif;
+  font-weight:900;
+  font-size:clamp(3.5rem,12vw,7rem);
+  line-height:0.82;
+  letter-spacing:-0.03em;
+  color:#ff1493;
+  text-shadow:0 0 20px rgba(255,20,147,0.5),0 0 40px rgba(255,20,147,0.3);
+  animation:sculpture-glow 3s ease-in-out infinite;
+}
+@keyframes sculpture-glow{
+  0%,100%{filter:drop-shadow(0 0 15px rgba(255,20,147,0.4))}
+  50%{filter:drop-shadow(0 0 35px rgba(255,20,147,0.8))}
+}
+.love-sculpture span{
+  display:flex;align-items:center;justify-content:center;
+}
+.love-sculpture .sculpture-o{
+  transform:rotate(-28deg) translate(-4%,10%);
+  color:#ff69b4;
+}
+
+/* ── Rainbow overrides for LGBTQ ── */
+.rainbow-active .heart-divider{
+  background:linear-gradient(90deg,#e40303,#ff8c00,#ffed00,#008026,#004dff,#750787);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  opacity:1;
+}
+.rainbow-active .telegram-frame{
+  border-color:rgba(255,100,0,0.25);
+  animation:rainbow-frame-glow 6s linear infinite;
+}
+@keyframes rainbow-frame-glow{
+  0%{box-shadow:0 0 20px rgba(228,3,3,0.15),inset 0 0 15px rgba(228,3,3,0.04)}
+  17%{box-shadow:0 0 20px rgba(255,140,0,0.15),inset 0 0 15px rgba(255,140,0,0.04)}
+  33%{box-shadow:0 0 20px rgba(255,237,0,0.15),inset 0 0 15px rgba(255,237,0,0.04)}
+  50%{box-shadow:0 0 20px rgba(0,128,38,0.15),inset 0 0 15px rgba(0,128,38,0.04)}
+  67%{box-shadow:0 0 20px rgba(0,77,255,0.15),inset 0 0 15px rgba(0,77,255,0.04)}
+  83%{box-shadow:0 0 20px rgba(117,7,135,0.15),inset 0 0 15px rgba(117,7,135,0.04)}
+  100%{box-shadow:0 0 20px rgba(228,3,3,0.15),inset 0 0 15px rgba(228,3,3,0.04)}
+}
+.rainbow-active .telegram-frame::before{
+  background:linear-gradient(90deg,#e40303,#ff8c00,#ffed00,#008026,#004dff,#750787);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.rainbow-active .love-word{
+  background:linear-gradient(90deg,#e40303,#ff8c00,#ffed00,#008026,#004dff,#750787);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  text-shadow:none;
+}
+.rainbow-active .love-declaration{
+  background:linear-gradient(135deg,#e40303,#ff8c00,#ffed00,#008026,#004dff,#750787,#e40303);
+  background-size:400% 400%;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  animation:rainbow-gradient 4s linear infinite;
+  filter:drop-shadow(0 0 20px rgba(255,140,0,0.3));
+}
+@keyframes rainbow-gradient{
+  0%{background-position:0% 50%}
+  100%{background-position:400% 50%}
+}
+.rainbow-active .affirmation-card{
+  border-color:rgba(255,140,0,0.2);
+}
+.rainbow-active .affirmation-card:hover{
+  border-color:rgba(0,128,38,0.5);
+  box-shadow:0 8px 24px rgba(0,77,255,0.1);
+}
+
+/* ── Detonation Flash ── */
+.detonate-flash{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:9999;pointer-events:none;
+  background:radial-gradient(circle at center,rgba(255,20,147,0.35) 0%,rgba(255,105,180,0.15) 40%,transparent 70%);
+  animation:detonate-fade 1.8s ease-out forwards;
+}
+@keyframes detonate-fade{
+  0%{opacity:1;transform:scale(0.8)}
+  20%{opacity:1;transform:scale(1.2)}
+  100%{opacity:0;transform:scale(2)}
+}
+
+/* ── Song info below video ── */
+.song-info{
+  font-family:'Special Elite',cursive;
+  font-size:0.95rem;
+  color:#ff69b4;
+  letter-spacing:1px;
+  margin-top:12px;
+  text-shadow:0 0 8px rgba(255,105,180,0.3);
+}
+
+/* ── Haptic pulse indicator ── */
+.haptic-pulse{
+  position:fixed;bottom:20px;right:20px;
+  width:12px;height:12px;border-radius:50%;
+  background:#ff69b4;
+  z-index:50;pointer-events:none;
+  opacity:0;
+  transition:opacity 0.3s;
+}
+.haptic-pulse.active{
+  opacity:1;
+  animation:haptic-beat 0.15s ease-out;
+}
+@keyframes haptic-beat{
+  0%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,105,180,0.6)}
+  100%{transform:scale(2);box-shadow:0 0 0 12px rgba(255,105,180,0)}
+}
 </style>
 </head>
 <body>
@@ -511,6 +646,7 @@ strong{color:#fff;font-weight:500}
 <canvas id="star-canvas"></canvas>
 <div class="aurora-overlay"></div>
 <canvas id="heart-canvas"></canvas>
+<div class="haptic-pulse" id="haptic-pulse"></div>
 
 <div class="content">
 
@@ -527,6 +663,15 @@ strong{color:#fff;font-weight:500}
     <p>Someone thought of <strong>you</strong>. Out of everyone in their world, they chose you. Right now, in this moment, <span class="love-word">you are the reason this page exists.</span></p>
     <p>This was made for you. Every word. Every heart. Every glow. <strong>Scroll down and feel it.</strong></p>
     <p id="variation-hook-sub" style="font-size:0.95rem;color:#c090a8;margin-top:16px"></p>
+
+    <!-- Philly LOVE Sculpture (hidden unless philly variation) -->
+    <div class="love-sculpture-wrap" id="love-sculpture">
+      <div class="love-sculpture">
+        <span>L</span><span class="sculpture-o">O</span>
+        <span>V</span><span>E</span>
+      </div>
+    </div>
+
     <p style="font-size:0.9rem;color:#a07888;margin-top:40px">scroll down</p>
     <p style="font-size:1.4rem;color:#ff69b4;animation:bounce 2s infinite">&#8595;</p>
   </div>
@@ -620,6 +765,7 @@ strong{color:#fff;font-weight:500}
     <div class="video-section">
       <h3>Let this play while you take it in.</h3>
       <div class="subtitle">The person who sent this picked this song for you.</div>
+      <div class="song-info" id="song-info"></div>
       <div class="yt-container" id="yt-container">
         <div id="yt-player"></div>
       </div>
@@ -683,6 +829,16 @@ strong{color:#fff;font-weight:500}
 <!-- SCRIPTS                                     -->
 <!-- ═══════════════════════════════════════════ -->
 <script>
+/* ── Early Variation Detection ── */
+var currentVariationId = 'default';
+var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
+(function detectVariationEarly() {
+  var params = new URLSearchParams(window.location.search);
+  var v = params.get('v') || 'default';
+  currentVariationId = LOVE_BOMB_VARIATIONS[v] ? v : 'default';
+  currentVariationConfig = LOVE_BOMB_VARIATIONS[currentVariationId];
+})();
+
 /* ── Starfield — twinkling stars background (magical layer) ── */
 (function initStarfield() {
   var starCanvas = document.getElementById('star-canvas');
@@ -759,12 +915,33 @@ var hearts = [];
 var musicMode = false;
 var scrollProgress = 0;
 
-var COLORS = [
+var DEFAULT_HEART_COLORS = [
   [255,105,180], [255,69,100], [255,182,193],
   [238,130,238], [255,140,160], [255,200,220],
   [200,100,255], [255,80,120],  [255,220,230],
   [255,20,100],  [180,60,200],
 ];
+
+var RAINBOW_HEART_COLORS = [
+  [228,3,3],     [255,60,40],
+  [255,140,0],   [255,170,50],
+  [255,237,0],   [255,255,80],
+  [0,128,38],    [0,180,80],
+  [0,77,255],    [60,120,255],
+  [117,7,135],   [180,60,220],
+];
+
+var COLORS = DEFAULT_HEART_COLORS.slice();
+
+function setHeartColors(mode) {
+  COLORS.length = 0;
+  var src = mode === 'rainbow' ? RAINBOW_HEART_COLORS : DEFAULT_HEART_COLORS;
+  for (var i = 0; i < src.length; i++) COLORS.push(src[i]);
+}
+
+if (currentVariationConfig && currentVariationConfig.heartColors === 'rainbow') {
+  setHeartColors('rainbow');
+}
 
 function resize() {
   W = canvas.width = window.innerWidth;
@@ -931,7 +1108,70 @@ var observer = new IntersectionObserver(function(entries) {
 }, { threshold: 0.15 });
 document.querySelectorAll('.section').forEach(function(s) { observer.observe(s); });
 
-/* ── YouTube Player — autoplay with volume ── */
+/* ── Haptics Engine — syncs vibration to song BPM ── */
+var hapticsInterval = null;
+var hapticPulseEl = document.getElementById('haptic-pulse');
+
+function startHaptics(bpm) {
+  stopHaptics();
+  if (!bpm) return;
+  var beatMs = Math.round(60000 / bpm);
+  var vibrateMs = Math.max(15, Math.min(50, Math.round(beatMs * 0.07)));
+
+  function doBeat() {
+    if (navigator.vibrate) {
+      navigator.vibrate(vibrateMs);
+    }
+    if (hapticPulseEl) {
+      hapticPulseEl.classList.add('active');
+      setTimeout(function() { hapticPulseEl.classList.remove('active'); }, 150);
+    }
+  }
+
+  doBeat();
+  hapticsInterval = setInterval(doBeat, beatMs);
+}
+
+function stopHaptics() {
+  if (hapticsInterval) {
+    clearInterval(hapticsInterval);
+    hapticsInterval = null;
+  }
+  try { if (navigator.vibrate) navigator.vibrate(0); } catch(e) {}
+  if (hapticPulseEl) hapticPulseEl.classList.remove('active');
+}
+
+/* ── Detonation Effect — the "bomb" moment ── */
+function detonateLoveBomb() {
+  var flash = document.createElement('div');
+  flash.className = 'detonate-flash';
+  document.body.appendChild(flash);
+  setTimeout(function() { flash.remove(); }, 2000);
+
+  for (var i = 0; i < 80; i++) {
+    (function(idx) {
+      setTimeout(function() {
+        hearts.push(new Heart(
+          W * 0.2 + Math.random() * W * 0.6,
+          H * 0.2 + Math.random() * H * 0.6,
+          true
+        ));
+      }, idx * 20);
+    })(i);
+  }
+
+  if (navigator.vibrate) {
+    navigator.vibrate([60, 20, 60, 20, 60, 20, 80, 40, 120, 60, 200]);
+  }
+
+  if (currentVariationConfig && currentVariationConfig.bpm) {
+    setTimeout(function() {
+      startHaptics(currentVariationConfig.bpm);
+    }, 800);
+  }
+}
+
+/* ── YouTube Player — variation-aware autoplay ── */
 var ytPlayer = null;
 var ytReady = false;
 var userHasInteracted = false;
@@ -940,6 +1180,26 @@ var audioUnlocked = false;
 var tag = document.createElement('script');
 tag.src = 'https://www.youtube.com/iframe_api';
 document.head.appendChild(tag);
+
+function getVideoConfig() {
+  var cfg = currentVariationConfig || LOVE_BOMB_VARIATIONS['default'];
+  return {
+    videoId: cfg.videoId || 'NI6aOFI7hms',
+    start: cfg.videoStart || 0,
+  };
+}
+
+function updateSongInfo() {
+  var el = document.getElementById('song-info');
+  if (!el || !currentVariationConfig) return;
+  var title = currentVariationConfig.songTitle;
+  var artist = currentVariationConfig.songArtist;
+  if (title && artist) {
+    el.innerHTML = '&#9835; ' + artist + ' — <em>' + title + '</em>';
+  } else {
+    el.textContent = '';
+  }
+}
 
 function tryUnmutePlayer() {
   if (!ytPlayer || !ytReady || audioUnlocked) return;
@@ -954,36 +1214,15 @@ function tryUnmutePlayer() {
   } catch(e) {}
 }
 
-function pollForContentStart() {
-  if (!ytPlayer || !ytReady) return;
-  try {
-    var currentTime = ytPlayer.getCurrentTime();
-    var state = ytPlayer.getPlayerState();
-    if (state === YT.PlayerState.PLAYING && currentTime >= 48) {
-      tryUnmutePlayer();
-      if (!audioUnlocked && userHasInteracted) {
-        ytPlayer.unMute();
-        ytPlayer.setVolume(100);
-        audioUnlocked = true;
-        var tapBtn = document.getElementById('tap-to-hear');
-        if (tapBtn) tapBtn.classList.add('hidden');
-      }
-    } else {
-      setTimeout(pollForContentStart, 1000);
-    }
-  } catch(e) {
-    setTimeout(pollForContentStart, 1000);
-  }
-}
-
-window.onYouTubeIframeAPIReady = function() {
+function createPlayer() {
+  var vc = getVideoConfig();
   ytPlayer = new YT.Player('yt-player', {
     height: '100%',
     width: '100%',
-    videoId: 'NI6aOFI7hms',
+    videoId: vc.videoId,
     playerVars: {
       autoplay: 1,
-      start: 52,
+      start: vc.start,
       modestbranding: 1,
       rel: 0,
       playsinline: 1,
@@ -997,6 +1236,7 @@ window.onYouTubeIframeAPIReady = function() {
         event.target.unMute();
         event.target.playVideo();
         musicMode = true;
+        updateSongInfo();
 
         setTimeout(function() {
           try {
@@ -1007,28 +1247,57 @@ window.onYouTubeIframeAPIReady = function() {
               audioUnlocked = true;
               var tapBtn = document.getElementById('tap-to-hear');
               if (tapBtn) tapBtn.classList.add('hidden');
+              detonateLoveBomb();
             }
           } catch(e) {}
         }, 500);
-
-        pollForContentStart();
-
-        for (var i = 0; i < 30; i++) {
-          (function(idx) {
-            setTimeout(function() {
-              hearts.push(new Heart(W/2 + (Math.random()-0.5)*200, H/2, true));
-            }, idx * 50);
-          })(i);
-        }
       },
       onStateChange: function(e) {
         musicMode = (e.data === YT.PlayerState.PLAYING);
-        if (e.data === YT.PlayerState.PLAYING && userHasInteracted && !audioUnlocked) {
-          tryUnmutePlayer();
+        if (e.data === YT.PlayerState.PLAYING) {
+          if (userHasInteracted && !audioUnlocked) {
+            tryUnmutePlayer();
+          }
+          if (audioUnlocked && !hapticsInterval && currentVariationConfig && currentVariationConfig.bpm) {
+            startHaptics(currentVariationConfig.bpm);
+          }
+        } else {
+          stopHaptics();
         }
       }
     }
   });
+}
+
+function loadVariationVideo() {
+  if (!ytPlayer || !ytReady) return;
+  var vc = getVideoConfig();
+  audioUnlocked = false;
+  stopHaptics();
+  try {
+    ytPlayer.loadVideoById({ videoId: vc.videoId, startSeconds: vc.start });
+    ytPlayer.setVolume(100);
+    ytPlayer.unMute();
+    updateSongInfo();
+
+    setTimeout(function() {
+      try {
+        if (!ytPlayer.isMuted()) {
+          audioUnlocked = true;
+          var tapBtn = document.getElementById('tap-to-hear');
+          if (tapBtn) tapBtn.classList.add('hidden');
+          detonateLoveBomb();
+        } else {
+          var tapBtn = document.getElementById('tap-to-hear');
+          if (tapBtn) tapBtn.classList.remove('hidden');
+        }
+      } catch(e) {}
+    }, 600);
+  } catch(e) {}
+}
+
+window.onYouTubeIframeAPIReady = function() {
+  createPlayer();
 };
 
 function onUserInteraction() {
@@ -1041,6 +1310,7 @@ function onUserInteraction() {
     audioUnlocked = true;
     var tapBtn = document.getElementById('tap-to-hear');
     if (tapBtn) tapBtn.classList.add('hidden');
+    detonateLoveBomb();
   }
 }
 
@@ -1121,14 +1391,16 @@ document.addEventListener('scroll', function onFirstScroll() {
   scheduleNext();
 })();
 
-/* ── Variation System ── */
+/* ── Variation System — handles video, hearts, sculpture, haptics ── */
 (function initVariations() {
   var params = new URLSearchParams(window.location.search);
-  var v = params.get('v') || 'default';
-  var varId = LOVE_BOMB_VARIATIONS[v] ? v : 'default';
+  var varId = currentVariationId;
 
-  function applyVariation(id) {
+  function applyVariation(id, isSwitch) {
     var c = LOVE_BOMB_VARIATIONS[id] || LOVE_BOMB_VARIATIONS['default'];
+    currentVariationId = id;
+    currentVariationConfig = c;
+
     var from = document.getElementById('var-from');
     var to = document.getElementById('var-to');
     var re = document.getElementById('var-re');
@@ -1145,6 +1417,35 @@ document.addEventListener('scroll', function onFirstScroll() {
     document.querySelectorAll('.variation-btn').forEach(function(btn) {
       btn.classList.toggle('active', btn.dataset.var === id);
     });
+
+    /* Rainbow hearts for LGBTQ */
+    if (c.heartColors === 'rainbow') {
+      setHeartColors('rainbow');
+      document.body.classList.add('rainbow-active');
+    } else {
+      setHeartColors('default');
+      document.body.classList.remove('rainbow-active');
+    }
+
+    /* Philly LOVE sculpture */
+    var sculpture = document.getElementById('love-sculpture');
+    if (sculpture) {
+      if (c.showLoveSculpture) {
+        sculpture.classList.add('active');
+      } else {
+        sculpture.classList.remove('active');
+      }
+    }
+
+    /* Song info */
+    updateSongInfo();
+
+    /* Load new video if switching */
+    if (isSwitch) {
+      loadVariationVideo();
+    }
+
+    /* Update URL */
     if (id !== (params.get('v') || 'default')) {
       var u = new URL(window.location.href);
       u.searchParams.set('v', id);
@@ -1161,11 +1462,11 @@ document.addEventListener('scroll', function onFirstScroll() {
       b.className = 'variation-btn' + (id === varId ? ' active' : '');
       b.dataset.var = id;
       b.textContent = c.label;
-      b.addEventListener('click', function() { applyVariation(id); });
+      b.addEventListener('click', function() { applyVariation(id, true); });
       btns.appendChild(b);
     });
   }
-  applyVariation(varId);
+  applyVariation(varId, false);
 })();
 
 /* ── Share Functions ── */
