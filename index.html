@@ -668,6 +668,8 @@ body.mobile-version{
   min-height:calc(var(--app-vh,1vh) * 100);
   -webkit-text-size-adjust:100%;
   overscroll-behavior-y:contain;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
 }
 body.mobile-version .content{
   max-width:100%;
@@ -2226,27 +2228,32 @@ var extraMode = false;
   };
 })();
 
-/* ── Mobile Version Detection ── */
+/* ── Mobile Version Detection (default: mobile unless desktop requested or very wide) ── */
 (function initMobileVersion() {
   var params = new URLSearchParams(window.location.search);
   var forceMobile = params.get('mobile') === '1';
-  var compactViewport = window.matchMedia('(max-width: 820px)');
-  var coarsePointer = window.matchMedia('(hover: none), (pointer: coarse)');
+  var forceDesktop = params.get('desktop') === '1';
+  var wideViewport = window.matchMedia('(min-width: 1400px)');
 
   function setViewportHeightVar() {
     document.documentElement.style.setProperty('--app-vh', (window.innerHeight * 0.01) + 'px');
   }
 
   function applyMobileClass() {
-    var enableMobile = forceMobile || compactViewport.matches || coarsePointer.matches;
+    var enableMobile = forceMobile || (!forceDesktop && !wideViewport.matches);
     document.body.classList.toggle('mobile-version', enableMobile);
   }
 
   setViewportHeightVar();
   applyMobileClass();
+  var resizeTid;
   window.addEventListener('resize', function() {
-    setViewportHeightVar();
-    applyMobileClass();
+    if (resizeTid) clearTimeout(resizeTid);
+    resizeTid = setTimeout(function() {
+      resizeTid = null;
+      setViewportHeightVar();
+      applyMobileClass();
+    }, 80);
   });
 })();
 
@@ -2262,7 +2269,11 @@ var extraMode = false;
     starCanvas.width = window.innerWidth;
     starCanvas.height = window.innerHeight;
   }
-  window.addEventListener('resize', resizeStars);
+  var starResizeTid;
+  window.addEventListener('resize', function() {
+    if (starResizeTid) clearTimeout(starResizeTid);
+    starResizeTid = setTimeout(function() { starResizeTid = null; resizeStars(); }, 80);
+  });
   resizeStars();
 
   for (var i = 0; i < STAR_COUNT; i++) {
@@ -2382,7 +2393,11 @@ function resize() {
   W = canvas.width = window.innerWidth;
   H = canvas.height = window.innerHeight;
 }
-window.addEventListener('resize', resize);
+var heartResizeTid;
+window.addEventListener('resize', function() {
+  if (heartResizeTid) clearTimeout(heartResizeTid);
+  heartResizeTid = setTimeout(function() { heartResizeTid = null; resize(); }, 80);
+});
 resize();
 
 window.addEventListener('scroll', function() {
@@ -3456,14 +3471,14 @@ function detectAccentFromFlag(countryCode, flagPng, done) {
   for (var bi = 0; bi < breathingEls.length; bi++) breathingDefaults.push(breathingEls[bi].textContent);
 
   var RB_TEXT_TARGETS = [
-    { selector: '#hook-title', html: '99 red balloons.<br>One avoidable escalation.' },
+    { selector: '#hook-title', html: '99 red balloons.<br>One misread signal. One world changed.' },
     { selector: '#s6 h2', text: 'How fear escalates — and how love can interrupt it' },
-    { selector: '#s6 > p:first-of-type', text: 'The song 99 Luftballons imagines a tiny misunderstanding becoming a major conflict. This theme is a reminder to lead with care before fear writes the next chapter.' },
-    { selector: '#s6 .quote', html: 'Small signals can be misread.<br>Love, patience, and context can stop escalation.' },
+    { selector: '#s6 > p:first-of-type', text: 'In 99 Luftballons, harmless balloons on radar become a pretext for war. The song reminds us: small signals get misread. Without empathy and context, misunderstanding can escalate fast. Love slows the reaction — and keeps people from becoming enemies by accident.' },
+    { selector: '#s6 .quote', html: 'One blip on a screen. One choice to pause.<br>Love, patience, and context can stop escalation before it starts.' },
     { selector: '#s7 h2', text: 'Send calm forward' },
-    { selector: '#s7 > p:first-of-type', text: 'Pick one person and send this as a reminder: choose empathy before assumption.' },
+    { selector: '#s7 > p:first-of-type', text: 'Pick one person and send this as a reminder: choose empathy before assumption. Before panic writes the story.' },
     { selector: '#s5 .video-section h3', text: 'A Cold War warning in song form.' },
-    { selector: '#s5 .video-section .subtitle', text: '99 Luftballons became an anthem about misunderstanding, fear, and preventable escalation.' }
+    { selector: '#s5 .video-section .subtitle', text: '99 Luftballons — NENA\'s 1983 anthem about misunderstanding, fear, and the escalation we could have avoided.' }
   ];
 
   function setCountryControlsVisible(on) {
@@ -3519,7 +3534,7 @@ function detectAccentFromFlag(countryCode, flagPng, done) {
       } else if (id === 'friend') {
         telegramBodyEl.innerHTML = 'You are <span class="love-word">loved</span>. Friendship love. Real, steady, and here for you.<br><br>You matter to people who know you well. Your presence helps more than you realize.<br><br>You are enough right now. Keep this feeling and pass it on when someone needs it.';
       } else if (id === 'redballoons') {
-        telegramBodyEl.innerHTML = 'In <span class="love-word">99 Luftballons</span>, harmless balloons are mistaken for a threat — and fear escalates everything.<br><br>The warning is timeless: without empathy, context, and patience, small signals can become huge conflict.<br><br>Love is not passive here. Love slows the reaction, restores humanity, and keeps people from becoming enemies by accident.';
+        telegramBodyEl.innerHTML = 'In <span class="love-word">99 Luftballons</span>, a blip on radar — harmless balloons — becomes a pretext for war. Fear escalates. The song\'s warning is timeless: without empathy, context, and patience, small signals can become huge conflict.<br><br>Love is not passive here. Love slows the reaction, restores humanity, and keeps people from becoming enemies by accident.';
       } else if (c.telegramBodyHtml) {
         telegramBodyEl.innerHTML = c.telegramBodyHtml;
       } else {
@@ -3994,6 +4009,7 @@ document.head.appendChild(style);
   var senderName = params.get('from');
   if (!senderName) return;
   senderName = ('' + senderName).substring(0, 50);
+  var isRedBalloons = currentVariationId === 'redballoons';
 
   var banner = document.getElementById('from-banner');
   if (banner) {
@@ -4002,7 +4018,7 @@ document.head.appendChild(style);
   }
 
   var hookTitle = document.getElementById('hook-title');
-  if (hookTitle) {
+  if (hookTitle && !isRedBalloons) {
     while (hookTitle.firstChild) hookTitle.removeChild(hookTitle.firstChild);
     hookTitle.appendChild(document.createTextNode(senderName + ' just sent you'));
     hookTitle.appendChild(document.createElement('br'));
@@ -4010,7 +4026,7 @@ document.head.appendChild(style);
   }
 
   var telegramFrom = document.getElementById('var-from');
-  if (telegramFrom) {
+  if (telegramFrom && !isRedBalloons) {
     telegramFrom.textContent = senderName + ', who loves you';
   }
 })();
@@ -4226,8 +4242,13 @@ function triggerHyperspace() {
   function resizeSWCanvas() {
     sw = cvs.width = window.innerWidth;
     sh = cvs.height = window.innerHeight;
+    positionDeathStar();
   }
-  window.addEventListener('resize', resizeSWCanvas);
+  var swResizeTid;
+  window.addEventListener('resize', function() {
+    if (swResizeTid) clearTimeout(swResizeTid);
+    swResizeTid = setTimeout(function() { swResizeTid = null; resizeSWCanvas(); }, 80);
+  });
   resizeSWCanvas();
 
   var deathStarX, deathStarY, deathStarR;
@@ -4236,8 +4257,6 @@ function triggerHyperspace() {
     deathStarX = sw * 0.85;
     deathStarY = sh * 0.12;
   }
-  positionDeathStar();
-  window.addEventListener('resize', positionDeathStar);
 
   function drawDeathStar(pulse) {
     c.save();
