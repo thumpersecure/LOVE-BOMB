@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500&family=Special+Elite&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{
   background:#0d0212;
   color:#fff;
@@ -63,6 +63,7 @@ body{
   position:relative;z-index:2;
   max-width:720px;margin:0 auto;padding:40px 24px;
   text-align:center;
+  contain:layout style;
 }
 
 /* ── Sections ── */
@@ -72,6 +73,7 @@ body{
   transition:opacity 1.2s ease,transform 1.2s ease;
   content-visibility:auto;
   contain-intrinsic-size:1px 700px;
+  contain:layout;
 }
 .section.visible{opacity:1;transform:translateY(0)}
 .section#s1{margin-top:15vh}
@@ -687,6 +689,7 @@ body.mobile-version .variation-btn{width:100%;justify-content:center}
 body.mobile-version .video-section{max-width:100%}
 body.mobile-version .unmute-overlay{left:12px;right:12px;bottom:12px}
 body.mobile-version .unmute-btn{width:100%;justify-content:center}
+body.mobile-version .telegram-frame{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 @media(max-width:420px){
   body.mobile-version .variation-btns{grid-template-columns:1fr}
 }
@@ -2293,6 +2296,7 @@ var extraMode = false;
 
   var starFrame = 0;
   function animateStars() {
+    if (document.hidden) return;
     starFrame++;
     if (lowPowerMode && starFrame % 2) {
       requestAnimationFrame(animateStars);
@@ -2317,6 +2321,9 @@ var extraMode = false;
     requestAnimationFrame(animateStars);
   }
   animateStars();
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) animateStars();
+  });
 })();
 
 /* ── Magical Floating Orbs ── */
@@ -2400,9 +2407,14 @@ window.addEventListener('resize', function() {
 });
 resize();
 
+var scrollProgressTid;
 window.addEventListener('scroll', function() {
-  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  scrollProgress = docHeight > 0 ? Math.min(1, window.scrollY / docHeight) : 0;
+  if (scrollProgressTid) return;
+  scrollProgressTid = requestAnimationFrame(function() {
+    scrollProgressTid = null;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    scrollProgress = docHeight > 0 ? Math.min(1, window.scrollY / docHeight) : 0;
+  });
 }, { passive: true });
 
 function drawHeart(cx, cy, size, angle, color, alpha) {
@@ -2542,6 +2554,7 @@ function collide(a, b) {
 var spawnTimer = 0;
 var heartFrame = 0;
 function animate() {
+  if (document.hidden) return;
   heartFrame++;
   if (lowPowerMode && heartFrame % 2) {
     requestAnimationFrame(animate);
@@ -2587,6 +2600,9 @@ function animate() {
   requestAnimationFrame(animate);
 }
 animate();
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden) animate();
+});
 
 var touchBurstCount = (window.innerWidth <= 600) ? (lowPowerMode ? 4 : 6) : (lowPowerMode ? 8 : 12);
 document.addEventListener('click', function(e) {
@@ -3940,14 +3956,19 @@ document.head.appendChild(style);
   ];
   var lastIdx = 0;
   var origTitle = document.title;
+  var scrollTitleTid;
   window.addEventListener('scroll', function() {
-    var docH = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = docH > 0 ? window.scrollY / docH : 0;
-    var idx = Math.min(titles.length - 1, Math.floor(pct * titles.length));
-    if (idx !== lastIdx) {
-      lastIdx = idx;
-      document.title = titles[idx];
-    }
+    if (scrollTitleTid) return;
+    scrollTitleTid = requestAnimationFrame(function() {
+      scrollTitleTid = null;
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docH > 0 ? window.scrollY / docH : 0;
+      var idx = Math.min(titles.length - 1, Math.floor(pct * titles.length));
+      if (idx !== lastIdx) {
+        lastIdx = idx;
+        document.title = titles[idx];
+      }
+    });
   }, { passive: true });
   document.addEventListener('visibilitychange', function() {
     if (document.hidden) {
@@ -3962,10 +3983,15 @@ document.head.appendChild(style);
 (function initWarmthGradient() {
   var aurora = document.querySelector('.aurora-overlay');
   if (!aurora) return;
+  var warmthTid;
   window.addEventListener('scroll', function() {
-    var docH = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = docH > 0 ? Math.min(1, window.scrollY / docH) : 0;
-    aurora.style.opacity = (0.6 + pct * 0.4).toFixed(2);
+    if (warmthTid) return;
+    warmthTid = requestAnimationFrame(function() {
+      warmthTid = null;
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docH > 0 ? Math.min(1, window.scrollY / docH) : 0;
+      aurora.style.opacity = (0.6 + pct * 0.4).toFixed(2);
+    });
   }, {passive: true});
 })();
 
@@ -4398,6 +4424,7 @@ function triggerHyperspace() {
 
   var swFrame = 0;
   function animateSWScene() {
+    if (document.hidden) return;
     swFrame++;
     if (lowPowerMode && swFrame % 3) {
       requestAnimationFrame(animateSWScene);
@@ -4426,6 +4453,9 @@ function triggerHyperspace() {
     requestAnimationFrame(animateSWScene);
   }
   animateSWScene();
+  document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) animateSWScene();
+  });
 })();
 
 /* ── SW Yoda Quote Rotation ── */
@@ -4840,13 +4870,17 @@ function triggerHyperspace() {
   if (currentVariationId !== 'starwars') return;
   var aurora = document.querySelector('.aurora-overlay');
   if (!aurora) return;
-
+  var parallaxTid;
   window.addEventListener('scroll', function() {
-    var docH = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = docH > 0 ? Math.min(1, window.scrollY / docH) : 0;
-    var hue = Math.round(pct * 30);
-    aurora.style.filter = 'hue-rotate(' + hue + 'deg)';
-    aurora.style.opacity = (0.4 + pct * 0.5).toFixed(2);
+    if (parallaxTid) return;
+    parallaxTid = requestAnimationFrame(function() {
+      parallaxTid = null;
+      var docH = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docH > 0 ? Math.min(1, window.scrollY / docH) : 0;
+      var hue = Math.round(pct * 30);
+      aurora.style.filter = 'hue-rotate(' + hue + 'deg)';
+      aurora.style.opacity = (0.4 + pct * 0.5).toFixed(2);
+    });
   }, { passive: true });
 })();
 </script>
