@@ -2149,9 +2149,20 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
 /* ── Early Variation Detection ── */
 var currentVariationId = 'default';
 var currentVariationConfig = LOVE_BOMB_VARIATIONS['default'];
+function normalizeVariationId(raw) {
+  var v = ('' + (raw || '')).toLowerCase().trim();
+  if (!v || v === 'classic') return 'default';
+  if (v === 'lgbtq+' || v === 'lgbtq%2b' || v === 'lgbtq%2B') return 'lgbtq';
+  if (v === 'newyork' || v === 'new-york' || v === 'new york') return 'nyc';
+  if (v === 'us') return 'usa';
+  if (v === 'country' || v === 'country-love' || v === 'country_love') return 'countrylove';
+  if (v === 'red-balloons' || v === '99redballoons' || v === '99-red-balloons') return 'redballoons';
+  if (v === 'star-wars' || v === 'star wars' || v === 'sw') return 'starwars';
+  return v;
+}
 (function detectVariationEarly() {
   var params = new URLSearchParams(window.location.search);
-  var v = params.get('v') || 'default';
+  var v = normalizeVariationId(params.get('v') || 'default');
   currentVariationId = LOVE_BOMB_VARIATIONS[v] ? v : 'default';
   currentVariationConfig = LOVE_BOMB_VARIATIONS[currentVariationId];
 })();
@@ -3648,11 +3659,17 @@ function detectAccentFromFlag(countryCode, flagPng, done) {
     }
   }
 
+  var countryApplySeq = 0;
   function applyCountryLove(base, isSwitch) {
+    countryApplySeq++;
+    var seq = countryApplySeq;
     setCountryControlsVisible(true);
     loadCountryLoveList(function(list) {
+      if (seq !== countryApplySeq) return;
+      if (currentVariationId !== 'countrylove') return;
       if (!list || !list.length) return;
-      var selectedCode = (params.get('country') || 'US').toUpperCase();
+      var urlParams = new URLSearchParams(window.location.search);
+      var selectedCode = (urlParams.get('country') || 'US').toUpperCase();
       var selected = null;
       for (var i = 0; i < list.length; i++) {
         if (list[i].code === selectedCode) { selected = list[i]; break; }
@@ -3669,7 +3686,11 @@ function detectAccentFromFlag(countryCode, flagPng, done) {
       if (countrySelectEl) countrySelectEl.value = selected.code;
 
       translateCountryLoveBundle(selected.target, function(bundle) {
+        if (seq !== countryApplySeq) return;
+        if (currentVariationId !== 'countrylove') return;
         detectAccentFromFlag(selected.code, selected.flagPng, function(accent) {
+          if (seq !== countryApplySeq) return;
+          if (currentVariationId !== 'countrylove') return;
           var countryCfg = buildCountryTheme(base, selected, bundle, accent);
           currentVariationConfig = countryCfg;
           renderVariationText('countrylove', countryCfg);
@@ -3747,9 +3768,16 @@ function detectAccentFromFlag(countryCode, flagPng, done) {
       var u = new URL(window.location.href);
       u.searchParams.set('v', 'countrylove');
       u.searchParams.set('country', code);
-      window.location.assign(u.toString());
+      window.history.pushState({}, '', u.toString());
+      applyVariation('countrylove', false);
     });
   }
+
+  window.addEventListener('popstate', function() {
+    if (normalizeVariationId((new URLSearchParams(window.location.search)).get('v') || '') === 'countrylove') {
+      applyVariation('countrylove', false);
+    }
+  });
 
   applyVariation(varId, false);
 })();
