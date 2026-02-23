@@ -70,10 +70,17 @@ body{
   margin:80px 0;
   opacity:0;transform:translateY(40px);
   transition:opacity 1.2s ease,transform 1.2s ease;
+  content-visibility:auto;
+  contain-intrinsic-size:1px 700px;
 }
 .section.visible{opacity:1;transform:translateY(0)}
 .section#s1{margin-top:15vh}
 .section#variation-picker{margin-top:10vh}
+.section#s1,
+.section#variation-picker{
+  content-visibility:visible;
+  contain-intrinsic-size:auto;
+}
 
 /* ── Typography ── */
 h1{
@@ -503,6 +510,28 @@ strong{color:#fff;font-weight:500}
 .variation-btns{
   display:flex;flex-wrap:wrap;gap:8px;justify-content:center;
 }
+.country-controls{
+  margin-top:10px;
+  display:grid;
+  grid-template-columns:minmax(150px,1fr) minmax(170px,1fr);
+  gap:8px;
+  align-items:center;
+}
+.country-controls input,
+.country-controls select{
+  width:100%;
+  min-height:40px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.18);
+  background:rgba(255,255,255,0.07);
+  color:#ffe6f0;
+  padding:8px 10px;
+  font-size:0.84rem;
+}
+.country-controls input::placeholder{color:#c7a7b8}
+.country-controls option{
+  color:#121212;
+}
 .top-controls{
   display:flex;
   gap:10px;
@@ -613,6 +642,7 @@ strong{color:#fff;font-weight:500}
   .share-link-btn{padding:14px 24px;font-size:0.95rem;width:100%;justify-content:center}
   .variation-btn{padding:10px 14px;font-size:0.82rem;min-height:44px;display:inline-flex;align-items:center}
   .variation-btns{gap:6px}
+  .country-controls{grid-template-columns:1fr}
   .affirmation-grid{grid-template-columns:1fr;gap:12px}
   .affirmation-card{padding:16px 14px}
   .counter-box{padding:8px 16px;font-size:0.85rem;flex-wrap:wrap;justify-content:center}
@@ -943,6 +973,12 @@ body.beat-hit .love-star-btn{filter:brightness(1.12)}
   box-shadow:0 8px 24px rgba(0,77,255,0.1);
 }
 
+.balloon-divider{
+  letter-spacing:8px !important;
+  color:#ff566f !important;
+  opacity:0.95;
+}
+
 /* ── Per-Variation Visual Themes ── */
 :root{
   --accent:255,105,180;
@@ -1079,6 +1115,34 @@ body.beat-hit .love-star-btn{filter:brightness(1.12)}
 .variation-multilang .share-btn{background:linear-gradient(135deg,#ffc850,#e6a800,#cc9500)}
 .variation-multilang .affirmation-card{border-color:rgba(255,200,100,0.15)}
 .variation-multilang .affirmation-card:hover{border-color:rgba(255,200,100,0.4);box-shadow:0 8px 24px rgba(255,200,100,0.1)}
+
+.variation-redballoons{--accent:235,55,78;--accent-hue:350}
+.variation-redballoons .aurora-overlay{
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 80%, rgba(235,55,78,0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(255,120,90,0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 70%);
+}
+.variation-redballoons h1{
+  background:linear-gradient(135deg,#fff 0%,#ffd7dc 42%,#ff566f 75%,#fff 100%);
+  background-size:200% 200%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.variation-redballoons .heart-divider{color:#ff566f}
+.variation-redballoons .telegram-frame{border-color:rgba(235,55,78,0.32)}
+.variation-redballoons .telegram-frame::before{content:'HISTORY NOTE';color:#ff566f;text-shadow:0 0 10px rgba(235,55,78,0.42)}
+.variation-redballoons .love-word{color:#ff566f;text-shadow:0 0 8px rgba(235,55,78,0.35)}
+.variation-redballoons .love-declaration{
+  background:linear-gradient(135deg,#ff566f,#ff2d55,#ff8c78,#ff566f);
+  background-size:300% 300%;
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 20px rgba(235,55,78,0.36));
+}
+.variation-redballoons .share-btn{background:linear-gradient(135deg,#ff566f,#ff2d55,#ff566f)}
+.variation-redballoons .counter-box .counter-num{color:#ff566f}
+.variation-redballoons .counter-pulse{background:#ff566f}
+
+.variation-countrylove{--accent:255,190,120;--accent-hue:38}
 
 .variation-starwars{--accent:160,210,255;--accent-hue:210;--saber-blue:#4fc3f7;--saber-red:#ff1744;--saber-green:#69f0ae;--sw-gold:#ffe81f;--sw-space:#000008}
 .variation-starwars .aurora-overlay{
@@ -1765,15 +1829,19 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
       <button class="mode-toggle" id="extra-toggle" type="button" aria-pressed="false">Extra mode: OFF</button>
     </div>
     <div class="variation-btns" id="variation-btns"></div>
+    <div class="country-controls" id="country-controls" style="display:none">
+      <input id="country-search" type="search" placeholder="Search country" aria-label="Search country for country love theme">
+      <select id="country-select" aria-label="Select country love theme"></select>
+    </div>
   </div>
 
   <!-- ═══ HOOK ═══ (deeply personal love) -->
   <div class="section" id="s1">
     <div class="from-banner" id="from-banner" style="display:none"></div>
     <h1 id="hook-title">Someone just sent you<br>a love bomb.</h1>
-    <p>Not the scary kind. The kind that wraps around you like a warm blanket on a cold night and whispers: <em>you matter.</em></p>
-    <p>Someone thought of <strong>you</strong>. Out of everyone in their world, they chose you. Right now, in this moment, <span class="love-word">you are the reason this page exists.</span></p>
-    <p>This was made for you. Every word. Every heart. Every glow. <strong>Scroll down and feel it.</strong></p>
+    <p>Not the scary kind. The kind that says: <em>you matter.</em></p>
+    <p>Someone thought of <strong>you</strong> and chose you on purpose. <span class="love-word">This page exists because of that.</span></p>
+    <p>Take a breath. Keep scrolling. <strong>Let this land.</strong></p>
     <p id="variation-hook-sub" style="font-size:0.95rem;color:#c090a8;margin-top:16px"></p>
 
     <!-- Star Wars-ish Love Scene (hidden unless starwars variation) -->
@@ -1826,16 +1894,12 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
         TO: <span id="var-to">You, right now, reading this</span><br>
         RE: <span id="var-re">Things you need to hear</span>
       </div>
-      <div class="telegram-body">
-        You are <span class="love-word">loved</span>. Not in some vague, distant, "everyone is loved" way — right here, right now, by the specific person who sent you this. They thought of <strong>you</strong>. They chose <strong>you</strong>. They wanted <strong>you</strong> to feel something real today.
+      <div class="telegram-body" id="telegram-body-main">
+        You are <span class="love-word">loved</span>. Not in a generic way — by someone specific who thought of you and sent this on purpose.
         <br><br>
-        You matter more than you let yourself believe. Your laugh makes rooms lighter. Your kindness leaves marks on people you'll never know about. The way you care, the way you try, even the way you doubt yourself — it all means you have a heart that <span class="love-word">feels deeply</span>. That's not weakness. That's your superpower.
+        You matter. You are <span class="love-word">enough</span> right now, exactly as you are.
         <br><br>
-        If no one's told you lately: <span class="love-word">you are enough</span>. Exactly as you are. Not when you fix that thing. Not when you achieve that goal. Not someday. <em>Right now.</em> You — imperfect, beautiful, trying-your-best you — are enough.
-        <br><br>
-        The person who sent this didn't do it by accident. They did it because you crossed their mind and their heart said: <em>"They need to know."</em> So here it is. You're seen. You're valued. You're cherished. <span class="love-word">You are loved.</span>
-        <br><br>
-        Hold onto this feeling. It's real. And when you're ready — pass it on to someone who needs to hear it too.
+        Keep this feeling. When you're ready, pass it forward.
       </div>
       <div class="telegram-stamp">SENT WITH ALL MY LOVE &#10084;</div>
     </div>
@@ -2044,10 +2108,9 @@ body.extra-mode .haptic-pulse{width:14px;height:14px}
   <!-- ═══ SEND ONE ═══ -->
   <div class="section" id="s7">
     <h2>Now it's your turn</h2>
-    <p>You've been love bombed. You felt it. That warmth in your chest right now — that's real. You can't un-feel it.</p>
-    <p>Close your eyes for a second. Think of <strong>one person</strong> who needs to hear that they're loved today. A friend who's been quiet lately. A parent who gave everything. A partner. A sibling. Someone you haven't reached out to in too long. <span class="love-word">That person.</span> The one who just popped into your head without you even trying.</p>
-    <p>That's your heart telling you something. <em>Listen to it.</em></p>
-    <p>Send them this. No explanation needed — the page does the talking. They'll open it, feel exactly what you just felt, and know that <strong>someone in this world loves them</strong>. And that someone is you.</p>
+    <p>Think of <strong>one person</strong> who needs encouragement today.</p>
+    <p>Send them this link. No long explanation needed.</p>
+    <p>Small reminders of love can change the direction of a hard day.</p>
     <p style="margin:32px 0">
       <button class="share-btn" onclick="shareLoveBomb()" aria-label="Share this love bomb with someone you love">
         &#128140;&ensp;Send a love bomb to someone you love
@@ -2296,11 +2359,18 @@ var RAINBOW_HEART_COLORS = [
   [117,7,135],   [180,60,220],
 ];
 
+var RED_BALLOON_COLORS = [
+  [255, 48, 74], [235, 55, 78], [214, 34, 54], [255, 92, 109], [255, 22, 70],
+];
+
 var COLORS = DEFAULT_HEART_COLORS.slice();
+var particleShape = 'heart';
 
 function setHeartColors(mode) {
   COLORS.length = 0;
-  var src = mode === 'rainbow' ? RAINBOW_HEART_COLORS : DEFAULT_HEART_COLORS;
+  var src = DEFAULT_HEART_COLORS;
+  if (mode === 'rainbow') src = RAINBOW_HEART_COLORS;
+  if (mode === 'redballoons') src = RED_BALLOON_COLORS;
   for (var i = 0; i < src.length; i++) COLORS.push(src[i]);
 }
 
@@ -2343,6 +2413,48 @@ function drawHeart(cx, cy, size, angle, color, alpha) {
   ctx.restore();
 }
 
+function drawBalloon(cx, cy, size, angle, color, alpha) {
+  var s = size * 0.9;
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(angle * 0.25);
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+  ctx.beginPath();
+  ctx.ellipse(0, 0, s * 0.62, s * 0.84, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = 'rgba(255,255,255,0.25)';
+  ctx.beginPath();
+  ctx.ellipse(-s * 0.22, -s * 0.26, s * 0.16, s * 0.24, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.fillStyle = 'rgb(' + Math.max(0, color[0] - 25) + ',' + Math.max(0, color[1] - 25) + ',' + Math.max(0, color[2] - 25) + ')';
+  ctx.beginPath();
+  ctx.moveTo(0, s * 0.82);
+  ctx.lineTo(-s * 0.09, s * 1.02);
+  ctx.lineTo(s * 0.09, s * 1.02);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.strokeStyle = 'rgba(255,255,255,0.52)';
+  ctx.lineWidth = Math.max(1, s * 0.06);
+  ctx.beginPath();
+  ctx.moveTo(0, s * 1.02);
+  ctx.quadraticCurveTo(s * 0.15, s * 1.45, 0, s * 1.9);
+  ctx.quadraticCurveTo(-s * 0.12, s * 2.2, s * 0.06, s * 2.45);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawParticle(cx, cy, size, angle, color, alpha) {
+  if (particleShape === 'balloon') {
+    drawBalloon(cx, cy, size, angle, color, alpha);
+    return;
+  }
+  drawHeart(cx, cy, size, angle, color, alpha);
+}
+
 function Heart(x, y, burst) {
   this.x = x || Math.random() * W;
   this.y = y || -20 - Math.random() * 100;
@@ -2382,7 +2494,7 @@ Heart.prototype.update = function() {
   return this.life > 0 && this.y < H + 50;
 };
 Heart.prototype.draw = function() {
-  drawHeart(this.x, this.y, this.size, this.angle, this.color, this.life * this.opacity);
+  drawParticle(this.x, this.y, this.size, this.angle, this.color, this.life * this.opacity);
 };
 
 function collide(a, b) {
@@ -3115,9 +3227,9 @@ document.addEventListener('scroll', function onFirstScroll() {
 
 /* ── Love Bomb Counter ── */
 (function initCounter() {
-  var LAUNCH_DATE = new Date('2025-06-01T00:00:00Z');
-  var BASE_COUNT = 1300;
-  var PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47];
+  var sessionStartMs = Date.now();
+  var hourlyIncrements = [];
+  var baseCount = 1300 + Math.floor(Math.random() * 4000);
 
   function seededRandom(seed) {
     var t = seed + 0x6D2B79F5;
@@ -3126,35 +3238,20 @@ document.addEventListener('scroll', function onFirstScroll() {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   }
 
-  function calculateCount() {
-    var now = new Date();
-    var msPerDay = 86400000;
-    var daysSinceLaunch = Math.max(0, Math.floor((now - LAUNCH_DATE) / msPerDay));
-    var total = BASE_COUNT;
+  function getHourIncrement(hourIndex) {
+    if (hourlyIncrements[hourIndex]) return hourlyIncrements[hourIndex];
+    var seed = (Math.floor(sessionStartMs / 1000) + 17) * (hourIndex + 97);
+    var n = 1 + Math.floor(seededRandom(seed) * 4);
+    hourlyIncrements[hourIndex] = n;
+    return n;
+  }
 
-    for (var day = 0; day <= daysSinceLaunch; day++) {
-      var seed = day * 31337 + 7919;
-      var rand = seededRandom(seed);
-      var progress = Math.min(1, day / 365);
-      var primeIndex = Math.floor((1 - progress) * (PRIMES.length - 1));
-      var prime = PRIMES[primeIndex];
-      var maxDailyAdds = 4320;
-      var dailyBase = 1 + (maxDailyAdds - 1) * Math.pow(progress, 3);
-      var dailyIncrement = Math.floor((dailyBase / prime) * (0.6 + rand * 0.8));
-      total += Math.max(1, dailyIncrement);
+  function calculateCount(nowMs) {
+    var elapsedHours = Math.max(0, Math.floor((nowMs - sessionStartMs) / 3600000));
+    var total = baseCount;
+    for (var i = 0; i < elapsedHours; i++) {
+      total += getHourIncrement(i);
     }
-
-    if (daysSinceLaunch > 0) {
-      var progress = Math.min(1, daysSinceLaunch / 365);
-      var maxPerMin = 3 * Math.pow(progress, 3);
-      var minutesToday = now.getHours() * 60 + now.getMinutes();
-      var seed = daysSinceLaunch * 99991 + minutesToday;
-      var rand = seededRandom(seed);
-      var intradayPrime = PRIMES[Math.floor(rand * 5)];
-      var intradayAdds = Math.floor((minutesToday * maxPerMin) / intradayPrime);
-      total += Math.max(0, intradayAdds);
-    }
-
     return total;
   }
 
@@ -3165,31 +3262,237 @@ document.addEventListener('scroll', function onFirstScroll() {
   function updateCounter() {
     var el = document.getElementById('love-counter');
     if (el) {
-      el.textContent = formatNumber(calculateCount());
+      el.textContent = formatNumber(calculateCount(Date.now()));
     }
   }
 
   updateCounter();
-  function scheduleNext() {
-    var delay = 20000 + Math.random() * 20000;
-    setTimeout(function() {
-      updateCounter();
-      scheduleNext();
-    }, delay);
-  }
-  scheduleNext();
+  var msToNextHour = 3600000 - ((Date.now() - sessionStartMs) % 3600000);
+  setTimeout(function() {
+    updateCounter();
+    setInterval(updateCounter, 3600000);
+  }, msToNextHour);
 })();
+
+/* ── Localized Country Love (dynamic countries, excluded geopolitics) ── */
+var BASE_TELEGRAM_BODY_HTML = (function() {
+  var el = document.getElementById('telegram-body-main');
+  return el ? el.innerHTML : '';
+})();
+var COUNTRY_LOVE_BASE_TEXT = {
+  telegramFrom: 'Someone who cares about you',
+  telegramTo: 'You, right now',
+  telegramRe: 'Things you need to hear today',
+  hookSub: 'Classic love bomb, in your language.',
+  worldPeaceNote: 'When we choose love first, fear loses power.',
+  telegramBody: 'You are loved. You matter. You are enough right now, exactly as you are. Love can stop fear from turning into conflict. Hold this feeling and pass it forward.',
+};
+var COUNTRY_LOVE_LANGUAGE_TO_TARGET = {
+  Afrikaans: 'af', Albanian: 'sq', Amharic: 'am', Arabic: 'ar', Armenian: 'hy', Aymara: 'ay',
+  Azerbaijani: 'az', Basque: 'eu', Belarusian: 'be', Bengali: 'bn', Bosnian: 'bs', Bulgarian: 'bg',
+  Catalan: 'ca', Chinese: 'zh-CN', Croatian: 'hr', Czech: 'cs', Danish: 'da', Dutch: 'nl',
+  English: 'en', Estonian: 'et', Filipino: 'tl', Finnish: 'fi', French: 'fr', Galician: 'gl',
+  Georgian: 'ka', German: 'de', Greek: 'el', 'Haitian Creole': 'ht', Hebrew: 'iw', Hindi: 'hi',
+  Hungarian: 'hu', Icelandic: 'is', Indonesian: 'id', Irish: 'ga', Italian: 'it', Japanese: 'ja',
+  Kazakh: 'kk', Khmer: 'km', Kinyarwanda: 'rw', Korean: 'ko', Kyrgyz: 'ky', Lao: 'lo', Latin: 'la',
+  Latvian: 'lv', Lingala: 'ln', Lithuanian: 'lt', Luxembourgish: 'lb', Macedonian: 'mk',
+  Malagasy: 'mg', Malay: 'ms', Maltese: 'mt', Mongolian: 'mn', Nepali: 'ne', Norwegian: 'no',
+  'Norwegian Bokmål': 'no', 'Norwegian Nynorsk': 'no', Pashto: 'ps', 'Persian (Farsi)': 'fa',
+  Polish: 'pl', Portuguese: 'pt', Quechua: 'qu', Romanian: 'ro', Russian: 'ru', Samoan: 'sm',
+  Serbian: 'sr', Shona: 'sn', Sinhala: 'si', Slovak: 'sk', Somali: 'so', Spanish: 'es',
+  Swahili: 'sw', Swedish: 'sv', Tajik: 'tg', Tamil: 'ta', Thai: 'th', Tigrinya: 'ti', Tsonga: 'ts',
+  Turkish: 'tr', Turkmen: 'tk', Ukrainian: 'uk', Urdu: 'ur', Uzbek: 'uz', Vietnamese: 'vi',
+  Xhosa: 'xh', Zulu: 'zu'
+};
+var COUNTRY_LOVE_EXCLUDED = { IR: true, PS: true };
+var countryLoveState = {
+  loading: false,
+  loaded: false,
+  list: [],
+  translationCache: {},
+  accentCache: {},
+};
+
+function chooseCountryTargetLanguage(languageObj) {
+  if (!languageObj) return null;
+  var names = Object.keys(languageObj).map(function(k) { return languageObj[k]; });
+  for (var i = 0; i < names.length; i++) {
+    var n = names[i];
+    if (COUNTRY_LOVE_LANGUAGE_TO_TARGET[n]) {
+      return { name: n, target: COUNTRY_LOVE_LANGUAGE_TO_TARGET[n] };
+    }
+  }
+  return null;
+}
+
+function loadCountryLoveList(done) {
+  if (countryLoveState.loaded) return done(countryLoveState.list);
+  if (countryLoveState.loading) {
+    var waiter = setInterval(function() {
+      if (!countryLoveState.loading) {
+        clearInterval(waiter);
+        done(countryLoveState.list);
+      }
+    }, 80);
+    return;
+  }
+  countryLoveState.loading = true;
+  fetch('https://restcountries.com/v3.1/all?fields=cca2,name,languages,flags')
+    .then(function(r) { return r.ok ? r.json() : []; })
+    .then(function(arr) {
+      var out = [];
+      for (var i = 0; i < arr.length; i++) {
+        var c = arr[i] || {};
+        var code = (c.cca2 || '').toUpperCase();
+        if (!code || COUNTRY_LOVE_EXCLUDED[code]) continue;
+        var picked = chooseCountryTargetLanguage(c.languages || {});
+        if (!picked) continue;
+        var commonName = (c.name && c.name.common) ? c.name.common : code;
+        out.push({
+          code: code,
+          name: commonName,
+          languageName: picked.name,
+          target: picked.target,
+          flagPng: c.flags && c.flags.png ? c.flags.png : '',
+        });
+      }
+      out.sort(function(a, b) { return a.name.localeCompare(b.name); });
+      if (!out.some(function(x) { return x.code === 'IL'; })) {
+        out.push({ code: 'IL', name: 'Israel', languageName: 'Hebrew', target: 'iw', flagPng: '' });
+      }
+      countryLoveState.list = out;
+      countryLoveState.loaded = true;
+      countryLoveState.loading = false;
+      done(countryLoveState.list);
+    })
+    .catch(function() {
+      countryLoveState.list = [
+        { code: 'US', name: 'United States', languageName: 'English', target: 'en', flagPng: '' },
+        { code: 'IL', name: 'Israel', languageName: 'Hebrew', target: 'iw', flagPng: '' },
+      ];
+      countryLoveState.loaded = true;
+      countryLoveState.loading = false;
+      done(countryLoveState.list);
+    });
+}
+
+function translateCountryLoveBundle(target, done) {
+  if (!target || target === 'en') return done(COUNTRY_LOVE_BASE_TEXT);
+  if (countryLoveState.translationCache[target]) return done(countryLoveState.translationCache[target]);
+  var keys = ['telegramFrom', 'telegramTo', 'telegramRe', 'hookSub', 'worldPeaceNote', 'telegramBody'];
+  var sep = '__LBSEP__';
+  var source = keys.map(function(k) { return COUNTRY_LOVE_BASE_TEXT[k]; }).join(sep);
+  var url = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=' + encodeURIComponent(target) + '&dt=t&q=' + encodeURIComponent(source);
+  fetch(url)
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(data) {
+      if (!data || !data[0]) throw new Error('translation failed');
+      var translated = '';
+      for (var i = 0; i < data[0].length; i++) {
+        translated += (data[0][i] && data[0][i][0]) ? data[0][i][0] : '';
+      }
+      var pieces = translated.split(sep);
+      if (pieces.length !== keys.length) throw new Error('translation split mismatch');
+      var bundle = {};
+      for (var k = 0; k < keys.length; k++) bundle[keys[k]] = pieces[k];
+      countryLoveState.translationCache[target] = bundle;
+      done(bundle);
+    })
+    .catch(function() {
+      done(COUNTRY_LOVE_BASE_TEXT);
+    });
+}
+
+function detectAccentFromFlag(countryCode, flagPng, done) {
+  if (countryLoveState.accentCache[countryCode]) return done(countryLoveState.accentCache[countryCode]);
+  if (!flagPng) return done([255, 190, 120]);
+  var img = new Image();
+  img.crossOrigin = 'anonymous';
+  img.onload = function() {
+    try {
+      var c = document.createElement('canvas');
+      c.width = 12; c.height = 8;
+      var x = c.getContext('2d');
+      x.drawImage(img, 0, 0, c.width, c.height);
+      var d = x.getImageData(0, 0, c.width, c.height).data;
+      var r = 0, g = 0, b = 0, n = 0;
+      for (var i = 0; i < d.length; i += 4) {
+        var rr = d[i], gg = d[i + 1], bb = d[i + 2];
+        if (rr > 238 && gg > 238 && bb > 238) continue;
+        if (rr < 18 && gg < 18 && bb < 18) continue;
+        r += rr; g += gg; b += bb; n++;
+      }
+      var accent = n > 0 ? [Math.round(r / n), Math.round(g / n), Math.round(b / n)] : [255, 190, 120];
+      countryLoveState.accentCache[countryCode] = accent;
+      done(accent);
+    } catch (e) {
+      done([255, 190, 120]);
+    }
+  };
+  img.onerror = function() { done([255, 190, 120]); };
+  img.src = flagPng;
+}
 
 /* ── Variation System — handles video, hearts, sculpture, haptics ── */
 (function initVariations() {
   var params = new URLSearchParams(window.location.search);
   var varId = currentVariationId;
+  var countryControlsEl = document.getElementById('country-controls');
+  var countrySearchEl = document.getElementById('country-search');
+  var countrySelectEl = document.getElementById('country-select');
+  var telegramBodyEl = document.getElementById('telegram-body-main');
+  var stampEl = document.querySelector('.telegram-stamp');
+  var dividerEls = document.querySelectorAll('.heart-divider');
+  var breathingEls = document.querySelectorAll('.breathing-heart');
+  var dividerDefaults = [];
+  var breathingDefaults = [];
+  for (var di = 0; di < dividerEls.length; di++) dividerDefaults.push(dividerEls[di].textContent);
+  for (var bi = 0; bi < breathingEls.length; bi++) breathingDefaults.push(breathingEls[bi].textContent);
 
-  function applyVariation(id, isSwitch) {
-    var c = LOVE_BOMB_VARIATIONS[id] || LOVE_BOMB_VARIATIONS['default'];
-    currentVariationId = id;
-    currentVariationConfig = c;
+  var RB_TEXT_TARGETS = [
+    { selector: '#hook-title', html: '99 red balloons.<br>One avoidable escalation.' },
+    { selector: '#s6 h2', text: 'How fear escalates — and how love can interrupt it' },
+    { selector: '#s6 > p:first-of-type', text: 'The song 99 Luftballons imagines a tiny misunderstanding becoming a major conflict. This theme is a reminder to lead with care before fear writes the next chapter.' },
+    { selector: '#s6 .quote', html: 'Small signals can be misread.<br>Love, patience, and context can stop escalation.' },
+    { selector: '#s7 h2', text: 'Send calm forward' },
+    { selector: '#s7 > p:first-of-type', text: 'Pick one person and send this as a reminder: choose empathy before assumption.' },
+    { selector: '#s5 .video-section h3', text: 'A Cold War warning in song form.' },
+    { selector: '#s5 .video-section .subtitle', text: '99 Luftballons became an anthem about misunderstanding, fear, and preventable escalation.' }
+  ];
 
+  function setCountryControlsVisible(on) {
+    if (!countryControlsEl) return;
+    countryControlsEl.style.display = on ? '' : 'none';
+  }
+
+  function setBalloonMode(on) {
+    particleShape = on ? 'balloon' : 'heart';
+    for (var i = 0; i < dividerEls.length; i++) {
+      dividerEls[i].textContent = on ? '🎈  🎈  🎈  🎈  🎈' : dividerDefaults[i];
+      dividerEls[i].classList.toggle('balloon-divider', on);
+    }
+    for (var j = 0; j < breathingEls.length; j++) {
+      breathingEls[j].textContent = on ? '🎈' : breathingDefaults[j];
+    }
+  }
+
+  function setRedBalloonsNarrative(on) {
+    for (var i = 0; i < RB_TEXT_TARGETS.length; i++) {
+      var t = RB_TEXT_TARGETS[i];
+      var el = document.querySelector(t.selector);
+      if (!el) continue;
+      if (!el.dataset.rbOrig) el.dataset.rbOrig = t.html ? el.innerHTML : el.textContent;
+      if (on) {
+        if (t.html) el.innerHTML = t.html;
+        else el.textContent = t.text;
+      } else {
+        if (t.html) el.innerHTML = el.dataset.rbOrig;
+        else el.textContent = el.dataset.rbOrig;
+      }
+    }
+  }
+
+  function renderVariationText(id, c) {
     var from = document.getElementById('var-from');
     var to = document.getElementById('var-to');
     var re = document.getElementById('var-re');
@@ -3203,75 +3506,145 @@ document.addEventListener('scroll', function onFirstScroll() {
       hookSub.style.display = c.hookSub ? 'block' : 'none';
     }
     if (worldNote && c.worldPeaceNote) worldNote.textContent = c.worldPeaceNote;
+
+    if (telegramBodyEl) {
+      if (c.telegramBodyText) {
+        telegramBodyEl.textContent = c.telegramBodyText;
+      } else if (id === 'friend') {
+        telegramBodyEl.innerHTML = 'You are <span class="love-word">loved</span>. Friendship love. Real, steady, and here for you.<br><br>You matter to people who know you well. Your presence helps more than you realize.<br><br>You are enough right now. Keep this feeling and pass it on when someone needs it.';
+      } else if (id === 'redballoons') {
+        telegramBodyEl.innerHTML = 'In <span class="love-word">99 Luftballons</span>, harmless balloons are mistaken for a threat — and fear escalates everything.<br><br>The warning is timeless: without empathy, context, and patience, small signals can become huge conflict.<br><br>Love is not passive here. Love slows the reaction, restores humanity, and keeps people from becoming enemies by accident.';
+      } else if (c.telegramBodyHtml) {
+        telegramBodyEl.innerHTML = c.telegramBodyHtml;
+      } else {
+        telegramBodyEl.innerHTML = BASE_TELEGRAM_BODY_HTML;
+      }
+    }
+
+    if (stampEl) {
+      stampEl.innerHTML = (id === 'redballoons')
+        ? 'HISTORY REMEMBERED • SENT WITH CARE'
+        : 'SENT WITH ALL MY LOVE &#10084;';
+    }
+
+    setRedBalloonsNarrative(id === 'redballoons');
+  }
+
+  function applyVariationVisuals(id, c) {
     var vBtns = document.querySelectorAll('.variation-btn');
     for (var bi = 0; bi < vBtns.length; bi++) {
       var btn = vBtns[bi];
       btn.classList.toggle('active', btn.dataset.var === id);
     }
 
-    /* Per-variation body class */
     Object.keys(LOVE_BOMB_VARIATIONS).forEach(function(k) {
       var vc = LOVE_BOMB_VARIATIONS[k];
       if (vc.bodyClass) document.body.classList.remove(vc.bodyClass);
     });
     if (c.bodyClass) document.body.classList.add(c.bodyClass);
 
-    /* Per-variation CSS custom properties */
     if (c.accentColor) {
       document.documentElement.style.setProperty('--accent', c.accentColor.join(','));
     }
 
-    /* Rainbow hearts for LGBTQ */
     if (c.heartColors === 'rainbow') {
       setHeartColors('rainbow');
       document.body.classList.add('rainbow-active');
+      setBalloonMode(false);
+    } else if (c.heartColors === 'redballoons' || c.particleShape === 'balloon') {
+      setHeartColors('redballoons');
+      document.body.classList.remove('rainbow-active');
+      setBalloonMode(true);
     } else {
       setHeartColors('default');
       document.body.classList.remove('rainbow-active');
+      setBalloonMode(false);
     }
 
-    /* Philly LOVE sculpture */
     var sculpture = document.getElementById('love-sculpture');
-    if (sculpture) {
-      if (c.showLoveSculpture) {
-        sculpture.classList.add('active');
-      } else {
-        sculpture.classList.remove('active');
-      }
-    }
+    if (sculpture) sculpture.classList.toggle('active', !!c.showLoveSculpture);
 
-    /* Star Wars-ish love scene */
     var swScene = document.getElementById('starwars-scene');
     if (swScene) {
-      if (id === 'starwars') {
-        swScene.classList.add('active');
-        swScene.setAttribute('aria-hidden', 'false');
-      } else {
-        swScene.classList.remove('active');
-        swScene.setAttribute('aria-hidden', 'true');
+      var active = id === 'starwars';
+      swScene.classList.toggle('active', active);
+      swScene.setAttribute('aria-hidden', active ? 'false' : 'true');
+    }
+  }
+
+  function buildCountryTheme(base, entry, bundle, accent) {
+    var merged = {};
+    for (var k in base) merged[k] = base[k];
+    merged.telegramFrom = bundle.telegramFrom;
+    merged.telegramTo = bundle.telegramTo;
+    merged.telegramRe = bundle.telegramRe;
+    merged.hookSub = bundle.hookSub + ' ' + entry.name + ' · ' + entry.languageName + '.';
+    merged.worldPeaceNote = bundle.worldPeaceNote;
+    merged.telegramBodyText = bundle.telegramBody;
+    merged.accentColor = accent;
+    merged.accentHue = Math.round(((accent[0] * 2 + accent[1] * 3 + accent[2]) % 360));
+    return merged;
+  }
+
+  function setCountryOptions(list, filter, selectedCode) {
+    if (!countrySelectEl) return;
+    var q = (filter || '').trim().toLowerCase();
+    while (countrySelectEl.firstChild) countrySelectEl.removeChild(countrySelectEl.firstChild);
+    for (var i = 0; i < list.length; i++) {
+      var c = list[i];
+      if (q && c.name.toLowerCase().indexOf(q) === -1 && c.code.toLowerCase().indexOf(q) === -1) continue;
+      var opt = document.createElement('option');
+      opt.value = c.code;
+      opt.textContent = c.name + ' (' + c.languageName + ')';
+      if (c.code === selectedCode) opt.selected = true;
+      countrySelectEl.appendChild(opt);
+    }
+  }
+
+  function applyCountryLove(base, isSwitch) {
+    setCountryControlsVisible(true);
+    loadCountryLoveList(function(list) {
+      if (!list || !list.length) return;
+      var selectedCode = (params.get('country') || 'US').toUpperCase();
+      var selected = null;
+      for (var i = 0; i < list.length; i++) {
+        if (list[i].code === selectedCode) { selected = list[i]; break; }
       }
+      if (!selected) selected = list[0];
+
+      setCountryOptions(list, countrySearchEl ? countrySearchEl.value : '', selected.code);
+      if (countrySelectEl) countrySelectEl.value = selected.code;
+
+      translateCountryLoveBundle(selected.target, function(bundle) {
+        detectAccentFromFlag(selected.code, selected.flagPng, function(accent) {
+          var countryCfg = buildCountryTheme(base, selected, bundle, accent);
+          currentVariationConfig = countryCfg;
+          renderVariationText('countrylove', countryCfg);
+          applyVariationVisuals('countrylove', countryCfg);
+          updateSongInfo();
+          if (isSwitch) loadVariationVideo();
+        });
+      });
+    });
+  }
+
+  function applyVariation(id, isSwitch) {
+    var base = LOVE_BOMB_VARIATIONS[id] || LOVE_BOMB_VARIATIONS['default'];
+    currentVariationId = id;
+    currentVariationConfig = base;
+
+    if (id === 'countrylove') {
+      applyCountryLove(base, isSwitch);
+    } else {
+      setCountryControlsVisible(false);
+      renderVariationText(id, base);
+      applyVariationVisuals(id, base);
+      updateSongInfo();
+      if (isSwitch) loadVariationVideo();
     }
 
-    /* Song info */
-    updateSongInfo();
-
-    /* Load new video if switching */
-    if (isSwitch) {
-      loadVariationVideo();
-    }
-
-    /* Update URL */
-    if (id !== (params.get('v') || 'default')) {
-      var u = new URL(window.location.href);
-      u.searchParams.set('v', id);
-      window.history.replaceState({}, '', u.toString());
-    }
-
-    /* Kid-friendly lockdown: no top links, no extra mode */
     var picker = document.getElementById('variation-picker');
-    if (picker) {
-      picker.style.display = (id === 'kids') ? 'none' : '';
-    }
+    if (picker) picker.style.display = (id === 'kids') ? 'none' : '';
     if (id === 'kids') {
       document.body.classList.remove('extra-mode');
       try { if (window.__refreshExtraModeEffective) window.__refreshExtraModeEffective(); } catch (e) {}
@@ -3279,21 +3652,52 @@ document.addEventListener('scroll', function onFirstScroll() {
     } else {
       try { if (window.__refreshExtraModeEffective) window.__refreshExtraModeEffective(); } catch (e) {}
     }
+
+    var u = new URL(window.location.href);
+    u.searchParams.set('v', id);
+    if (id !== 'countrylove') u.searchParams.delete('country');
+    window.history.replaceState({}, '', u.toString());
   }
 
   var btns = document.getElementById('variation-btns');
   if (btns) {
-    ['default','friend','kids','philly','nyc','usa','lgbtq','multilang','starwars'].forEach(function(id) {
+    var frag = document.createDocumentFragment();
+    ['default','friend','kids','philly','nyc','usa','lgbtq','multilang','countrylove','redballoons','starwars'].forEach(function(id) {
       var c = LOVE_BOMB_VARIATIONS[id];
       if (!c) return;
       var b = document.createElement('button');
       b.className = 'variation-btn' + (id === varId ? ' active' : '');
       b.dataset.var = id;
       b.textContent = c.label;
-      b.addEventListener('click', function() { applyVariation(id, true); });
-      btns.appendChild(b);
+      b.addEventListener('click', function() {
+        var u = new URL(window.location.href);
+        u.searchParams.set('v', id);
+        if (id !== 'countrylove') u.searchParams.delete('country');
+        window.location.assign(u.toString());
+      });
+      frag.appendChild(b);
+    });
+    btns.appendChild(frag);
+  }
+
+  if (countrySearchEl) {
+    countrySearchEl.addEventListener('input', function() {
+      if (!countryLoveState.list.length) return;
+      var current = (countrySelectEl && countrySelectEl.value) ? countrySelectEl.value : '';
+      setCountryOptions(countryLoveState.list, countrySearchEl.value, current);
     });
   }
+  if (countrySelectEl) {
+    countrySelectEl.addEventListener('change', function() {
+      var code = (countrySelectEl.value || '').toUpperCase();
+      if (!code) return;
+      var u = new URL(window.location.href);
+      u.searchParams.set('v', 'countrylove');
+      u.searchParams.set('country', code);
+      window.location.assign(u.toString());
+    });
+  }
+
   applyVariation(varId, false);
 })();
 
@@ -3617,17 +4021,11 @@ document.head.appendChild(style);
   var crawlContainer = document.getElementById('sw-crawl-container');
   if (!crawlContainer) return;
 
-  var hasSeenCrawl = false;
-  try { hasSeenCrawl = sessionStorage.getItem('sw-crawl-seen') === '1'; } catch(e) {}
-
-  if (hasSeenCrawl) return;
-
   crawlContainer.classList.add('active');
   crawlContainer.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
 
   function endCrawl() {
-    try { sessionStorage.setItem('sw-crawl-seen', '1'); } catch(e) {}
     crawlContainer.style.transition = 'opacity 1.5s ease';
     crawlContainer.style.opacity = '0';
     setTimeout(function() {
