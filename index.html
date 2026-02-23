@@ -3345,7 +3345,12 @@ function loadCountryLoveList(done) {
         var c = arr[i] || {};
         var code = (c.cca2 || '').toUpperCase();
         if (!code || COUNTRY_LOVE_EXCLUDED[code]) continue;
-        var picked = chooseCountryTargetLanguage(c.languages || {});
+        var picked = null;
+        if (code === 'IL') {
+          picked = { name: 'Hebrew', target: 'iw' };
+        } else {
+          picked = chooseCountryTargetLanguage(c.languages || {});
+        }
         if (!picked) continue;
         var commonName = (c.name && c.name.common) ? c.name.common : code;
         out.push({
@@ -3611,6 +3616,12 @@ function detectAccentFromFlag(countryCode, flagPng, done) {
         if (list[i].code === selectedCode) { selected = list[i]; break; }
       }
       if (!selected) selected = list[0];
+
+      var currentUrl = new URL(window.location.href);
+      if ((currentUrl.searchParams.get('country') || '').toUpperCase() !== selected.code) {
+        currentUrl.searchParams.set('country', selected.code);
+        window.history.replaceState({}, '', currentUrl.toString());
+      }
 
       setCountryOptions(list, countrySearchEl ? countrySearchEl.value : '', selected.code);
       if (countrySelectEl) countrySelectEl.value = selected.code;
