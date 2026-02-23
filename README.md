@@ -1,6 +1,6 @@
-**Now with 9 love bomb variations — because love should feel personal.**
+**Now with 11 love bomb variations — because love should feel personal.**
 
-🤝 **Friend** — For your person. Your day-one. A love bomb that’s pure friendship.
+🤝 **Friend** — Pure friendship. Day-one support. No romance wording.
 
 🧸 **Kid-Friendly** — Gentle, safe-for-all-ages love. Soft hearts, kind words.
 
@@ -13,6 +13,10 @@
 🏳️‍🌈 **LGBTQ+** — Love is love. Chosen family. Rainbow hearts. You, exactly as you are.
 
 🌍 **Multi-language** — Te amo · Je t'aime · 我爱你. Love needs no translation.
+
+🌐 **Country Love** — Classic message, localized language by country (with dynamic country picker).
+
+🎈 **Red Balloons (History)** — Inspired by *99 Luftballons*: a reminder that fear escalates fast, and love can interrupt it.
 
 ✨ **Star Wars (Love)** — Space‑opera love vibes. Love is the force.
 
@@ -28,6 +32,8 @@ Pick at the top of the page, or share a direct link:
 - [United States](https://thumpersecure.github.io/LOVE-BOMB/?v=usa)
 - [LGBTQ+](https://thumpersecure.github.io/LOVE-BOMB/?v=lgbtq)
 - [Multi-language](https://thumpersecure.github.io/LOVE-BOMB/?v=multilang)
+- [Country Love](https://thumpersecure.github.io/LOVE-BOMB/?v=countrylove&country=US)
+- [Red Balloons](https://thumpersecure.github.io/LOVE-BOMB/?v=redballoons)
 - [Star Wars](https://thumpersecure.github.io/LOVE-BOMB/?v=starwars)
 
 Shared links keep the chosen variation.
